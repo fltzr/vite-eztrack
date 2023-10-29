@@ -1,5 +1,5 @@
-import { Outlet } from 'react-router-dom';
+import { App } from './app';
 
 export const AppContainer = () => {
-	return <Outlet />;
+	return <App />;
 };
