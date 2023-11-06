@@ -4,7 +4,25 @@ import { AppContainer } from '../app-container';
 export const routes: RouteObject[] = [
 	{
 		path: '/',
-		index: true,
 		element: <AppContainer />,
+		children: [
+			{
+				path: 'demos',
+				lazy: () => import('@/pages/demos'),
+			},
+		],
+	},
+	{
+		path: 'auth',
+		children: [
+			{
+				path: 'signin',
+				lazy: () => import('@/pages/auth/sign-in'),
+			},
+			{
+				path: 'signup',
+				lazy: () => import('@/pages/auth/sign-up'),
+			},
+		],
 	},
 ];

@@ -5,13 +5,17 @@ import { router } from '@/router';
 import { Loader } from '@/common/components/loader';
 import '@cloudscape-design/global-styles/index.css';
 import './main.scss';
+import { Provider } from 'react-redux';
+import { store } from './common/store';
 
 const root = document.querySelector('#root');
 
 if (root) {
 	createRoot(root).render(
 		<StrictMode>
-			<RouterProvider router={router} fallbackElement={<Loader />} />
+			<Provider store={store}>
+				<RouterProvider router={router} fallbackElement={<Loader />} />
+			</Provider>
 		</StrictMode>,
 	);
 }
