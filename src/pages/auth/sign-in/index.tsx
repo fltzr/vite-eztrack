@@ -13,6 +13,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from 'react';
 import { Control, Controller, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 
 const loginSchema = z.object({
@@ -59,6 +60,7 @@ const PasswordField = ({ control, error }: { control: Control<InferredLoginSchem
 
 export const Component = () => {
 	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		dispatch({ type: SET_NAVIGATION_HIDDEN, payload: true });
@@ -103,7 +105,16 @@ export const Component = () => {
 					<hr className="divider" />
 					<Grid gridDefinition={[{ colspan: 2 }, { colspan: 8 }, { colspan: 2 }]}>
 						<div></div>
-						<Button fullWidth variant="normal" wrapText={false} formAction="none">
+						<Button
+							fullWidth
+							variant="normal"
+							wrapText={false}
+							formAction="none"
+							onClick={(event) => {
+								event.preventDefault();
+								navigate('/auth/signup');
+							}}
+						>
 							Create account
 						</Button>
 						<div></div>
