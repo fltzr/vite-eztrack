@@ -23,6 +23,10 @@ export const routes: RouteObject[] = [
                 path: 'signup',
                 lazy: () => import('@/pages/auth/sign-up'),
             },
+            {
+                path: 'verify',
+                lazy: () => import('@/pages/auth/verify-email'),
+            },
         ],
     },
 ];

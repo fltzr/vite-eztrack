@@ -10,7 +10,8 @@ export type AuthState = {
     token: string | null;
     isAuthenticated: boolean;
     isAuthenticating: boolean;
-    error: string | null;
+    signinError: string | null;
+    signupError: string | null;
 };
 
 const getInitialState = (): AuthState => {
@@ -22,7 +23,8 @@ const getInitialState = (): AuthState => {
         token,
         isAuthenticated: !!user && !!token,
         isAuthenticating: false,
-        error: null,
+        signinError: null,
+        signupError: null,
     };
 };
 
@@ -75,7 +77,8 @@ const authSlice = createSlice({
             state.isAuthenticated = false;
             state.user = null;
             state.token = null;
-            state.error = null;
+            state.signinError = null;
+            state.signupError = null;
             remove('user');
             remove('auth');
         },
@@ -97,14 +100,16 @@ const authSlice = createSlice({
             .addCase(signin.rejected, (state, action) => {
                 state.isAuthenticating = false;
                 state.isAuthenticated = false;
-                state.error = action.payload as string;
+                state.signinError = action.payload as string;
             })
             .addCase(signup.pending, (state) => {
                 state.isAuthenticating = true;
+                state.signupError = null;
             })
             .addCase(signup.rejected, (state, action) => {
                 state.isAuthenticating = false;
-                state.error = (action.payload as string) || 'Failed to create account.';
+                state.signupError =
+                    (action.payload as string) || 'Failed to create account.';
             });
     },
 });
