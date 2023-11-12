@@ -1,3 +1,9 @@
 .signup-form {
-	width: 455px !important;
+    display: grid;
+    place-items: center;
+    height: 100vh;
+
+    > :first-child {
+        width: 455px;
+    }
 }

@@ -1,10 +1,13 @@
 .divider {
-	border: 1px solid #e9ebed;
+    border: 1px solid #e9ebed;
 }
 
 .auth-form {
-	width: 340px;
-	margin: 15vh auto;
-	padding-left: 16px;
-	padding-right: 16px;
+    display: grid;
+    place-items: center;
+    height: 100vh;
+
+    > :first-child {
+        width: 340px;
+    }
 }
