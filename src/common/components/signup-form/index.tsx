@@ -5,7 +5,7 @@ import Form from '@cloudscape-design/components/form';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import Button from '@cloudscape-design/components/button';
 import { useAppSelector } from '@/common/hooks/use-app-selector';
-import { selectError, selectIsAuthenticating } from '@/features/auth/selectors';
+import { selectSignupError, selectIsAuthenticating } from '@/features/auth/selectors';
 import { InferredSignupSchema, signupSchema } from '@/features/auth/types';
 import { FormInput } from '../form/input';
 import { FormSelect } from '../form/select';
@@ -17,14 +17,14 @@ export const SignupForm = ({
     handleSubmitSignup: (data: InferredSignupSchema) => void;
 }) => {
     const isAuthenticating = useAppSelector(selectIsAuthenticating);
-    const serverError = useAppSelector(selectError);
+    const serverError = useAppSelector(selectSignupError);
 
     const methods = useForm<InferredSignupSchema>({
         resolver: zodResolver(signupSchema),
     });
 
     return (
-        <>
+        <SpaceBetween size="xl" direction="vertical">
             <FormProvider {...methods}>
                 <form
                     id="signup-form"
@@ -106,6 +106,6 @@ export const SignupForm = ({
             >
                 Create account
             </Button>
-        </>
+        </SpaceBetween>
     );
 };

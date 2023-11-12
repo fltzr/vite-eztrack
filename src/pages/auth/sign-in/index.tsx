@@ -1,8 +1,6 @@
-import { PropsWithChildren, useEffect } from 'react';
-import { createPortal } from 'react-dom';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Header, SpaceBetween } from '@cloudscape-design/components';
-
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { SigninForm } from '@/common/components/signin-form';
 import { CreateAccountButton } from '@/common/components/create-account-button';
@@ -11,19 +9,10 @@ import { selectIsAuthenticated } from '@/features/auth/selectors';
 
 import styles from './styles.module.scss';
 import { InferredSigninSchema } from '@/features/auth/types';
+import { Divider } from '@/common/components/divider';
 
 const SET_NAVIGATION_HIDDEN = 'layout/setNavigationHidden';
 const SET_TOOLS_HIDDEN = 'layout/setToolsHidden';
-
-const AuthHeaderPortal = ({ children }: PropsWithChildren) => {
-    const dom = document.getElementById('h');
-
-    if (!dom) {
-        return null;
-    }
-
-    return createPortal(children, dom);
-};
 
 export const Component = () => {
     const dispatch = useAppDispatch();
@@ -54,7 +43,7 @@ export const Component = () => {
             <Container header={<Header variant="h1">Sign in</Header>}>
                 <SpaceBetween size="xxl" direction="vertical">
                     <SigninForm handleSignin={handleSubmitLogin} />
-                    <hr className="divider" />
+                    <Divider>New to eztrack?</Divider>
                     <CreateAccountButton />
                 </SpaceBetween>
             </Container>

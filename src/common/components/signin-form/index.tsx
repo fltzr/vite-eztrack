@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { FormInput } from '../form/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useAppSelector } from '@/common/hooks';
-import { selectError, selectIsAuthenticating } from '@/features/auth/selectors';
+import { selectSigninError, selectIsAuthenticating } from '@/features/auth/selectors';
 import Button from '@cloudscape-design/components/button';
 import { InferredSigninSchema, signinSchema } from '@/features/auth/types';
 
@@ -13,7 +13,7 @@ type SigninFormProps = {
 };
 export const SigninForm = ({ handleSignin }: SigninFormProps) => {
     const isAuthenticating = useAppSelector(selectIsAuthenticating);
-    const serverError = useAppSelector(selectError);
+    const serverError = useAppSelector(selectSigninError);
 
     const methods = useForm<InferredSigninSchema>({
         resolver: zodResolver(signinSchema),

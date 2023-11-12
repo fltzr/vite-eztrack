@@ -11,8 +11,9 @@ import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { SignupForm } from '@/common/components/signup-form';
 import { signup } from '@/features/auth/slice';
 import { InferredSignupSchema } from '@/features/auth/types';
-import { selectError, selectIsAuthenticated } from '@/features/auth/selectors';
+import { selectSignupError, selectIsAuthenticated } from '@/features/auth/selectors';
 import styles from './styles.module.scss';
+import { Divider } from '@/common/components/divider';
 
 // Define action types as constants
 const SET_NAVIGATION_HIDDEN = 'layout/setNavigationHidden';
@@ -25,7 +26,7 @@ export const Component = () => {
 
     const from = location.state?.from?.pathname || '/';
     const isAuthenticated = useAppSelector(selectIsAuthenticated);
-    const serverError = useAppSelector(selectError);
+    const serverError = useAppSelector(selectSignupError);
 
     useEffect(() => {
         dispatch({ type: SET_NAVIGATION_HIDDEN, payload: true });
@@ -58,7 +59,7 @@ export const Component = () => {
             >
                 <SpaceBetween size="m">
                     <SignupForm handleSubmitSignup={handleSubmitSignup} />
-                    <hr className="divider" />
+                    <Divider>Have an eztrack account?</Divider>
                     <Grid
                         gridDefinition={[{ colspan: 2 }, { colspan: 8 }, { colspan: 2 }]}
                     >
