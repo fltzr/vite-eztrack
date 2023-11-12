@@ -1,3 +1,7 @@
+# Theme builder
+src-theme/*
+!src-theme/theme-builder.js
+
 # Logs
 logs
 *.log
