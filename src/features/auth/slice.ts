@@ -1,9 +1,10 @@
-import axios, { AxiosError } from 'axios';
+import PockerBase, { AuthModel } from 'pocketbase';
+import { AxiosError } from 'axios';
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { load, remove, save } from '@/common/utils';
-import { SIGNIN, SIGNUP } from '@/common/api/auth';
-import type { User } from '@/common/types/user';
 import type { InferredSigninSchema, InferredSignupSchema } from './types';
+
+type User = AuthModel;
+const pb = new PockerBase(import.meta.env.VITE_API_URI);
 
 export type AuthState = {
     user: User | null;
@@ -15,8 +16,8 @@ export type AuthState = {
 };
 
 const getInitialState = (): AuthState => {
-    const user = load<User>('user');
-    const token = load<string>('auth');
+    const user = pb.authStore.model;
+    const token = pb.authStore.token;
 
     return {
         user,
@@ -40,11 +41,14 @@ export const signin = createAsyncThunk(
     'auth/signin',
     async (credentials: InferredSigninSchema, { rejectWithValue }) => {
         try {
-            const response = await axios.post(SIGNIN, credentials);
-            save<string>('auth', response.data.token);
-            save<User>('user', response.data.record);
+            // const response = await axios.post(SIGNIN, credentials);
+            // save<string>('auth', response.data.token);
+            // save<User>('user', response.data.record);
+            const response = await pb
+                .collection('users')
+                .authWithPassword(credentials.identity, credentials.password);
 
-            return { token: response.data.token, user: response.data.record };
+            return { token: response.token, user: response.record };
         } catch (error) {
             return rejectWithValue(extractErrorMessage(error));
         }
@@ -55,7 +59,7 @@ export const signup = createAsyncThunk(
     'auth/signup',
     async (credentials: InferredSignupSchema, { dispatch, rejectWithValue }) => {
         try {
-            await axios.post(SIGNUP, credentials);
+            await pb.collection('user').create(credentials);
 
             const signinCredentials: InferredSigninSchema = {
                 identity: credentials.email,
@@ -79,8 +83,7 @@ const authSlice = createSlice({
             state.token = null;
             state.signinError = null;
             state.signupError = null;
-            remove('user');
-            remove('auth');
+            pb.authStore.clear();
         },
     },
     extraReducers: (builder) => {
