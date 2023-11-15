@@ -1,49 +1,69 @@
+import { Mode as Theme, Density } from '@cloudscape-design/global-styles';
 import Modal from '@cloudscape-design/components/modal';
 import Header from '@cloudscape-design/components/header';
-import Grid from '@cloudscape-design/components/grid';
-import RadioGroup from '@cloudscape-design/components/radio-group';
+import SpaceBetween from '@cloudscape-design/components/space-between';
+import Select, { SelectProps } from '@cloudscape-design/components/select';
 import FormField from '@cloudscape-design/components/form-field';
-import Box from '@cloudscape-design/components/box';
+import { useAppDispatch, useAppSelector } from '@/common/hooks';
+import { selectDensity, selectTheme } from '@/features/layout/selectors';
+import { changeDensity, changeTheme } from '../../slice';
+
+const themeOptions: SelectProps.Option[] = [
+    { value: Theme.Light, label: 'Light' },
+    { value: Theme.Dark, label: 'Dark' },
+];
+
+const densityOptions: SelectProps.Option[] = [
+    { value: Density.Comfortable, label: 'Comfortable' },
+    { value: Density.Compact, label: 'Compact' },
+];
 
 type SettingsModalProps = {
-	visible: boolean;
-	onDismiss: () => void;
+    visible: boolean;
+    onDismiss: () => void;
 };
 export const SettingsModal = ({ visible, onDismiss }: SettingsModalProps) => {
-	return (
-		<Modal
-			size="small"
-			visible={visible}
-			onDismiss={onDismiss}
-			header={<Header variant="h2" children={'User Settings'} />}
-		>
-			<Grid gridDefinition={[{ colspan: 6 }, { colspan: 6 }]}>
-				<Box margin={{ top: 'xs', bottom: 'l' }}>
-					<FormField label="Theme">
-						<RadioGroup
-							name="theme-radio-group"
-							value={null}
-							items={[
-								{ label: 'Light', value: 'light' },
-								{ label: 'Dark', value: 'dark' },
-							]}
-						/>
-					</FormField>
-				</Box>
+    const dispatch = useAppDispatch();
+    const theme = useAppSelector(selectTheme);
+    const density = useAppSelector(selectDensity);
 
-				<Box margin={{ top: 'xs', bottom: 'l' }}>
-					<FormField label="Density">
-						<RadioGroup
-							name="density-radio-group"
-							value={null}
-							items={[
-								{ label: 'Comfortable', value: 'comfortable' },
-								{ label: 'Compact', value: 'compact' },
-							]}
-						/>
-					</FormField>
-				</Box>
-			</Grid>
-		</Modal>
-	);
+    return (
+        <Modal
+            size="small"
+            visible={visible}
+            onDismiss={onDismiss}
+            header={<Header variant="h2" children={'User Settings'} />}
+        >
+            <SpaceBetween size="m" direction="vertical">
+                <FormField label="Theme">
+                    <Select
+                        selectedOption={
+                            themeOptions.find((opt) => opt.value === theme) || null
+                        }
+                        options={themeOptions}
+                        onChange={(event) =>
+                            dispatch(
+                                changeTheme(event.detail.selectedOption.value as Theme),
+                            )
+                        }
+                    />
+                </FormField>
+                <FormField label="Density">
+                    <Select
+                        selectedOption={
+                            densityOptions.find((opt) => opt.value === density) || null
+                        }
+                        options={densityOptions}
+                        onChange={(event) =>
+                            dispatch(
+                                changeDensity(
+                                    event.detail.selectedOption.value as Density,
+                                ),
+                            )
+                        }
+                    />
+                </FormField>
+            </SpaceBetween>
+        </Modal>
+    );
 };

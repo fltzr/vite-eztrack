@@ -1,4 +1,6 @@
 import { FormInput } from '@/common/components/form/input';
+import { SigninForm } from '@/common/components/signin-form';
+import { SignupForm } from '@/common/components/signup-form';
 import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
@@ -24,25 +26,8 @@ export const Component = () => {
     };
 
     return (
-        <Container header={<Header variant="h2">Form</Header>}>
-            <FormProvider {...methods}>
-                <form id="demo-form" onSubmit={methods.handleSubmit(handleFormSubmit)}>
-                    <FormInput<InferredSchema>
-                        name="firstname"
-                        label="First name"
-                        type="text"
-                    />
-                    <FormInput<InferredSchema>
-                        name="lastname"
-                        label="Last name"
-                        type="text"
-                    />
-                    <FormInput<InferredSchema> name="email" label="Email" type="email" />
-                </form>
-            </FormProvider>
-            <Button formAction="submit" form="demo-form" variant="primary">
-                Submit
-            </Button>
+        <Container>
+            <SigninForm handleSignin={() => ''} />
         </Container>
     );
 };
