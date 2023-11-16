@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { reducers } from './root-reducer';
 import { logger } from './middleware';
+import { changeTheme } from '@/features/layout/slice';
 
 export const store = configureStore({
     reducer: reducers,
