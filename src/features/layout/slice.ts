@@ -6,11 +6,12 @@ import {
 } from '@cloudscape-design/global-styles';
 import { BreadcrumbGroupProps } from '@cloudscape-design/components/breadcrumb-group';
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { load } from '@/common/utils';
+import { load, save } from '@/common/utils';
 
 export type LayoutState = {
     theme: Theme;
     density: Density;
+    domainTitle: string;
     activeHref: string;
     breadcrumbs: BreadcrumbGroupProps.Item[];
     navigationOpen: boolean;
@@ -22,6 +23,7 @@ export type LayoutState = {
 export const changeTheme = createAsyncThunk(
     'layout/changeTheme',
     async (theme: Theme, { dispatch }) => {
+        save<Theme>('theme', theme);
         applyTheme(theme);
         dispatch(setTheme(theme));
     },
@@ -30,21 +32,28 @@ export const changeTheme = createAsyncThunk(
 export const changeDensity = createAsyncThunk(
     'layout/changeDensity',
     async (density: Density, { dispatch }) => {
+        save<Density>('density', density);
         applyDensity(density);
         dispatch(setDensity(density));
     },
 );
 
-const getInitialState = (): LayoutState => ({
-    theme: load<Theme>('theme') || Theme.Light,
-    density: load<Density>('density') || Density.Comfortable,
-    activeHref: '/',
-    breadcrumbs: [],
-    navigationOpen: false,
-    navigationHidden: false,
-    toolsOpen: false,
-    toolsHidden: false,
-});
+const getInitialState = (): LayoutState => {
+    const theme = load<Theme>('theme') || Theme.Light;
+    const density = load<Density>('density') || Density.Comfortable;
+
+    return {
+        theme,
+        density,
+        domainTitle: '',
+        activeHref: '/',
+        breadcrumbs: [],
+        navigationOpen: false,
+        navigationHidden: false,
+        toolsOpen: false,
+        toolsHidden: false,
+    };
+};
 
 const layoutSlice = createSlice({
     name: 'layout',
@@ -55,6 +64,9 @@ const layoutSlice = createSlice({
         },
         setDensity: (state, action: PayloadAction<Density>) => {
             state.density = action.payload;
+        },
+        setDomainTitle: (state, action: PayloadAction<string>) => {
+            state.domainTitle = action.payload;
         },
         setActiveHref: (state, action: PayloadAction<string>) => {
             state.activeHref = action.payload;
@@ -80,6 +92,7 @@ const layoutSlice = createSlice({
 export const {
     setTheme,
     setDensity,
+    setDomainTitle,
     setActiveHref,
     setBreadcrumbs,
     setNavigationOpen,

@@ -1,19 +1,12 @@
-import { Shell } from './components/shell';
-import { PropsWithChildren, useEffect } from 'react';
+import { PropsWithChildren } from 'react';
 import { Header } from './components/header';
-import { useAppDispatch, useAppSelector } from '@/common/hooks';
-import { selectDensity, selectTheme } from './selectors';
-import { applyDensity, applyMode } from '@cloudscape-design/global-styles';
+import { Shell } from './components/shell';
+import { useRouteTitle } from './hooks/useRouteTitle';
+import { useActiveHref } from './hooks/useActiveHref';
 
 export const Layout = ({ children }: PropsWithChildren) => {
-    const dispatch = useAppDispatch();
-    const theme = useAppSelector(selectTheme);
-    const density = useAppSelector(selectDensity);
-
-    useEffect(() => {
-        applyMode(theme);
-        applyDensity(density);
-    }, [dispatch, theme, density]);
+    useRouteTitle();
+    useActiveHref();
 
     return (
         <>

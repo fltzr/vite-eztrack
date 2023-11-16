@@ -8,7 +8,19 @@ export const routes: RouteObject[] = [
         children: [
             {
                 path: 'demos',
-                lazy: () => import('@/pages/demos'),
+                handle: {
+                    title: () => 'Demos',
+                },
+                children: [
+                    {
+                        path: 'single-page-form',
+                        lazy: () => import('@/pages/demos/single-page-form'),
+                    },
+                    {
+                        path: 'wizard',
+                        lazy: () => import('@/pages/demos/wizard'),
+                    },
+                ],
             },
         ],
     },
