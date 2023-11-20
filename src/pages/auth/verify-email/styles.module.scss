@@ -1,9 +1,9 @@
 .container {
-    display: grid;
-    place-items: center;
-    height: 100vh;
+	display: grid;
+	place-items: center;
+	height: 100vh;
 
-    > :first-child {
-        width: 455px;
-    }
+	> :first-child {
+		width: 455px;
+	}
 }

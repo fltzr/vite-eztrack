@@ -1,4 +1,4 @@
-import { AppState } from '@/common/store';
+import type { AppState } from '@/common/store';
 
 export const selectTheme = (state: AppState) => state.layout.theme;
 export const selectDensity = (state: AppState) => state.layout.density;

@@ -1,12 +1,13 @@
+/* eslint-disable react/no-multi-comp */
+import { type PropsWithChildren, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { PropsWithChildren, useState } from 'react';
-import TopNavigation from '@cloudscape-design/components/top-navigation';
 import { useNavigate } from 'react-router-dom';
-import styles from './styles.module.scss';
+import TopNavigation from '@cloudscape-design/components/top-navigation';
 import { SettingsModal } from '../settings-modal';
+import styles from './styles.module.scss';
 
 const HeaderPortal = ({ children }: PropsWithChildren) => {
-	const dom = document.getElementById('h');
+	const dom = document.querySelector('#h');
 
 	if (!dom) {
 		return null;
@@ -14,6 +15,7 @@ const HeaderPortal = ({ children }: PropsWithChildren) => {
 
 	return createPortal(children, dom);
 };
+
 export const Header = () => {
 	const [settingsOpen, setSettingsOpen] = useState(false);
 	const navigate = useNavigate();
@@ -35,13 +37,20 @@ export const Header = () => {
 							{
 								type: 'button',
 								iconName: 'settings',
-								onClick: () => setSettingsOpen(!settingsOpen),
+								onClick: () => {
+									setSettingsOpen(!settingsOpen);
+								},
 							},
 						]}
 					/>
 				</div>
 			</HeaderPortal>
-			<SettingsModal visible={settingsOpen} onDismiss={() => setSettingsOpen(false)} />
+			<SettingsModal
+				visible={settingsOpen}
+				onDismiss={() => {
+					setSettingsOpen(false);
+				}}
+			/>
 		</>
 	);
 };

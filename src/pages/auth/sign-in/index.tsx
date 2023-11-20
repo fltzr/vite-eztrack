@@ -1,80 +1,68 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
 import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { useAppDispatch, useAppSelector } from '@/common/hooks';
-import { SigninForm } from '@/common/components/signin-form';
-import { CreateAccountButton } from '@/common/components/create-account-button';
-import { signin } from '@/features/auth/slice';
+
+import { ChangeDensityButton } from '@/common/components/change-density-button';
+import { ChangeThemeButton } from '@/common/components/change-theme-button';
+import { Divider } from '@/common/components/divider';
 import { selectIsAuthenticated } from '@/features/auth/selectors';
+import { signin } from '@/features/auth/slice';
+import type { InferredSigninSchema } from '@/features/auth/types';
+import { setNavigationHidden, setToolsHidden } from '@/features/layout/slice';
+import { CreateAccountButton } from '@/pages/auth/components/create-account-button';
+import { SigninForm } from '@/pages/auth/components/signin-form';
+import { useAppDispatch, useAppSelector } from '@/common/hooks';
 
 import styles from './styles.module.scss';
-import { InferredSigninSchema } from '@/features/auth/types';
-import { Divider } from '@/common/components/divider';
-import Button from '@cloudscape-design/components/button';
-import { selectDensity, selectTheme } from '@/features/layout/selectors';
-import { Mode, applyMode } from '@cloudscape-design/global-styles';
-import { changeTheme, setTheme } from '@/features/layout/slice';
-
-const SET_NAVIGATION_HIDDEN = 'layout/setNavigationHidden';
-const SET_TOOLS_HIDDEN = 'layout/setToolsHidden';
 
 export const Component = () => {
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    const location = useLocation();
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+	const location = useLocation();
 
-    const from = location.state?.from?.pathname || '/';
-    const isAuthenticated = useAppSelector(selectIsAuthenticated);
+	const from = (location.state?.from?.pathname as string) || '/';
+	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
-    const theme = useAppSelector(selectTheme);
-    const density = useAppSelector(selectDensity);
+	useEffect(() => {
+		dispatch(setNavigationHidden(true));
+		dispatch(setToolsHidden(true));
+	}, [dispatch]);
 
-    useEffect(() => {
-        dispatch({ type: SET_NAVIGATION_HIDDEN, payload: true });
-        dispatch({ type: SET_TOOLS_HIDDEN, payload: true });
-    }, [dispatch]);
+	useEffect(() => {
+		if (isAuthenticated) {
+			navigate(from, { replace: true });
+		}
+	}, [from, isAuthenticated, navigate]);
 
-    useEffect(() => {
-        if (isAuthenticated) {
-            navigate(from, { replace: true });
-        }
-    }, [isAuthenticated, navigate]);
+	const handleSubmitLogin = async (data: InferredSigninSchema) => {
+		console.log(`[Auth] Sign-in: `, data);
+		try {
+			await dispatch(signin(data));
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
-    const handleSubmitLogin = async (data: InferredSigninSchema) => {
-        console.log(`[Auth] Sign-in: `, data);
-        dispatch(signin(data));
-    };
-
-    return (
-        <>
-            <div className={styles['auth-form']}>
-                <SpaceBetween size="xxl" direction="vertical">
-                    <Container header={<Header variant="h1">Sign in</Header>}>
-                        <SpaceBetween size="xxl" direction="vertical">
-                            <SigninForm handleSignin={handleSubmitLogin} />
-                            <Divider>New to eztrack?</Divider>
-                            <CreateAccountButton />
-                        </SpaceBetween>
-                    </Container>
-                    <Button
-                        variant="primary"
-                        iconName={
-                            theme === Mode.Light ? 'status-positive' : 'status-negative'
-                        }
-                        onClick={() => {
-                            if (theme === Mode.Light) {
-                                dispatch(changeTheme(Mode.Dark));
-                            } else {
-                                dispatch(changeTheme(Mode.Light));
-                            }
-                        }}
-                    >
-                        Theme
-                    </Button>
-                </SpaceBetween>
-            </div>
-        </>
-    );
+	return (
+		<div className={styles['auth-form']}>
+			<SpaceBetween size="xxl" direction="vertical">
+				<Container header={<Header variant="h1">Sign in</Header>}>
+					<SpaceBetween size="xxl" direction="vertical">
+						<SigninForm
+							handleSignin={(data) => void handleSubmitLogin(data)}
+						/>
+						<Divider>New to eztrack?</Divider>
+						<CreateAccountButton />
+					</SpaceBetween>
+				</Container>
+				<SpaceBetween size="m" direction="horizontal">
+					<ChangeThemeButton />
+					<ChangeDensityButton />
+				</SpaceBetween>
+			</SpaceBetween>
+		</div>
+	);
 };

@@ -1,33 +1,33 @@
+import type { PropsWithChildren } from 'react';
 import AppLayout from '@cloudscape-design/components/app-layout';
-import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import {
-    selectNavigationHidden,
-    selectNavigationOpen,
-    selectToolsHidden,
-    selectToolsOpen,
+	selectNavigationHidden,
+	selectNavigationOpen,
+	selectToolsHidden,
+	selectToolsOpen,
 } from '@/features/layout/selectors';
-import { PropsWithChildren } from 'react';
+import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { setNavigationOpen, setToolsOpen } from '../../slice';
 import { Navigation } from '../navigation';
 
 export const Shell = ({ children }: PropsWithChildren) => {
-    const dispatch = useAppDispatch();
-    const navigationOpen = useAppSelector(selectNavigationOpen);
-    const navigationHidden = useAppSelector(selectNavigationHidden);
-    const toolsOpen = useAppSelector(selectToolsOpen);
-    const toolsHidden = useAppSelector(selectToolsHidden);
+	const dispatch = useAppDispatch();
+	const navigationOpen = useAppSelector(selectNavigationOpen);
+	const navigationHidden = useAppSelector(selectNavigationHidden);
+	const toolsOpen = useAppSelector(selectToolsOpen);
+	const toolsHidden = useAppSelector(selectToolsHidden);
 
-    return (
-        <AppLayout
-            content={children}
-            headerSelector="#h"
-            navigation={<Navigation />}
-            navigationOpen={navigationOpen}
-            navigationHide={navigationHidden}
-            onNavigationChange={() => dispatch(setNavigationOpen(!navigationOpen))}
-            toolsOpen={toolsOpen}
-            toolsHide={toolsHidden}
-            onToolsChange={() => dispatch(setToolsOpen(!toolsOpen))}
-        />
-    );
+	return (
+		<AppLayout
+			content={children}
+			headerSelector="#h"
+			navigation={<Navigation />}
+			navigationOpen={navigationOpen}
+			navigationHide={navigationHidden}
+			toolsOpen={toolsOpen}
+			toolsHide={toolsHidden}
+			onNavigationChange={() => dispatch(setNavigationOpen(!navigationOpen))}
+			onToolsChange={() => dispatch(setToolsOpen(!toolsOpen))}
+		/>
+	);
 };

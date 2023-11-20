@@ -1,14 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { appListenerMiddleware } from './listener-middleware';
+import { logger } from './logger-middleware';
 import { reducers } from './root-reducer';
-import { logger } from './middleware';
-import { changeTheme } from '@/features/layout/slice';
 
 export const store = configureStore({
-    reducer: reducers,
-    middleware: (getDefaultMiddleware) =>
-        import.meta.env.PROD
-            ? getDefaultMiddleware()
-            : getDefaultMiddleware().concat(logger),
+	reducer: reducers,
+	middleware: (getDefaultMiddleware) =>
+		import.meta.env.PROD
+			? getDefaultMiddleware().prepend(appListenerMiddleware.middleware)
+			: getDefaultMiddleware()
+					.prepend(appListenerMiddleware.middleware)
+					.prepend(logger),
 });
 
 export type AppDispatch = typeof store.dispatch;

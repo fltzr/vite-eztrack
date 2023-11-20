@@ -1,4 +1,4 @@
-import { AppState } from '@/common/store';
+import type { AppState } from '@/common/store';
 
 export const selectUser = (state: AppState) => state.auth.user;
 export const selectToken = (state: AppState) => state.auth.token;

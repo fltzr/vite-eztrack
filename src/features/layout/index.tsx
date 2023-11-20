@@ -1,17 +1,17 @@
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 import { Header } from './components/header';
 import { Shell } from './components/shell';
-import { useRouteTitle } from './hooks/useRouteTitle';
 import { useActiveHref } from './hooks/useActiveHref';
+import { useRouteTitle } from './hooks/useRouteTitle';
 
 export const Layout = ({ children }: PropsWithChildren) => {
-    useRouteTitle();
-    useActiveHref();
+	useRouteTitle();
+	useActiveHref();
 
-    return (
-        <>
-            <Header />
-            <Shell children={children} />
-        </>
-    );
+	return (
+		<>
+			<Header />
+			<Shell>{children}</Shell>
+		</>
+	);
 };

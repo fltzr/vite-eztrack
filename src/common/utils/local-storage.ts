@@ -8,8 +8,10 @@ export const remove = (key: string): void => {
 
 export const load = <T>(key: string): T | null => {
 	const value = localStorage.getItem(key);
+
 	if (!value) {
 		return null;
 	}
+
 	return JSON.parse(value) as T;
 };
