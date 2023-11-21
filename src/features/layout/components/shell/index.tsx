@@ -5,9 +5,9 @@ import {
 	selectNavigationOpen,
 	selectToolsHidden,
 	selectToolsOpen,
-} from '@/features/layout/selectors';
+} from '@/features/layout/state/selectors';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
-import { setNavigationOpen, setToolsOpen } from '../../slice';
+import { setNavigationOpen, setToolsOpen } from '../../state/slice';
 import { Navigation } from '../navigation';
 
 export const Shell = ({ children }: PropsWithChildren) => {

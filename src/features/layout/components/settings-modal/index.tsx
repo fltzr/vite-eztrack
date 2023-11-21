@@ -4,8 +4,8 @@ import Header from '@cloudscape-design/components/header';
 import Modal from '@cloudscape-design/components/modal';
 import Select, { type SelectProps } from '@cloudscape-design/components/select';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { selectDensity, selectTheme } from '@/features/layout/selectors';
-import { setDensity, setTheme } from '@/features/layout/slice';
+import { selectDensity, selectTheme } from '@/features/layout/state/selectors';
+import { setDensity, setTheme } from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 
 const themeOptions: SelectProps.Option[] = [

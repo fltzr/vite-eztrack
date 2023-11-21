@@ -1,7 +1,7 @@
 import { Density } from '@cloudscape-design/global-styles';
 import Button from '@cloudscape-design/components/button';
-import { selectDensity } from '@/features/layout/selectors';
-import { setDensity } from '@/features/layout/slice';
+import { selectDensity } from '@/features/layout/state/selectors';
+import { setDensity } from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 
 export const ChangeDensityButton = () => {

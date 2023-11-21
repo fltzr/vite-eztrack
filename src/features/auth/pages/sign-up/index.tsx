@@ -10,11 +10,14 @@ import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 
 import { Divider } from '@/common/components/divider';
-import { selectSignupError, selectIsAuthenticated } from '@/features/auth/selectors';
-import { signup } from '@/features/auth/slice';
+import { SignupForm } from '@/features/auth/components/signup-form';
+import {
+	selectSignupError,
+	selectIsAuthenticated,
+} from '@/features/auth/state/selectors';
+import { signup } from '@/features/auth/state/slice';
 import type { InferredSignupSchema } from '@/features/auth/types';
-import { setNavigationHidden, setToolsHidden } from '@/features/layout/slice';
-import { SignupForm } from '@/pages/auth/components/signup-form';
+import { setNavigationHidden, setToolsHidden } from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 
 import styles from './styles.module.scss';

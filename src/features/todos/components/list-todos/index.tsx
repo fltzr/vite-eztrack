@@ -5,13 +5,13 @@ import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Cards from '@cloudscape-design/components/cards';
 import Header from '@cloudscape-design/components/header';
-import { selectTodos, selectTodosLoading } from '@/features/todos/selectors';
+import { selectTodos, selectTodosLoading } from '@/features/todos/state/selectors';
 import {
 	deleteTodo,
 	fetchTodos,
 	updateTodo,
 	type TodoItem,
-} from '@/features/todos/slice';
+} from '@/features/todos/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { AddTodo } from '../add-todo';
 

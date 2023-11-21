@@ -8,7 +8,7 @@ export const routes: RouteObject[] = [
 		children: [
 			{
 				index: true,
-				lazy: () => import('@/pages/home'),
+				lazy: () => import('@/features/home/pages'),
 			},
 			{
 				path: 'demos',
@@ -18,11 +18,11 @@ export const routes: RouteObject[] = [
 				children: [
 					{
 						path: 'single-page-form',
-						lazy: () => import('@/pages/demos/single-page-form'),
+						lazy: () => import('@/features/demos/pages/single-page-form'),
 					},
 					{
 						path: 'wizard',
-						lazy: () => import('@/pages/demos/wizard'),
+						lazy: () => import('@/features/demos/pages/wizard'),
 					},
 				],
 			},
@@ -31,7 +31,7 @@ export const routes: RouteObject[] = [
 				handle: {
 					title: () => 'Todos',
 				},
-				lazy: () => import('@/pages/todos'),
+				lazy: () => import('@/features/todos/pages'),
 			},
 		],
 	},
@@ -40,15 +40,15 @@ export const routes: RouteObject[] = [
 		children: [
 			{
 				path: 'signin',
-				lazy: () => import('@/pages/auth/sign-in'),
+				lazy: () => import('@/features/auth/pages/sign-in'),
 			},
 			{
 				path: 'signup',
-				lazy: () => import('@/pages/auth/sign-up'),
+				lazy: () => import('@/features/auth/pages/sign-up'),
 			},
 			{
 				path: 'verify',
-				lazy: () => import('@/pages/auth/verify-email'),
+				lazy: () => import('@/features/auth/pages/verify-email'),
 			},
 		],
 	},

@@ -4,7 +4,10 @@ import Button from '@cloudscape-design/components/button';
 import Form from '@cloudscape-design/components/form';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { FormInput } from '@/common/components/form/input';
-import { selectSigninError, selectIsAuthenticating } from '@/features/auth/selectors';
+import {
+	selectSigninError,
+	selectIsAuthenticating,
+} from '@/features/auth/state/selectors';
 import { type InferredSigninSchema, signinSchema } from '@/features/auth/types';
 import { useAppSelector } from '@/common/hooks';
 

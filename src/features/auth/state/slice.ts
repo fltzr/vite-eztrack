@@ -1,10 +1,10 @@
 import { type PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
-import PockerBase, { type AuthModel } from 'pocketbase';
-import type { InferredSigninSchema, InferredSignupSchema } from './types';
+import pocketbase, { type AuthModel } from 'pocketbase';
+import type { InferredSigninSchema, InferredSignupSchema } from '../types';
 
 type User = AuthModel;
-const pb = new PockerBase(import.meta.env.VITE_API_URI);
+const pb = new pocketbase(import.meta.env.VITE_API_URI);
 
 export interface AuthState {
 	user: User | null;
@@ -30,8 +30,9 @@ const getInitialState = (): AuthState => {
 };
 
 const extractErrorMessage = (error: unknown): string => {
-	if (error instanceof AxiosError && error.response) {
-		return error.response.data.message || 'An error occured.';
+	if (error instanceof AxiosError && error.response?.data) {
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain, @typescript-eslint/no-unsafe-member-access
+		return (error.response.data?.message! as string) || 'An error occured.';
 	}
 
 	return 'An error occured.';

@@ -7,7 +7,7 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 import { FormDatePicker } from '@/common/components/form/date-picker';
 import { FormInput } from '@/common/components/form/input';
 import { FormTextarea } from '@/common/components/form/text-area';
-import { type TodoItem, addTodo } from '@/features/todos/slice';
+import { type TodoItem, addTodo } from '@/features/todos/state/slice';
 import { useAppDispatch } from '@/common/hooks';
 
 interface AddTodoProps {

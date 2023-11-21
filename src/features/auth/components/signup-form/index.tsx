@@ -8,7 +8,10 @@ import { FormDatePicker } from '@/common/components/form/date-picker';
 import { FormInput } from '@/common/components/form/input';
 import { FormSelect } from '@/common/components/form/select';
 import { useAppSelector } from '@/common/hooks/use-app-selector';
-import { selectSignupError, selectIsAuthenticating } from '@/features/auth/selectors';
+import {
+	selectSignupError,
+	selectIsAuthenticating,
+} from '@/features/auth/state/selectors';
 import { type InferredSignupSchema, signupSchema } from '@/features/auth/types';
 
 export const SignupForm = ({

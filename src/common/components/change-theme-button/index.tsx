@@ -1,7 +1,7 @@
 import { Mode } from '@cloudscape-design/global-styles';
 import Button from '@cloudscape-design/components/button';
-import { selectTheme } from '@/features/layout/selectors';
-import { setTheme } from '@/features/layout/slice';
+import { selectTheme } from '@/features/layout/state/selectors';
+import { setTheme } from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 
 export const ChangeThemeButton = () => {

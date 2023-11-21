@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useMatches } from 'react-router-dom';
 import { useAppDispatch } from '@/common/hooks';
-import { setDomainTitle } from '../slice';
+import { setDomainTitle } from '../state/slice';
 
 interface Handle {
 	title: () => string;
