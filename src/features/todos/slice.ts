@@ -26,12 +26,6 @@ const initialState: TodoState = {
 const isAuthenticated = () => {
 	const user = client.authStore.model;
 
-	console.log(`[Todo]: (fetchTodos) authStore.isValid: `, client.authStore.isValid);
-	console.log(
-		`[Todo]: (fetchTodos) authStore.isAuthRecord: `,
-		client.authStore.isAuthRecord,
-	);
-
 	if (
 		!client.authStore.isValid ||
 		!client.authStore.isAuthRecord ||
@@ -58,8 +52,6 @@ export const addTodo = createAsyncThunk('todo/addTodo', async (todo: TodoItem) =
 	const user = client.authStore.model;
 
 	isAuthenticated();
-
-	console.log('addTodo');
 
 	const response = await client.collection('todos').create<TodoItem>({
 		...todo,
@@ -110,7 +102,7 @@ const todoSlice = createSlice({
 					(todo) => todo.id === action.payload.id,
 				);
 
-				if (index === -1) {
+				if (index !== -1) {
 					state.todos[index] = action.payload;
 				}
 			})
