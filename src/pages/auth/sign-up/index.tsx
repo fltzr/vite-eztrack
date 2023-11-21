@@ -49,7 +49,6 @@ export const Component = () => {
 	const handleSubmitSignup: SubmitHandler<InferredSignupSchema> = async (
 		data: InferredSignupSchema,
 	) => {
-		console.log(`[Auth] Sign-up: `, data);
 		try {
 			await dispatch(signup(data));
 		} catch (error) {

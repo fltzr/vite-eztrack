@@ -92,7 +92,6 @@ export const layoutReducer = layoutSlice.reducer;
 startAppListening({
 	actionCreator: setTheme,
 	effect: (action) => {
-		console.log(action);
 		save<Theme>('theme', action.payload);
 		applyTheme(action.payload);
 	},
@@ -101,7 +100,6 @@ startAppListening({
 startAppListening({
 	actionCreator: setDensity,
 	effect: (action) => {
-		console.log(action);
 		save<Density>('density', action.payload);
 		applyDensity(action.payload);
 	},

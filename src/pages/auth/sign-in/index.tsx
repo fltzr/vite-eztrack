@@ -38,7 +38,6 @@ export const Component = () => {
 	}, [from, isAuthenticated, navigate]);
 
 	const handleSubmitLogin = async (data: InferredSigninSchema) => {
-		console.log(`[Auth] Sign-in: `, data);
 		try {
 			await dispatch(signin(data));
 		} catch (error) {

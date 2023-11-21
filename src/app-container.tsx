@@ -5,8 +5,6 @@ import { useAppSelector } from '@/common/hooks';
 import { Layout } from '@/features/layout';
 
 export const AppContainer = () => {
-	console.log(`AppContainer re-render`);
-
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 	const location = useLocation();
 
