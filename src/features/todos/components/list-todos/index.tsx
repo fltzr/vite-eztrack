@@ -74,7 +74,7 @@ export const ListTodos = () => {
 				trackBy="id"
 				loading={loadingTodos}
 				loadingText="Fetching Todos..."
-				cardsPerRow={[{ cards: 1 }]}
+				cardsPerRow={[{ cards: 3 }]}
 				empty={
 					loadingTodos ? null : <Box variant="span">{"Let's add a task!"}</Box>
 				}

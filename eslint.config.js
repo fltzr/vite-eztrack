@@ -22,6 +22,7 @@ export default defineFlatConfig([
 			'no-console': 'off',
 			'no-param-reassign': 'off',
 			'no-void': 'off',
+			'@typescript-eslint/consistent-type-definitions': ['error', 'type'],
 			'@typescript-eslint/explicit-module-boundary-types': 'off',
 			'react/jsx-props-no-spreading': 'off',
 			'import/no-named-as-default': 'off',

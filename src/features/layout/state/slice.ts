@@ -6,20 +6,23 @@ import {
 } from '@cloudscape-design/global-styles';
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import type { BreadcrumbGroupProps } from '@cloudscape-design/components/breadcrumb-group';
+import type { FlashbarProps } from '@cloudscape-design/components/flashbar';
 import { startAppListening } from '@/common/store/listener-middleware';
 import { load, save } from '@/common/utils';
 
-export interface LayoutState {
+export type LayoutState = {
 	theme: Theme;
 	density: Density;
 	domainTitle: string;
 	activeHref: string;
 	breadcrumbs: BreadcrumbGroupProps.Item[];
+	stickyNotifications?: boolean;
+	notifications?: FlashbarProps.MessageDefinition[];
 	navigationOpen: boolean;
 	navigationHidden: boolean;
 	toolsOpen: boolean;
 	toolsHidden: boolean;
-}
+};
 
 const getInitialState = (): LayoutState => {
 	const theme = load<Theme>('theme') ?? Theme.Light;
@@ -34,6 +37,8 @@ const getInitialState = (): LayoutState => {
 		domainTitle: '',
 		activeHref: '/',
 		breadcrumbs: [],
+		stickyNotifications: false,
+		notifications: [],
 		navigationOpen: false,
 		navigationHidden: false,
 		toolsOpen: false,
@@ -60,6 +65,17 @@ const layoutSlice = createSlice({
 		setBreadcrumbs: (state, action: PayloadAction<BreadcrumbGroupProps.Item[]>) => {
 			state.breadcrumbs = action.payload;
 		},
+		addNotification: (
+			state,
+			action: PayloadAction<FlashbarProps.MessageDefinition>,
+		) => {
+			state.notifications?.push(action.payload);
+		},
+		removeNotification: (state, action: PayloadAction<string>) => {
+			state.notifications = state.notifications?.filter(
+				(notification) => notification.id !== action.payload,
+			);
+		},
 		setNavigationOpen: (state, action: PayloadAction<boolean>) => {
 			state.navigationOpen = action.payload;
 		},
@@ -81,6 +97,8 @@ export const {
 	setDomainTitle,
 	setActiveHref,
 	setBreadcrumbs,
+	addNotification,
+	removeNotification,
 	setNavigationOpen,
 	setNavigationHidden,
 	setToolsOpen,

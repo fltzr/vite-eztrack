@@ -6,14 +6,14 @@ import type { InferredSigninSchema, InferredSignupSchema } from '../types';
 type User = AuthModel;
 const pb = new pocketbase(import.meta.env.VITE_API_URI);
 
-export interface AuthState {
+export type AuthState = {
 	user: User | null;
 	token: string | null;
 	isAuthenticated: boolean;
 	isAuthenticating: boolean;
 	signinError: string | null;
 	signupError: string | null;
-}
+};
 
 const getInitialState = (): AuthState => {
 	const user = pb.authStore.model;
