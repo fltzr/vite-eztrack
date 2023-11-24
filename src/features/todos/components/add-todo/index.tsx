@@ -1,4 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Form from '@cloudscape-design/components/form';
@@ -6,11 +8,21 @@ import Header from '@cloudscape-design/components/header';
 import Modal from '@cloudscape-design/components/modal';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { FormDatePicker } from '@/common/components/form/date-picker';
+import { FormFileUpload } from '@/common/components/form/file-upload';
 import { FormInput } from '@/common/components/form/input';
 import { FormTextarea } from '@/common/components/form/text-area';
 import { addNotification } from '@/features/layout/state/slice';
-import { type TodoItem, addTodo } from '@/features/todos/state/slice';
+import { addTodo } from '@/features/todos/state/slice';
 import { useAppDispatch } from '@/common/hooks';
+
+const todoSchema = z.object({
+	title: z.string().min(1, 'Title is required.'),
+	description: z.string().optional(),
+	dueDate: z.string().optional(),
+	documents: z.array(z.instanceof(File)).optional(),
+});
+
+type InferredTodoSchema = z.infer<typeof todoSchema>;
 
 type AddTodoProps = {
 	isVisible: boolean;
@@ -19,9 +31,12 @@ type AddTodoProps = {
 
 export const AddTodo = ({ isVisible, setIsVisible }: AddTodoProps) => {
 	const dispatch = useAppDispatch();
-	const methods = useForm<TodoItem>();
+	const methods = useForm<InferredTodoSchema>({
+		resolver: zodResolver(todoSchema),
+	});
 
-	const handleAddTodo = async (data: Partial<TodoItem>) => {
+	const handleAddTodo = async (data: Partial<InferredTodoSchema>) => {
+		console.log(data);
 		try {
 			await dispatch(addTodo(data));
 			methods.reset();
@@ -33,6 +48,7 @@ export const AddTodo = ({ isVisible, setIsVisible }: AddTodoProps) => {
 				}),
 			);
 		} catch (error) {
+			console.log(error);
 			dispatch(
 				addNotification({
 					id: `notification-${Date.now()}`,
@@ -73,21 +89,25 @@ export const AddTodo = ({ isVisible, setIsVisible }: AddTodoProps) => {
 								}}
 							>
 								<SpaceBetween size="m">
-									<FormInput<TodoItem>
+									<FormInput<InferredTodoSchema>
 										spellcheck
 										name="title"
 										label="Title *"
 										autoComplete={false}
 									/>
-									<FormTextarea<TodoItem>
+									<FormTextarea<InferredTodoSchema>
 										spellcheck
 										name="description"
 										label="Description"
 									/>
-									<FormDatePicker<TodoItem>
+									<FormDatePicker<InferredTodoSchema>
 										name="dueDate"
 										label="Due date"
 										placeholder="YYYY/MM/DD"
+									/>
+									<FormFileUpload<InferredTodoSchema>
+										name="documents"
+										accept="application/pdf text/csv text/plain"
 									/>
 								</SpaceBetween>
 							</form>

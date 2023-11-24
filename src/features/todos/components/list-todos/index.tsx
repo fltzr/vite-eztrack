@@ -5,6 +5,7 @@ import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Cards from '@cloudscape-design/components/cards';
 import Header from '@cloudscape-design/components/header';
+import TextFilter from '@cloudscape-design/components/text-filter';
 import { selectTodos, selectTodosLoading } from '@/features/todos/state/selectors';
 import {
 	deleteTodo,
@@ -34,7 +35,9 @@ export const ListTodos = () => {
 				info={
 					<Button
 						variant="icon"
-						iconName={item.completed ? 'status-positive' : 'status-negative'}
+						iconName={
+							item.completed ? 'status-positive' : 'status-in-progress'
+						}
 						onClick={() => {
 							void dispatch(
 								updateTodo({ ...item, completed: !item.completed }),
@@ -75,6 +78,12 @@ export const ListTodos = () => {
 				loading={loadingTodos}
 				loadingText="Fetching Todos..."
 				cardsPerRow={[{ cards: 3 }]}
+				filter={
+					<TextFilter
+						filteringPlaceholder="Filter todo items"
+						filteringText={''}
+					/>
+				}
 				empty={
 					loadingTodos ? null : <Box variant="span">{"Let's add a task!"}</Box>
 				}

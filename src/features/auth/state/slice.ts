@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { type PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import pocketbase, { type AuthModel } from 'pocketbase';
 import type { InferredSigninSchema, InferredSignupSchema } from '../types';
 
 type User = AuthModel;
-const pb = new pocketbase(import.meta.env.VITE_API_URI);
+const pb = new pocketbase(import.meta.env.VITE_PB_URI);
 
 export type AuthState = {
 	user: User | null;
@@ -31,8 +32,7 @@ const getInitialState = (): AuthState => {
 
 const extractErrorMessage = (error: unknown): string => {
 	if (error instanceof AxiosError && error.response?.data) {
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-non-null-asserted-optional-chain, @typescript-eslint/no-unsafe-member-access
-		return (error.response.data?.message! as string) || 'An error occured.';
+		return (error.response.data as string) || 'An error occured.';
 	}
 
 	return 'An error occured.';
@@ -42,9 +42,6 @@ export const signin = createAsyncThunk(
 	'auth/signin',
 	async (credentials: InferredSigninSchema, { rejectWithValue }) => {
 		try {
-			// const response = await axios.post(SIGNIN, credentials);
-			// save<string>('auth', response.data.token);
-			// save<User>('user', response.data.record);
 			const response = await pb
 				.collection('users')
 				.authWithPassword(credentials.identity, credentials.password);

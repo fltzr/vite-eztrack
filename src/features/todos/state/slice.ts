@@ -11,6 +11,7 @@ export type TodoItem = {
 	description?: string;
 	dueDate?: string;
 	completed?: boolean;
+	documents?: File[];
 };
 
 export type TodoState = {
@@ -74,6 +75,8 @@ export const addTodo = createAsyncThunk(
 					content: 'Failed to add task.',
 				}),
 			);
+
+			throw new Error('Error adding todo!');
 		}
 	},
 );
@@ -93,7 +96,7 @@ export const updateTodo = createAsyncThunk(
 			dispatch(
 				addNotification({
 					id: `notification-${Date.now()}`,
-					type: 'info',
+					type: 'success',
 					content: 'Successfully updated task!',
 				}),
 			);
@@ -107,6 +110,7 @@ export const updateTodo = createAsyncThunk(
 					content: 'Failed to update task.',
 				}),
 			);
+			throw new Error('Unabled to update todo!');
 		}
 	},
 );
@@ -148,7 +152,7 @@ const todoSlice = createSlice({
 				state.error = action.error.message;
 			})
 			.addCase(addTodo.fulfilled, (state, action: PayloadAction<TodoItem>) => {
-				state.todos.push(action.payload);
+				state.todos = [...state.todos, action.payload];
 			})
 			.addCase(updateTodo.fulfilled, (state, action: PayloadAction<TodoItem>) => {
 				const index = state.todos.findIndex(

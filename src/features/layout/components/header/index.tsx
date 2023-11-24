@@ -3,6 +3,8 @@ import { type PropsWithChildren, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import TopNavigation from '@cloudscape-design/components/top-navigation';
+import { selectUser } from '@/features/auth/state/selectors';
+import { useAppSelector } from '@/common/hooks';
 import { SettingsModal } from '../settings-modal';
 import styles from './styles.module.scss';
 
@@ -19,6 +21,8 @@ const HeaderPortal = ({ children }: PropsWithChildren) => {
 export const Header = () => {
 	const [settingsOpen, setSettingsOpen] = useState(false);
 	const navigate = useNavigate();
+
+	const user = useAppSelector(selectUser);
 
 	return (
 		<>
@@ -40,6 +44,11 @@ export const Header = () => {
 								onClick: () => {
 									setSettingsOpen(!settingsOpen);
 								},
+							},
+							{
+								type: 'menu-dropdown',
+								text: `Howdy, ${user?.firstname}!`,
+								items: [],
 							},
 						]}
 					/>
