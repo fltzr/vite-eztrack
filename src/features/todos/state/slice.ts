@@ -73,6 +73,7 @@ export const addTodo = createAsyncThunk(
 
 			dispatch(
 				addNotification({
+					autoDismiss: true,
 					id: `notification-${Date.now()}`,
 					type: 'success',
 					content: 'Successfully added task!',
@@ -102,6 +103,7 @@ export const updateTodo = createAsyncThunk(
 
 			dispatch(
 				addNotification({
+					autoDismiss: true,
 					id: `notification-${Date.now()}`,
 					type: 'success',
 					content: 'Successfully updated task!',
@@ -126,6 +128,7 @@ export const deleteTodo = createAsyncThunk(
 
 		dispatch(
 			addNotification({
+				autoDismiss: true,
 				id: `notification-${Date.now()}`,
 				type: 'info',
 				content: 'Successfully deleted task.',

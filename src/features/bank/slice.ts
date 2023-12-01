@@ -75,6 +75,7 @@ export const exchangePublicToken = createAsyncThunk(
 
 			dispatch(
 				addNotification({
+					autoDismiss: true,
 					id: 'PLAID_TOKEN_EXCHANGE_SUCCESS',
 					header: 'Successfully linked your account. Setting up...',
 				}),
@@ -84,6 +85,7 @@ export const exchangePublicToken = createAsyncThunk(
 		} catch (error) {
 			dispatch(
 				addNotification({
+					autoDismiss: true,
 					id: 'PLAID_TOKEN_EXCHANGE_FAILED',
 					header: 'Failed to link bank account. Please try again later.',
 					content: `Error: PLAID_TOKEN_EXCHANGE_FAILED`,

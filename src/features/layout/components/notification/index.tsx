@@ -1,3 +1,4 @@
+import { useCallback, useEffect } from 'react';
 import Flashbar from '@cloudscape-design/components/flashbar';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { selectNotifications } from '../../state/selectors';
@@ -7,9 +8,28 @@ export const Notification = () => {
 	const dispatch = useAppDispatch();
 	const notifications = useAppSelector(selectNotifications);
 
-	const handleDismiss = (id: string) => {
-		dispatch(removeNotification(id));
-	};
+	const handleDismiss = useCallback(
+		(id: string) => {
+			dispatch(removeNotification(id));
+		},
+		[dispatch],
+	);
+
+	useEffect(() => {
+		const timers = notifications
+			?.filter((noti) => noti.autoDismiss)
+			.map((noti) =>
+				setTimeout(() => {
+					handleDismiss(noti.id ?? '');
+				}, 5000),
+			);
+
+		return () => {
+			timers?.forEach((timer) => {
+				clearTimeout(timer);
+			});
+		};
+	}, [notifications, handleDismiss]);
 
 	return (
 		<Flashbar

@@ -10,6 +10,8 @@ import type { FlashbarProps } from '@cloudscape-design/components/flashbar';
 import { startAppListening } from '@/common/store/listener-middleware';
 import { load, save } from '@/common/utils';
 
+type Notification = FlashbarProps.MessageDefinition & { autoDismiss?: boolean };
+
 export type LayoutState = {
 	theme: Theme;
 	density: Density;
@@ -17,7 +19,7 @@ export type LayoutState = {
 	activeHref: string;
 	breadcrumbs: BreadcrumbGroupProps.Item[];
 	stickyNotifications?: boolean;
-	notifications?: FlashbarProps.MessageDefinition[];
+	notifications?: Notification[];
 	navigationOpen: boolean;
 	navigationHidden: boolean;
 	toolsOpen: boolean;
@@ -65,10 +67,7 @@ const layoutSlice = createSlice({
 		setBreadcrumbs: (state, action: PayloadAction<BreadcrumbGroupProps.Item[]>) => {
 			state.breadcrumbs = action.payload;
 		},
-		addNotification: (
-			state,
-			action: PayloadAction<FlashbarProps.MessageDefinition>,
-		) => {
+		addNotification: (state, action: PayloadAction<Notification>) => {
 			state.notifications?.push(action.payload);
 		},
 		removeNotification: (state, action: PayloadAction<string>) => {

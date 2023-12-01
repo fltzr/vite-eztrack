@@ -14,6 +14,7 @@ export const handleThunkError = (
 
 	dispatch(
 		addNotification({
+			autoDismiss: true,
 			id: `notification-${Date.now()}`,
 			type: errorType,
 			header: 'Operation failed.',
