@@ -21,6 +21,18 @@ export const Navigation = () => {
 			}
 			items={[
 				{
+					type: 'link',
+					text: 'Todos',
+					href: '/todos',
+				},
+				{ type: 'divider' },
+				{
+					type: 'section',
+					text: 'Banks',
+					items: [{ type: 'link', text: 'Accounts', href: '/banks' }],
+				},
+				{ type: 'divider' },
+				{
 					type: 'section',
 					text: 'Demos',
 					items: [
@@ -35,18 +47,6 @@ export const Navigation = () => {
 							href: '/demos/wizard',
 						},
 					],
-				},
-				{ type: 'divider' },
-				{
-					type: 'link',
-					text: 'Todos',
-					href: '/todos',
-				},
-				{ type: 'divider' },
-				{
-					type: 'section',
-					text: 'Banks',
-					items: [{ type: 'link', text: 'Accounts', href: '/banks' }],
 				},
 			]}
 			onFollow={(event) => {

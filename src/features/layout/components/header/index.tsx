@@ -51,20 +51,9 @@ export const Header = () => {
 								iconName: 'user-profile-active',
 								items: [
 									{
-										id: 'dropdown-1',
-										text: 'Dropdown 1',
-										items: [
-											{
-												id: 'dropdown-1-sub-1',
-												text: 'Dropdown 1 Sub 1',
-												href: '/',
-											},
-											{
-												id: 'dropdown-1-sub-2',
-												text: 'Dropdown 1 Sub 2',
-												href: '/',
-											},
-										],
+										id: 'account',
+										text: 'Account',
+										href: '/account',
 									},
 									{
 										id: 'dropdown-2',
@@ -77,6 +66,12 @@ export const Header = () => {
 										href: '/',
 									},
 								],
+								onItemFollow: (event) => {
+									event.preventDefault();
+									if (!event.detail.external) {
+										navigate(event.detail.href as string);
+									}
+								},
 							},
 						]}
 					/>

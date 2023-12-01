@@ -11,6 +11,18 @@ export const routes: RouteObject[] = [
 				lazy: () => import('@/features/home/pages'),
 			},
 			{
+				path: 'account',
+				handle: {
+					title: () => 'Account',
+				},
+				children: [
+					{
+						index: true,
+						lazy: () => import('@/features/auth/pages/profile'),
+					},
+				],
+			},
+			{
 				path: 'demos',
 				handle: {
 					title: () => 'Demos',
