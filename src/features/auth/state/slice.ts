@@ -57,7 +57,7 @@ export const signup = createAsyncThunk(
 	'auth/signup',
 	async (credentials: InferredSignupSchema, { dispatch, rejectWithValue }) => {
 		try {
-			await pb.collection('user').create(credentials);
+			await pb.collection('users').create(credentials);
 
 			const signinCredentials: InferredSigninSchema = {
 				identity: credentials.email,

@@ -48,7 +48,35 @@ export const Header = () => {
 							{
 								type: 'menu-dropdown',
 								text: `Howdy, ${user?.firstname}!`,
-								items: [],
+								iconName: 'user-profile-active',
+								items: [
+									{
+										id: 'dropdown-1',
+										text: 'Dropdown 1',
+										items: [
+											{
+												id: 'dropdown-1-sub-1',
+												text: 'Dropdown 1 Sub 1',
+												href: '/',
+											},
+											{
+												id: 'dropdown-1-sub-2',
+												text: 'Dropdown 1 Sub 2',
+												href: '/',
+											},
+										],
+									},
+									{
+										id: 'dropdown-2',
+										text: 'Dropdown 2',
+										href: '/',
+									},
+									{
+										id: 'dropdown-3',
+										text: 'Dropdown 3',
+										href: '/',
+									},
+								],
 							},
 						]}
 					/>

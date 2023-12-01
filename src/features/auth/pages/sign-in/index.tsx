@@ -5,15 +5,19 @@ import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 
-import { ChangeDensityButton } from '@/common/components/change-density-button';
-import { ChangeThemeButton } from '@/common/components/change-theme-button';
 import { Divider } from '@/common/components/divider';
+import { CreateAccountButton } from '@/features/auth/components/create-account-button';
+import { SigninForm } from '@/features/auth/components/signin-form';
 import { selectIsAuthenticated } from '@/features/auth/state/selectors';
 import { signin } from '@/features/auth/state/slice';
 import type { InferredSigninSchema } from '@/features/auth/types';
-import { setNavigationHidden, setToolsHidden } from '@/features/layout/state/slice';
-import { CreateAccountButton } from '@/pages/auth/components/create-account-button';
-import { SigninForm } from '@/pages/auth/components/signin-form';
+import { ChangeDensityButton } from '@/features/layout/components/change-density-button';
+import { ChangeThemeButton } from '@/features/layout/components/change-theme-button';
+import {
+	addNotification,
+	setNavigationHidden,
+	setToolsHidden,
+} from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 
 import styles from './styles.module.scss';
@@ -23,6 +27,7 @@ export const Component = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 	const from = (location.state?.from?.pathname as string) || '/';
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
@@ -41,7 +46,13 @@ export const Component = () => {
 		try {
 			await dispatch(signin(data));
 		} catch (error) {
-			console.log(error);
+			dispatch(
+				addNotification({
+					id: `notification-${Date.now()}`,
+					type: 'error',
+					content: 'Failed to sign in. Please try again.',
+				}),
+			);
 		}
 	};
 

@@ -9,7 +9,7 @@ const theme = {
 	tokens: {
 		borderRadiusAlert: '0px',
 		borderRadiusBadge: '0px',
-		borderRadiusButton: '0.5rem',
+		borderRadiusButton: '0px',
 		borderRadiusCalendarDayFocusRing: '0px',
 		borderRadiusContainer: '0px',
 		borderRadiusControlCircularFocusRing: '0px',

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const signinSchema = z.object({
-	identity: z.string().min(3, 'Username is required.').max(10),
+	identity: z.string().min(3, 'Username is required.'),
 	password: z.string().min(8, 'Please enter a valid password.').max(20),
 });
 

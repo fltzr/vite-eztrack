@@ -27,6 +27,22 @@ export const routes: RouteObject[] = [
 				],
 			},
 			{
+				path: 'banks',
+				handle: {
+					title: () => 'Banks',
+				},
+				children: [
+					{
+						index: true,
+						lazy: () => import('@/features/bank/pages/connected-accounts'),
+					},
+					{
+						path: 'link',
+						lazy: () => import('@/features/bank/pages/link'),
+					},
+				],
+			},
+			{
 				path: 'todos',
 				handle: {
 					title: () => 'Todos',

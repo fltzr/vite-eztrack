@@ -31,7 +31,9 @@ export const SignupForm = ({
 			<FormProvider {...methods}>
 				<form
 					id="signup-form"
-					onSubmit={void methods.handleSubmit(handleSubmitSignup)}
+					onSubmit={(event) => {
+						void methods.handleSubmit(handleSubmitSignup)(event);
+					}}
 				>
 					<Form
 						errorText={

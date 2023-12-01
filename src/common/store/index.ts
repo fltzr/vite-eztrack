@@ -6,11 +6,7 @@ import { reducers } from './root-reducer';
 export const store = configureStore({
 	reducer: reducers,
 	middleware: (getDefaultMiddleware) =>
-		import.meta.env.PROD
-			? getDefaultMiddleware().prepend(appListenerMiddleware.middleware)
-			: getDefaultMiddleware()
-					.prepend(appListenerMiddleware.middleware)
-					.prepend(logger),
+		getDefaultMiddleware().prepend(appListenerMiddleware.middleware).prepend(logger),
 });
 
 export type AppDispatch = typeof store.dispatch;

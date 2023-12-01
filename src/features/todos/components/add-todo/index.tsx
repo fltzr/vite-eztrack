@@ -36,19 +36,10 @@ export const AddTodo = ({ isVisible, setIsVisible }: AddTodoProps) => {
 	});
 
 	const handleAddTodo = async (data: Partial<InferredTodoSchema>) => {
-		console.log(data);
 		try {
 			await dispatch(addTodo(data));
 			methods.reset();
-			dispatch(
-				addNotification({
-					id: `notification-${Date.now()}`,
-					type: 'success',
-					content: 'Successfully added task!',
-				}),
-			);
 		} catch (error) {
-			console.log(error);
 			dispatch(
 				addNotification({
 					id: `notification-${Date.now()}`,

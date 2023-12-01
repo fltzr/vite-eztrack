@@ -17,7 +17,11 @@ import {
 } from '@/features/auth/state/selectors';
 import { signup } from '@/features/auth/state/slice';
 import type { InferredSignupSchema } from '@/features/auth/types';
-import { setNavigationHidden, setToolsHidden } from '@/features/layout/state/slice';
+import {
+	addNotification,
+	setNavigationHidden,
+	setToolsHidden,
+} from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 
 import styles from './styles.module.scss';
@@ -45,17 +49,22 @@ export const Component = () => {
 		navigate(from, { replace: true });
 	}, [location.state?.from, isAuthenticated, navigate]);
 
-	useEffect(() => {
-		console.log(`serverError: `, serverError);
-	}, [serverError]);
-
 	const handleSubmitSignup: SubmitHandler<InferredSignupSchema> = async (
 		data: InferredSignupSchema,
 	) => {
 		try {
-			await dispatch(signup(data));
+			const normalize = { ...data, email: data.email };
+
+			await dispatch(signup(normalize));
 		} catch (error) {
-			console.log(error);
+			dispatch(
+				addNotification({
+					id: `notification-${Date.now()}`,
+					type: 'error',
+					header: 'Failed to sign up.',
+					content: serverError,
+				}),
+			);
 		}
 	};
 

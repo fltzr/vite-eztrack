@@ -42,6 +42,12 @@ export const Navigation = () => {
 					text: 'Todos',
 					href: '/todos',
 				},
+				{ type: 'divider' },
+				{
+					type: 'section',
+					text: 'Banks',
+					items: [{ type: 'link', text: 'Accounts', href: '/banks' }],
+				},
 			]}
 			onFollow={(event) => {
 				if (event.detail.external) {

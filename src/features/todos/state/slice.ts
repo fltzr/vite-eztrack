@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { client } from '@/common/api/pocketbase-client';
+import { handleThunkError } from '@/common/utils/handle-thunk-error';
 import { addNotification } from '@/features/layout/state/slice';
 
 export type TodoItem = {
@@ -37,61 +37,68 @@ const isAuthenticated = () => {
 	);
 };
 
-export const fetchTodos = createAsyncThunk('todo/fetchTodos', async () => {
-	const user = client.authStore.model;
+export const fetchTodos = createAsyncThunk(
+	'todo/fetchTodos',
+	async (_, { dispatch, rejectWithValue }) => {
+		try {
+			if (!isAuthenticated()) {
+				return rejectWithValue(unauthenticatedMessage);
+			}
 
-	if (!isAuthenticated()) {
-		throw new Error(unauthenticatedMessage);
-	}
+			const response = await client.collection('todos').getList<TodoItem>(1, 50, {
+				filter: `user = "${client.authStore.model?.id}"`,
+			});
 
-	const response = await client
-		.collection('todos')
-		.getList<TodoItem>(1, 50, { filter: `user = "${user?.id}"` });
+			return response.items;
+		} catch (error) {
+			const errorMessage = handleThunkError(dispatch, error);
 
-	return response.items;
-});
+			return rejectWithValue(errorMessage);
+		}
+	},
+);
 
 export const addTodo = createAsyncThunk(
 	'todo/addTodo',
-	async (todo: TodoItem, { dispatch }) => {
-		const user = client.authStore.model;
-
-		if (!isAuthenticated()) {
-			throw new Error(unauthenticatedMessage);
-		}
-
+	async (todo: TodoItem, { dispatch, rejectWithValue }) => {
 		try {
+			if (!isAuthenticated()) {
+				return rejectWithValue(unauthenticatedMessage);
+			}
+
 			const response = await client.collection('todos').create<TodoItem>({
 				...todo,
-				user: user?.id,
+				user: client.authStore.model?.id,
 			});
 
-			return response;
-		} catch (error) {
 			dispatch(
 				addNotification({
 					id: `notification-${Date.now()}`,
-					type: 'error',
-					content: 'Failed to add task.',
+					type: 'success',
+					content: 'Successfully added task!',
 				}),
 			);
 
-			throw new Error('Error adding todo!');
+			return response;
+		} catch (error) {
+			const errorMessage = handleThunkError(dispatch, error);
+
+			return rejectWithValue(errorMessage);
 		}
 	},
 );
 
 export const updateTodo = createAsyncThunk(
 	'todo/updateTodo',
-	async (todo: TodoItem, { dispatch }) => {
-		if (!isAuthenticated()) {
-			throw new Error(unauthenticatedMessage);
-		}
-
+	async (todo: TodoItem, { dispatch, rejectWithValue }) => {
 		try {
+			if (!isAuthenticated()) {
+				return rejectWithValue(unauthenticatedMessage);
+			}
+
 			const response = await client
 				.collection('todos')
-				.update<TodoItem>(todo.id!, todo);
+				.update<TodoItem>(todo.id ?? '', todo);
 
 			dispatch(
 				addNotification({
@@ -103,14 +110,9 @@ export const updateTodo = createAsyncThunk(
 
 			return response;
 		} catch (error) {
-			dispatch(
-				addNotification({
-					id: `notification-${Date.now()}`,
-					type: 'error',
-					content: 'Failed to update task.',
-				}),
-			);
-			throw new Error('Unabled to update todo!');
+			const errorMessage = handleThunkError(dispatch, error);
+
+			return rejectWithValue(errorMessage);
 		}
 	},
 );

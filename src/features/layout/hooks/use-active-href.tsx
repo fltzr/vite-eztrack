@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { selectActiveHref } from '../state/selectors';
@@ -9,9 +8,7 @@ export const useActiveHref = () => {
 	const location = useLocation();
 	const activeHref = useAppSelector(selectActiveHref);
 
-	useEffect(() => {
-		if (location.pathname !== activeHref) {
-			dispatch(setActiveHref(location.pathname));
-		}
-	}, [location, dispatch, activeHref]);
+	if (location.pathname !== activeHref) {
+		dispatch(setActiveHref(location.pathname));
+	}
 };

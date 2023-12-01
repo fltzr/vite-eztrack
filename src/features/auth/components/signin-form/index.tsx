@@ -11,9 +11,9 @@ import {
 import { type InferredSigninSchema, signinSchema } from '@/features/auth/types';
 import { useAppSelector } from '@/common/hooks';
 
-interface SigninFormProps {
+type SigninFormProps = {
 	handleSignin: (data: InferredSigninSchema) => void;
-}
+};
 export const SigninForm = ({ handleSignin }: SigninFormProps) => {
 	const isAuthenticating = useAppSelector(selectIsAuthenticating);
 	const serverError = useAppSelector(selectSigninError);

@@ -1,12 +1,10 @@
 import type { PropsWithChildren } from 'react';
 import { Header } from './components/header';
 import { Shell } from './components/shell';
-import { useActiveHref } from './hooks/useActiveHref';
-import { useRouteTitle } from './hooks/useRouteTitle';
+import { useLayoutHooks } from './hooks/use-layout-hooks';
 
 export const Layout = ({ children }: PropsWithChildren) => {
-	useRouteTitle();
-	useActiveHref();
+	useLayoutHooks();
 
 	return (
 		<>

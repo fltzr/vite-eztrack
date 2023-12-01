@@ -76,6 +76,9 @@ const layoutSlice = createSlice({
 				(notification) => notification.id !== action.payload,
 			);
 		},
+		removeAllNotifications: (state) => {
+			state.notifications = [];
+		},
 		setNavigationOpen: (state, action: PayloadAction<boolean>) => {
 			state.navigationOpen = action.payload;
 		},
@@ -99,6 +102,7 @@ export const {
 	setBreadcrumbs,
 	addNotification,
 	removeNotification,
+	removeAllNotifications,
 	setNavigationOpen,
 	setNavigationHidden,
 	setToolsOpen,
