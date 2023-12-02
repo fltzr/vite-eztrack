@@ -1,7 +1,8 @@
 /* eslint-disable react/no-multi-comp */
-import { type PropsWithChildren, useState } from 'react';
+import { type PropsWithChildren, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
+import type { ButtonDropdownProps } from '@cloudscape-design/components/button-dropdown';
 import TopNavigation from '@cloudscape-design/components/top-navigation';
 import { selectUser } from '@/features/auth/state/selectors';
 import { useAppSelector } from '@/common/hooks';
@@ -21,8 +22,23 @@ const HeaderPortal = ({ children }: PropsWithChildren) => {
 export const Header = () => {
 	const [settingsOpen, setSettingsOpen] = useState(false);
 	const navigate = useNavigate();
-
 	const user = useAppSelector(selectUser);
+
+	const handleItemFollow = useCallback(
+		(event: CustomEvent<ButtonDropdownProps.ItemClickDetails>) => {
+			const { id, external, href } = event.detail;
+
+			if (id === 'sign-out') {
+				console.log('sign out');
+			} else if (!external) {
+				navigate(href as string);
+			}
+
+			event.preventDefault();
+			navigate(href as string);
+		},
+		[navigate],
+	);
 
 	return (
 		<>
@@ -49,6 +65,7 @@ export const Header = () => {
 								type: 'menu-dropdown',
 								text: `Howdy, ${user?.firstname}!`,
 								iconName: 'user-profile-active',
+								description: user?.email,
 								items: [
 									{
 										id: 'account',
@@ -56,22 +73,40 @@ export const Header = () => {
 										href: '/account',
 									},
 									{
-										id: 'dropdown-2',
-										text: 'Dropdown 2',
+										id: 'preferences',
+										text: 'Preferences',
 										href: '/',
 									},
 									{
-										id: 'dropdown-3',
-										text: 'Dropdown 3',
+										id: 'security',
+										text: 'Security',
 										href: '/',
 									},
+									{
+										id: 'support-resources',
+										text: 'Support',
+										items: [
+											{
+												id: 'help',
+												external: true,
+												externalIconAriaLabel:
+													'Opens in a new tab',
+												text: 'Help',
+												href: '/',
+											},
+											{
+												id: 'contact',
+												text: 'Contact',
+												href: '/',
+											},
+										],
+									},
+									{
+										id: 'sign-out',
+										text: 'Sign out',
+									},
 								],
-								onItemFollow: (event) => {
-									event.preventDefault();
-									if (!event.detail.external) {
-										navigate(event.detail.href as string);
-									}
-								},
+								onItemFollow: handleItemFollow,
 							},
 						]}
 					/>
