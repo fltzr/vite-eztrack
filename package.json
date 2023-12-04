@@ -10,7 +10,7 @@
 		"lint:format": "prettier -w ./src",
 		"build:ui": "node ./src-theme/theme-builder.js",
 		"build:dev": "vite build",
-		"build": "tsc && npm run build-theme && vite build",
+		"build": "tsc && npm run build:ui && vite build",
 		"preview": "vite preview"
 	},
 	"dependencies": {
