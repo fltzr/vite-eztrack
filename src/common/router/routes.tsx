@@ -9,6 +9,9 @@ export const routes: RouteObject[] = [
 			{
 				index: true,
 				lazy: () => import('@/features/home/pages'),
+				handle: {
+					title: () => 'Home',
+				},
 			},
 			{
 				path: 'account',

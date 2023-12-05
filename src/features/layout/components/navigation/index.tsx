@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import SideNavigation from '@cloudscape-design/components/side-navigation';
 import { useAppSelector } from '@/common/hooks';
 import { selectActiveHref, selectDomainTitle } from '../../state/selectors';
+import { navigationItems } from './navigation-items';
 
 export const Navigation = () => {
 	const navigate = useNavigate();
@@ -11,6 +12,7 @@ export const Navigation = () => {
 	return (
 		<SideNavigation
 			activeHref={activeHref}
+			items={navigationItems({ pathname: activeHref })}
 			header={
 				title
 					? {
@@ -19,36 +21,6 @@ export const Navigation = () => {
 					  }
 					: undefined
 			}
-			items={[
-				{
-					type: 'link',
-					text: 'Todos',
-					href: '/todos',
-				},
-				{ type: 'divider' },
-				{
-					type: 'section',
-					text: 'Banks',
-					items: [{ type: 'link', text: 'Accounts', href: '/banks' }],
-				},
-				{ type: 'divider' },
-				{
-					type: 'section',
-					text: 'Demos',
-					items: [
-						{
-							type: 'link',
-							text: 'Single Page Form',
-							href: '/demos/single-page-form',
-						},
-						{
-							type: 'link',
-							text: 'Wizard Form',
-							href: '/demos/wizard',
-						},
-					],
-				},
-			]}
 			onFollow={(event) => {
 				if (event.detail.external) {
 					return;

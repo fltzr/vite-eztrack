@@ -8,7 +8,7 @@ import { store } from './common/store';
 import '@cloudscape-design/global-styles/index.css';
 import './main.scss';
 
-const root = document.querySelector('#root');
+const root = document.querySelector('#c');
 
 if (root) {
 	createRoot(root).render(

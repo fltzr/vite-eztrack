@@ -2,13 +2,13 @@
 import { type PropsWithChildren, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Box from '@cloudscape-design/components/box';
-import Button from '@cloudscape-design/components/button';
+
 import TopNavigation, {
 	type TopNavigationProps,
 } from '@cloudscape-design/components/top-navigation';
 import { selectUser } from '@/features/auth/state/selectors';
 import { signout } from '@/features/auth/state/slice';
+import { ServicesDowndown } from '@/features/layout/components/services-dropdown';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { SettingsModal } from '../settings-modal';
 import styles from './styles.module.scss';
@@ -65,6 +65,7 @@ export const Header = () => {
 			<HeaderPortal>
 				<div className={styles.header}>
 					<TopNavigation
+						search={<ServicesDowndown />}
 						identity={{
 							title: 'Ez',
 							href: '/',
@@ -129,11 +130,6 @@ export const Header = () => {
 								onItemClick: handleMenuDropdownClick,
 							},
 						]}
-						search={
-							<Box textAlign="left">
-								<Button variant="link">Hmm</Button>
-							</Box>
-						}
 					/>
 				</div>
 			</HeaderPortal>
