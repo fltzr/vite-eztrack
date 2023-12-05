@@ -2,6 +2,12 @@
 	border: 1px solid #e9ebed;
 }
 
+.auth-alert {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 .auth-form {
 	display: grid;
 	place-items: center;

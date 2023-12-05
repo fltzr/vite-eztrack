@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import Alert from '@cloudscape-design/components/alert';
 import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
@@ -25,9 +25,11 @@ export const Component = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
+	const state = location.state as { from?: string; userSignout?: boolean } | undefined;
+	const from = state?.from ?? '/';
 
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-	const from = (location.state?.from?.pathname as string) || '/';
+	console.log(state);
+
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
 	useEffect(() => {
@@ -56,20 +58,29 @@ export const Component = () => {
 	};
 
 	return (
-		<div className={styles['auth-form']}>
-			<SpaceBetween size="xxl" direction="vertical">
-				<Container header={<Header variant="h1">Sign in</Header>}>
-					<SpaceBetween size="xxl" direction="vertical">
-						<SigninForm
-							handleSignin={(data) => void handleSubmitLogin(data)}
-						/>
-						<Divider>New to eztrack?</Divider>
-						<CreateAccountButton />
-						<Divider>UI</Divider>
-						<ToggleUiSettings />
-					</SpaceBetween>
-				</Container>
-			</SpaceBetween>
-		</div>
+		<SpaceBetween size="l" direction="vertical">
+			<div className={styles['auth-alert']}>
+				{state?.userSignout ? (
+					<Alert type="info">Successfully signed out.</Alert>
+				) : null}
+			</div>
+			<div className={styles['auth-form']}>
+				<SpaceBetween size="xxl" direction="vertical">
+					<Container header={<Header variant="h1">Sign in</Header>}>
+						<SpaceBetween size="xxl" direction="vertical">
+							<SigninForm
+								handleSignin={(data) => {
+									void handleSubmitLogin(data);
+								}}
+							/>
+							<Divider>New to eztrack?</Divider>
+							<CreateAccountButton />
+							<Divider>UI</Divider>
+							<ToggleUiSettings />
+						</SpaceBetween>
+					</Container>
+				</SpaceBetween>
+			</div>
+		</SpaceBetween>
 	);
 };

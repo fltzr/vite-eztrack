@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { type PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
-import pocketbase, { type AuthModel } from 'pocketbase';
+import type { AuthModel } from 'pocketbase';
+import { client } from '@/common/api/pocketbase-client';
 import type { InferredSigninSchema, InferredSignupSchema } from '../types';
 
 type User = AuthModel;
-const pb = new pocketbase(import.meta.env.VITE_PB_URI);
 
 export type AuthState = {
 	user: User | null;
@@ -17,8 +17,8 @@ export type AuthState = {
 };
 
 const getInitialState = (): AuthState => {
-	const user = pb.authStore.model;
-	const { token } = pb.authStore;
+	const user = client.authStore.model;
+	const { token } = client.authStore;
 
 	return {
 		user,
@@ -42,7 +42,7 @@ export const signin = createAsyncThunk(
 	'auth/signin',
 	async (credentials: InferredSigninSchema, { rejectWithValue }) => {
 		try {
-			const response = await pb
+			const response = await client
 				.collection('users')
 				.authWithPassword(credentials.identity, credentials.password);
 
@@ -57,7 +57,7 @@ export const signup = createAsyncThunk(
 	'auth/signup',
 	async (credentials: InferredSignupSchema, { dispatch, rejectWithValue }) => {
 		try {
-			await pb.collection('users').create(credentials);
+			await client.collection('users').create(credentials);
 
 			const signinCredentials: InferredSigninSchema = {
 				identity: credentials.email,
@@ -75,13 +75,13 @@ const authSlice = createSlice({
 	name: 'auth',
 	initialState: getInitialState(),
 	reducers: {
-		logout: (state) => {
+		signout: (state) => {
 			state.isAuthenticated = false;
 			state.user = null;
 			state.token = null;
 			state.signinError = null;
 			state.signupError = null;
-			pb.authStore.clear();
+			client.authStore.clear();
 		},
 	},
 	extraReducers: (builder) => {
@@ -115,5 +115,5 @@ const authSlice = createSlice({
 	},
 });
 
-export const { logout } = authSlice.actions;
+export const { signout } = authSlice.actions;
 export const authReducer = authSlice.reducer;
