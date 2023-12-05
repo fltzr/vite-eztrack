@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { PageLayout } from '@/common/components/page-layout';
 import { setNavigationHidden, setNavigationOpen } from '@/features/layout/state/slice';
 import { useAppDispatch } from '@/common/hooks';
 
@@ -7,8 +8,8 @@ export const Component = () => {
 
 	useEffect(() => {
 		dispatch(setNavigationHidden(false));
-		dispatch(setNavigationOpen(true));
+		dispatch(setNavigationOpen(false));
 	});
 
-	return <>Home</>;
+	return <PageLayout title="Welcome!"></PageLayout>;
 };
