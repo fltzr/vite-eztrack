@@ -1,4 +1,5 @@
 import { Mode as Theme, Density } from '@cloudscape-design/global-styles';
+import Box from '@cloudscape-design/components/box';
 import FormField from '@cloudscape-design/components/form-field';
 import Header from '@cloudscape-design/components/header';
 import Modal from '@cloudscape-design/components/modal';
@@ -18,10 +19,10 @@ const densityOptions: SelectProps.Option[] = [
 	{ value: Density.Compact, label: 'Compact' },
 ];
 
-interface SettingsModalProps {
+type SettingsModalProps = {
 	visible: boolean;
 	onDismiss: () => void;
-}
+};
 export const SettingsModal = ({ visible, onDismiss }: SettingsModalProps) => {
 	const dispatch = useAppDispatch();
 	const theme = useAppSelector(selectTheme);
@@ -34,32 +35,39 @@ export const SettingsModal = ({ visible, onDismiss }: SettingsModalProps) => {
 			header={<Header variant="h2">Theme Settings</Header>}
 			onDismiss={onDismiss}
 		>
-			<SpaceBetween size="m" direction="vertical">
-				<FormField label="Theme">
-					<Select
-						options={themeOptions}
-						selectedOption={
-							themeOptions.find((opt) => opt.value === theme) ?? null
-						}
-						onChange={(event) =>
-							dispatch(setTheme(event.detail.selectedOption.value as Theme))
-						}
-					/>
-				</FormField>
-				<FormField label="Density">
-					<Select
-						options={densityOptions}
-						selectedOption={
-							densityOptions.find((opt) => opt.value === density) ?? null
-						}
-						onChange={(event) =>
-							dispatch(
-								setDensity(event.detail.selectedOption.value as Density),
-							)
-						}
-					/>
-				</FormField>
-			</SpaceBetween>
+			<Box margin={{ bottom: 'l' }}>
+				<SpaceBetween size="m" direction="vertical">
+					<FormField label="Theme">
+						<Select
+							options={themeOptions}
+							selectedOption={
+								themeOptions.find((opt) => opt.value === theme) ?? null
+							}
+							onChange={(event) =>
+								dispatch(
+									setTheme(event.detail.selectedOption.value as Theme),
+								)
+							}
+						/>
+					</FormField>
+					<FormField label="Density">
+						<Select
+							options={densityOptions}
+							selectedOption={
+								densityOptions.find((opt) => opt.value === density) ??
+								null
+							}
+							onChange={(event) =>
+								dispatch(
+									setDensity(
+										event.detail.selectedOption.value as Density,
+									),
+								)
+							}
+						/>
+					</FormField>
+				</SpaceBetween>
+			</Box>
 		</Modal>
 	);
 };

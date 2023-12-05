@@ -39,7 +39,7 @@ const getInitialState = (): LayoutState => {
 		domainTitle: '',
 		activeHref: '/',
 		breadcrumbs: [],
-		stickyNotifications: false,
+		stickyNotifications: true,
 		notifications: [],
 		navigationOpen: false,
 		navigationHidden: false,

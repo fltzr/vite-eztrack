@@ -1,11 +1,15 @@
 /* eslint-disable react/no-multi-comp */
-import { type PropsWithChildren, useState, useCallback } from 'react';
+import { type PropsWithChildren, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
-import type { ButtonDropdownProps } from '@cloudscape-design/components/button-dropdown';
-import TopNavigation from '@cloudscape-design/components/top-navigation';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Box from '@cloudscape-design/components/box';
+import Button from '@cloudscape-design/components/button';
+import TopNavigation, {
+	type TopNavigationProps,
+} from '@cloudscape-design/components/top-navigation';
 import { selectUser } from '@/features/auth/state/selectors';
-import { useAppSelector } from '@/common/hooks';
+import { signout } from '@/features/auth/state/slice';
+import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { SettingsModal } from '../settings-modal';
 import styles from './styles.module.scss';
 
@@ -21,24 +25,40 @@ const HeaderPortal = ({ children }: PropsWithChildren) => {
 
 export const Header = () => {
 	const [settingsOpen, setSettingsOpen] = useState(false);
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
+	const location = useLocation();
 	const user = useAppSelector(selectUser);
 
-	const handleItemFollow = useCallback(
-		(event: CustomEvent<ButtonDropdownProps.ItemClickDetails>) => {
-			const { id, external, href } = event.detail;
+	const handleMenuDropdownClick: TopNavigationProps.MenuDropdownUtility['onItemClick'] =
+		(event) => {
+			const { id } = event.detail;
 
-			if (id === 'sign-out') {
-				console.log('sign out');
-			} else if (!external) {
-				navigate(href as string);
+			switch (id) {
+				case 'account': {
+					event.preventDefault();
+					navigate('/account', { replace: true });
+					break;
+				}
+				case 'preferences': {
+					event.preventDefault();
+					navigate('/preferences', { replace: true });
+					break;
+				}
+				case 'sign-out': {
+					event.preventDefault();
+					dispatch(signout());
+					navigate('/auth/signin', {
+						replace: true,
+						state: { from: location.pathname, userSignout: true },
+					});
+					break;
+				}
+				default: {
+					break;
+				}
 			}
-
-			event.preventDefault();
-			navigate(href as string);
-		},
-		[navigate],
-	);
+		};
 
 	return (
 		<>
@@ -106,9 +126,14 @@ export const Header = () => {
 										text: 'Sign out',
 									},
 								],
-								onItemFollow: handleItemFollow,
+								onItemClick: handleMenuDropdownClick,
 							},
 						]}
+						search={
+							<Box textAlign="left">
+								<Button variant="link">Hmm</Button>
+							</Box>
+						}
 					/>
 				</div>
 			</HeaderPortal>

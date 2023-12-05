@@ -33,6 +33,7 @@ export const Notification = () => {
 
 	return (
 		<Flashbar
+			stackItems
 			items={
 				notifications
 					? notifications.map((notification) => ({
