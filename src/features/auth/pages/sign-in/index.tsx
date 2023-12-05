@@ -11,14 +11,13 @@ import { SigninForm } from '@/features/auth/components/signin-form';
 import { selectIsAuthenticated } from '@/features/auth/state/selectors';
 import { signin } from '@/features/auth/state/slice';
 import type { InferredSigninSchema } from '@/features/auth/types';
-import { ChangeDensityButton } from '@/features/layout/components/change-density-button';
-import { ChangeThemeButton } from '@/features/layout/components/change-theme-button';
 import {
 	addNotification,
 	setNavigationHidden,
 	setToolsHidden,
 } from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
+import { ToggleUiSettings } from '../../components/toggle-ui-settings';
 
 import styles from './styles.module.scss';
 
@@ -66,12 +65,10 @@ export const Component = () => {
 						/>
 						<Divider>New to eztrack?</Divider>
 						<CreateAccountButton />
+						<Divider>UI</Divider>
+						<ToggleUiSettings />
 					</SpaceBetween>
 				</Container>
-				<SpaceBetween size="m" direction="horizontal">
-					<ChangeThemeButton />
-					<ChangeDensityButton />
-				</SpaceBetween>
 			</SpaceBetween>
 		</div>
 	);
