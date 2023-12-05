@@ -12,6 +12,8 @@ export type TodoItem = {
 	dueDate?: string;
 	completed?: boolean;
 	documents?: File[];
+	updated?: string;
+	created?: string;
 };
 
 export type TodoState = {
@@ -47,6 +49,7 @@ export const fetchTodos = createAsyncThunk(
 
 			const response = await client.collection('todos').getList<TodoItem>(1, 50, {
 				filter: `user = "${client.authStore.model?.id}"`,
+				sort: 'created',
 			});
 
 			return response.items;

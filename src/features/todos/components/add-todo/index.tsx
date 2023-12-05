@@ -38,6 +38,7 @@ export const AddTodo = ({ isVisible, setIsVisible }: AddTodoProps) => {
 	const handleAddTodo = async (data: Partial<InferredTodoSchema>) => {
 		try {
 			await dispatch(addTodo(data));
+			setIsVisible();
 			methods.reset();
 		} catch (error) {
 			dispatch(
@@ -48,8 +49,6 @@ export const AddTodo = ({ isVisible, setIsVisible }: AddTodoProps) => {
 				}),
 			);
 		}
-
-		setIsVisible();
 	};
 
 	return (
