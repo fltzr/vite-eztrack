@@ -1,5 +1,8 @@
 # Eztrack
 
+bit.ly/systemdesignpdf
+https://bit.ly/sdi-blueprint
+
 npm install \
  prettier \
  eslint \
