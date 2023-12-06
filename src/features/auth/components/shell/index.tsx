@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import { Outlet } from 'react-router-dom';
 import AppLayout from '@cloudscape-design/components/app-layout';
-import { BlankTopNavigation } from '@/common/components/blank-top-navigation';
+import { BlankTopNavigation } from '@/common/layouts/blank-top-navigation';
 
 import styles from './styles.module.scss';
 

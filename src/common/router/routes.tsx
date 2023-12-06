@@ -1,7 +1,7 @@
 import type { RouteObject } from 'react-router-dom';
 import { AppContainer } from '@/app-container';
+import { ErrorComponent } from '@/common/layouts/error-component';
 import { Shell } from '@/features/auth/components/shell';
-import { ErrorComponent } from '../components/error-component';
 
 export const routes: RouteObject[] = [
 	{
