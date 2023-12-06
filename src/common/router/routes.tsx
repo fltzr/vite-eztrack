@@ -1,10 +1,13 @@
 import type { RouteObject } from 'react-router-dom';
 import { AppContainer } from '@/app-container';
+import { Shell } from '@/features/auth/components/shell';
+import { ErrorComponent } from '../components/error-component';
 
 export const routes: RouteObject[] = [
 	{
 		path: '/',
 		element: <AppContainer />,
+		errorElement: <ErrorComponent />,
 		children: [
 			{
 				index: true,
@@ -68,6 +71,7 @@ export const routes: RouteObject[] = [
 	},
 	{
 		path: 'auth',
+		element: <Shell />,
 		children: [
 			{
 				path: 'signin',

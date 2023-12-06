@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { load } from '@/common/utils';
 
-export const Auth = () => {
+export const Component = () => {
 	const token = load('auth');
 
 	if (!token) {

@@ -27,7 +27,7 @@ export const SignupForm = ({
 	});
 
 	return (
-		<SpaceBetween size="xl" direction="vertical">
+		<SpaceBetween size="xxl" direction="vertical">
 			<FormProvider {...methods}>
 				<form
 					id="signup-form"

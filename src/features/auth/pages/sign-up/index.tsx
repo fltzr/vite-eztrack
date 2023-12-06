@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
-import Grid from '@cloudscape-design/components/grid';
 import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 
@@ -24,6 +24,7 @@ import {
 } from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 
+import { ToggleUiSettings } from '../../components/toggle-ui-settings';
 import styles from './styles.module.scss';
 
 export const Component = () => {
@@ -70,36 +71,40 @@ export const Component = () => {
 
 	return (
 		<div className={styles['signup-form']}>
-			<Container
-				header={
-					<Header variant="h1" description="It's quick and easy.">
-						Sign up
-					</Header>
-				}
-			>
-				<SpaceBetween size="m">
-					<SignupForm handleSubmitSignup={handleSubmitSignup} />
-					<Divider>Have an eztrack account?</Divider>
-					<Grid
-						gridDefinition={[{ colspan: 2 }, { colspan: 8 }, { colspan: 2 }]}
-					>
-						<div></div>
-						<Button
-							fullWidth
-							variant="normal"
-							wrapText={false}
-							formAction="none"
-							onClick={(event) => {
-								event.preventDefault();
-								navigate('/auth/signin');
-							}}
-						>
-							Sign in
-						</Button>
-						<div></div>
-					</Grid>
-				</SpaceBetween>
-			</Container>
+			<SpaceBetween size="l" direction="vertical">
+				<Container
+					header={
+						<Header variant="h1" description="It's quick and easy.">
+							Sign up
+						</Header>
+					}
+				>
+					<Box margin={{ top: 'xl' }}>
+						<SpaceBetween size="m">
+							<SignupForm handleSubmitSignup={handleSubmitSignup} />
+							<Divider>Have an eztrack account?</Divider>
+							<Box margin={{ left: 'xxxl', right: 'xxxl' }}>
+								<Button
+									fullWidth
+									variant="normal"
+									wrapText={false}
+									formAction="none"
+									onClick={(event) => {
+										event.preventDefault();
+										navigate('/auth/signin');
+									}}
+								>
+									Sign in
+								</Button>
+							</Box>
+						</SpaceBetween>
+					</Box>
+				</Container>
+				<Container>
+					<Divider>UI</Divider>
+					<ToggleUiSettings />
+				</Container>
+			</SpaceBetween>
 		</div>
 	);
 };

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Alert from '@cloudscape-design/components/alert';
+import Box from '@cloudscape-design/components/box';
 import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
@@ -58,29 +59,33 @@ export const Component = () => {
 	};
 
 	return (
-		<SpaceBetween size="l" direction="vertical">
-			<div className={styles['auth-alert']}>
-				{state?.userSignout ? (
-					<Alert type="info">Successfully signed out.</Alert>
-				) : null}
-			</div>
-			<div className={styles['auth-form']}>
-				<SpaceBetween size="xxl" direction="vertical">
+		<div className={styles['auth-form']}>
+			<SpaceBetween size="l" direction="vertical">
+				<div className={styles['auth-alert']}>
+					{state?.userSignout ? (
+						<Alert type="info">Successfully signed out.</Alert>
+					) : null}
+				</div>
+				<SpaceBetween size="xl" direction="vertical">
 					<Container header={<Header variant="h1">Sign in</Header>}>
-						<SpaceBetween size="xxl" direction="vertical">
-							<SigninForm
-								handleSignin={(data) => {
-									void handleSubmitLogin(data);
-								}}
-							/>
-							<Divider>New to eztrack?</Divider>
-							<CreateAccountButton />
-							<Divider>UI</Divider>
-							<ToggleUiSettings />
-						</SpaceBetween>
+						<Box margin={{ top: 'l', bottom: 'xxxl' }}>
+							<SpaceBetween size="s" direction="vertical">
+								<SigninForm
+									handleSignin={(data) => {
+										void handleSubmitLogin(data);
+									}}
+								/>
+								<Divider>New to eztrack?</Divider>
+								<CreateAccountButton />
+							</SpaceBetween>
+						</Box>
+					</Container>
+					<Container>
+						<Divider>UI</Divider>
+						<ToggleUiSettings />
 					</Container>
 				</SpaceBetween>
-			</div>
-		</SpaceBetween>
+			</SpaceBetween>
+		</div>
 	);
 };
