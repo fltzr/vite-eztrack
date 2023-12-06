@@ -3,6 +3,7 @@ import { App } from '@/app';
 import { selectIsAuthenticated } from '@/features/auth/state/selectors';
 import { useAppSelector } from '@/common/hooks';
 import { Layout } from '@/features/layout';
+import { HelpPanelProvider } from './common/hooks/use-help-panel';
 
 export const AppContainer = () => {
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
@@ -12,7 +13,13 @@ export const AppContainer = () => {
 		<>
 			{isAuthenticated ? (
 				<Layout>
-					<App />
+					<HelpPanelProvider
+						value={() => {
+							'content';
+						}}
+					>
+						<App />
+					</HelpPanelProvider>
 				</Layout>
 			) : (
 				<Navigate replace to="/auth/signin" state={{ from: location }} />
