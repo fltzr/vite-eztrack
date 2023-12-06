@@ -13,11 +13,7 @@ export const AppContainer = () => {
 		<>
 			{isAuthenticated ? (
 				<Layout>
-					<HelpPanelProvider
-						value={() => {
-							'content';
-						}}
-					>
+					<HelpPanelProvider value={null}>
 						<App />
 					</HelpPanelProvider>
 				</Layout>
