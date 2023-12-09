@@ -1,4 +1,7 @@
+/* eslint-disable react/no-multi-comp */
 import { Navigate, useLocation } from 'react-router-dom';
+import { I18nProvider } from '@cloudscape-design/components/i18n';
+import enMessages from '@cloudscape-design/components/i18n/messages/all.en.json';
 import { App } from '@/app';
 import { selectIsAuthenticated } from '@/features/auth/state/selectors';
 import { useAppSelector } from '@/common/hooks';
@@ -10,7 +13,7 @@ export const AppContainer = () => {
 	const location = useLocation();
 
 	return (
-		<>
+		<I18nProvider messages={[enMessages]}>
 			{isAuthenticated ? (
 				<Layout>
 					<HelpPanelProvider value={null}>
@@ -20,6 +23,6 @@ export const AppContainer = () => {
 			) : (
 				<Navigate replace to="/auth/signin" state={{ from: location }} />
 			)}
-		</>
+		</I18nProvider>
 	);
 };
