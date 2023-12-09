@@ -42,6 +42,10 @@ export const routes: RouteObject[] = [
 						path: 'wizard',
 						lazy: () => import('@/features/demos/pages/wizard'),
 					},
+					{
+						path: 'table',
+						lazy: () => import('@/features/demos/pages/table'),
+					},
 				],
 			},
 			{

@@ -13,7 +13,7 @@ import { client } from '@/common/api/pocketbase-client';
 import { FormDatePicker } from '@/common/components/form/date-picker';
 import { FormInput } from '@/common/components/form/input';
 import { KeyValuePair } from '@/common/components/key-value-pair';
-import { PageLayout } from '@/common/components/page-layout';
+import { PageLayout } from '@/common/layouts/page-layout';
 import { UserSettings } from '../../components/user-settings';
 
 const accountSettingsSchema = z.object({

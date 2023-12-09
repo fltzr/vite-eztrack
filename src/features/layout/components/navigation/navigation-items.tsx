@@ -75,6 +75,11 @@ export const navigationItems = ({
 				text: 'Wizard Form',
 				href: '/demos/wizard',
 			},
+			{
+				type: 'link',
+				text: 'Table',
+				href: '/demos/table',
+			},
 		];
 	}
 
