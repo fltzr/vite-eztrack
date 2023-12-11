@@ -37,9 +37,12 @@ export const DemoTableTodos = () => {
 			});
 	}, []);
 
+
+
 	return (
 		<SpaceBetween size="xl">
 			<ReusableTable
+				variant="full-page"
 				localstorageKeyPrefix="DemoTodo"
 				resource="Todo"
 				columnDefinitions={todoItemColumnDefinitions}

@@ -81,7 +81,7 @@ export const ReusableTable = <T,>({
 		<Table
 			{...collectionProps}
 			resizableColumns
-			variant="container"
+			variant={props.variant}
 			stickyHeader={props.stickyHeader}
 			columnDefinitions={columnDefinitions}
 			items={items}
@@ -98,14 +98,10 @@ export const ReusableTable = <T,>({
 				<FullPageHeader
 					title={`${capitalize(resource)}s`}
 					selectedItemsCount={collectionProps.selectedItems?.length ?? 0}
-					counter={
-						loading
-							? undefined
-							: getHeaderCounterText({
-									items,
-									selectedItems: collectionProps.selectedItems,
-							  })
-					}
+					counter={getHeaderCounterText({
+						items,
+						selectedItems: collectionProps.selectedItems,
+					})}
 					onInfoLinkClick={props.onInfoClick}
 					onViewResourceClick={props.onViewClick}
 					onEditResourceClick={props.onEditClick}

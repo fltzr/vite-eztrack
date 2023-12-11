@@ -4,7 +4,7 @@ import Header, { type HeaderProps } from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { InfoLink } from '@/common/components/info-link';
 
-type FullPageHeaderProps = HeaderProps & {
+export type FullPageHeaderProps = HeaderProps & {
 	title: string;
 	selectedItemsCount: number;
 	createButtonText?: string;
