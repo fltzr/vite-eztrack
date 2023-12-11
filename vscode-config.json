@@ -1,0 +1,67 @@
+{
+	"terminal.integrated.stickyScroll.enabled": true,
+	"editor.stickyScroll.enabled": true,
+	"typescript.preferences.preferTypeOnlyAutoImports": true,
+	"multiDiffEditor.experimental.enabled": true,
+	"workbench.tree.enableStickyScroll": true,
+	"workbench.tree.stickyScrollMaxItemCount": 15,
+	"editor.fontFamily": "Monaspace Neon Var",
+	"editor.fontSize": 12,
+	"editor.fontLigatures": "'calt', 'liga', 'dlig', 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08'",
+	"editor.wordWrap": "on",
+	"editor.formatOnPaste": false,
+	"editor.formatOnType": false,
+	"terminal.integrated.fontFamily": "monospace",
+	"terminal.integrated.fontSize": 12,
+	"git.autofetch": true,
+	"[markdown]": {
+		"editor.wordWrap": "on"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[typescript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"editor.linkedEditing": true,
+	"conventionalCommits.lineBreak": "\\n",
+	"eslint.lintTask.enable": true,
+	"eslint.codeAction.showDocumentation": {
+		"enable": true
+	},
+	"codemetrics.nodeconfiguration.ReturnStatement": 0.1,
+	"codemetrics.nodeconfiguration.SwitchStatement": 0.1,
+	"codemetrics.nodeconfiguration.JsxSelfClosingElement": 0.1,
+	"codemetrics.nodeconfiguration.JsxElement": 0.2,
+	"codemetrics.basics.CodeLensHiddenUnder": 4,
+	"sonarlint.disableTelemetry": true,
+	"files.autoSave": "afterDelay",
+	"workbench.editor.labelFormat": "short",
+	"explorer.compactFolders": false,
+	"editor.guides.bracketPairs": true,
+	"editor.mouseWheelZoom": true,
+	"projectManager.openInNewWindowWhenClickingInStatusBar": true,
+	"errorLens.gutterIconsEnabled": false,
+	"errorLens.statusBarColorsEnabled": true,
+	"errorLens.statusBarMessageEnabled": true,
+	"errorLens.statusBarMessageType": "closestSeverity",
+	"errorLens.followCursor": "closestProblem",
+	"errorLens.scrollbarHackEnabled": true,
+	"errorLens.fontStyleItalic": true,
+	"errorLens.messageBackgroundMode": "message",
+	"workbench.colorCustomizations": {
+		"editorInfo.foreground": "#0080ff6a"
+	},
+	"workbench.iconTheme": "material-icon-theme"
+}
