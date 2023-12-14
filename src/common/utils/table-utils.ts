@@ -1,6 +1,6 @@
 import type { PropertyFilterProperty } from '@cloudscape-design/collection-hooks';
 import type { CollectionPreferencesProps } from '@cloudscape-design/components';
-import { capitalize } from 'lodash';
+import { capitalize } from 'lodash-es';
 import type { TableProps } from '@cloudscape-design/components/table';
 
 export type TableColumnWidth = { id: string; width: number };

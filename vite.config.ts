@@ -5,8 +5,6 @@ import { defineConfig, splitVendorChunkPlugin } from 'vite';
 import tsConfigPaths from 'vite-tsconfig-paths';
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react-swc';
-import browserslist from 'browserslist';
-import { browserslistToTargets } from 'lightningcss';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,17 +20,13 @@ export default defineConfig({
 		},
 	},
 
-	css: {
-		transformer: 'lightningcss',
-		lightningcss: {
-			targets: browserslistToTargets(browserslist('>= 0.25%')),
-		},
-	},
-
 	server: {
 		strictPort: true,
 		port: 3000,
 		open: false,
+		hmr: {
+			overlay: false,
+		},
 	},
 
 	preview: {
@@ -42,8 +36,20 @@ export default defineConfig({
 
 	build: {
 		outDir: 'dist',
-		cssMinify: 'lightningcss',
-		cssCodeSplit: true,
+		emptyOutDir: true,
+		rollupOptions: {
+			output: {
+				experimentalMinChunkSize: 500,
+				entryFileNames: 'assets/public/[name].[hash].js',
+				chunkFileNames: 'assets/chunks/[name].[hash].js',
+				assetFileNames: 'assets/vendor/[name].[hash].[ext]',
+				manualChunks: (id) => {
+					if (id.includes('components/spinner')) {
+						return 'spinner';
+					}
+				},
+			},
+		},
 	},
 
 	test: {

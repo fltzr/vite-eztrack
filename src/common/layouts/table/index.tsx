@@ -1,5 +1,5 @@
 import { useCollection } from '@cloudscape-design/collection-hooks';
-import { capitalize } from 'lodash';
+import { capitalize } from 'lodash-es';
 import type { CollectionPreferencesProps } from '@cloudscape-design/components/collection-preferences';
 import Pagination from '@cloudscape-design/components/pagination';
 import PropertyFilter from '@cloudscape-design/components/property-filter';

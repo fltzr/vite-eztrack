@@ -1,4 +1,4 @@
-import { uniqueId } from 'lodash';
+import { uniqueId } from 'lodash-es';
 import type { ConnectedAccounts } from './table-config';
 
 const idPrefix = 'plaid-item-';
