@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import { capitalize } from 'lodash-es';
 import type { CollectionPreferencesProps } from '@cloudscape-design/components/collection-preferences';
@@ -77,6 +78,8 @@ export const ReusableTable = <T,>({
 		selection: {},
 	});
 
+	const [selectedItems, setSelectedItems] = useState<T[]>([]);
+
 	return (
 		<Table
 			{...collectionProps}
@@ -86,6 +89,7 @@ export const ReusableTable = <T,>({
 			columnDefinitions={columnDefinitions}
 			items={items}
 			selectionType={props.selectionType}
+			selectedItems={selectedItems}
 			loading={loading}
 			loadingText={loadingText}
 			columnDisplay={preferences.contentDisplay}
@@ -128,8 +132,16 @@ export const ReusableTable = <T,>({
 					}}
 				/>
 			}
+			onSelectionChange={(event) => {
+				setSelectedItems(event.detail.selectedItems);
+				console.log(
+					`selectedItems: ${JSON.stringify(event.detail.selectedItems)}`,
+				);
+			}}
 			onColumnWidthsChange={(event) => {
-				console.log(`Widths changed: ${JSON.stringify(event.detail.widths)}`);
+				console.log(
+					`Widths changed: ${JSON.stringify(event.detail.widths, null, 2)}`,
+				);
 				saveWidths(event);
 			}}
 		/>

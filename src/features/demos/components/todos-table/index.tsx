@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import ColumnLayout from '@cloudscape-design/components/column-layout';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { ReusableTable } from '@/common/layouts/table';
 import { todoItemColumnDefinitions, type TodoItem } from './config';
@@ -37,20 +38,30 @@ export const DemoTableTodos = () => {
 			});
 	}, []);
 
-
-
 	return (
 		<SpaceBetween size="xl">
-			<ReusableTable
-				variant="full-page"
-				localstorageKeyPrefix="DemoTodo"
-				resource="Todo"
-				columnDefinitions={todoItemColumnDefinitions}
-				items={todoItems}
-				loading={loadingTodoItems}
-				loadingText="Loading todo items..."
-				selectionType="multi"
-			/>
+			<ColumnLayout columns={2}>
+				<ReusableTable
+					variant="stacked"
+					localstorageKeyPrefix="DemoTodo"
+					resource="Todo"
+					columnDefinitions={todoItemColumnDefinitions}
+					items={todoItems}
+					loading={loadingTodoItems}
+					loadingText="Loading todo items..."
+					selectionType="multi"
+				/>
+				<ReusableTable
+					variant="stacked"
+					localstorageKeyPrefix="DemoTodo"
+					resource="Todo"
+					columnDefinitions={todoItemColumnDefinitions}
+					items={todoItems}
+					loading={loadingTodoItems}
+					loadingText="Loading todo items..."
+					selectionType="multi"
+				/>
+			</ColumnLayout>
 		</SpaceBetween>
 	);
 };

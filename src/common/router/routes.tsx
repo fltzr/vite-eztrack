@@ -29,6 +29,13 @@ export const routes: RouteObject[] = [
 				],
 			},
 			{
+				path: 'holidays',
+				handle: {
+					title: () => 'Holidays',
+				},
+				lazy: () => import('@/features/holidays/pages'),
+			},
+			{
 				path: 'demos',
 				handle: {
 					title: () => 'Demos',

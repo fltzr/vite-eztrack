@@ -2,13 +2,18 @@ import type { PropertyFilterProperty } from '@cloudscape-design/collection-hooks
 import type { CollectionPreferencesProps } from '@cloudscape-design/components';
 import { capitalize } from 'lodash-es';
 import type { TableProps } from '@cloudscape-design/components/table';
+import { DateTimeForm } from '../layouts/table/date-time-form';
 
 export type TableColumnWidth = { id: string; width: number };
 export type TableColumnDefinition<T> = Omit<
 	TableProps.ColumnDefinition<T>,
 	'id' | 'width'
 > &
-	TableColumnWidth & { visible?: boolean };
+	TableColumnWidth & {
+		isVisible?: boolean;
+		isDateOnly?: boolean;
+		isDateTime?: boolean;
+	};
 
 type AddWidthToColumnDefinitionsParams<T> = {
 	columnDefinitions: TableColumnDefinition<T>[];
@@ -58,29 +63,26 @@ export const getHeaderCounterText = ({
 		: `(${items.length}+)`;
 
 export const createPageSizeOptions = (resource: string) => [
-	{ value: 10, label: `10 ${capitalize(resource)}s` },
-	{ value: 20, label: `20 ${capitalize(resource)}s` },
-	{ value: 30, label: `30 ${capitalize(resource)}s` },
+	{ value: 25, label: `25 ${capitalize(resource)}s` },
+	{ value: 35, label: `35 ${capitalize(resource)}s` },
+	{ value: 50, label: `50 ${capitalize(resource)}s` },
 ];
 
 export const createFilteringProperties = <T>(
 	columnDefinitions: TableColumnDefinition<T>[],
 ): PropertyFilterProperty[] =>
-	columnDefinitions.map((columnDefinition) => {
-		const isDate = columnDefinition.id.includes('date');
-
-		return {
-			key: columnDefinition.id,
-			propertyLabel: columnDefinition.header?.toString() ?? '',
-			groupValuesLabel: `${columnDefinition.header?.toString() ?? ''} values`,
-			operators: isDate
-				? ['=', '!=', '<', '<=', '>', '>='].map((operator) => ({
-						operator,
-						match: 'date',
-				  }))
-				: [':', '!:', '=', '!=', '^'],
-		};
-	});
+	columnDefinitions.map((columnDefinition) => ({
+		key: columnDefinition.id,
+		propertyLabel: columnDefinition.header?.toString() ?? '',
+		groupValuesLabel: `${columnDefinition.header?.toString() ?? ''} values`,
+		operators: columnDefinition.isDateTime
+			? ['=', '!=', '<', '<=', '>', '>='].map((operator) => ({
+					operator,
+					match: 'datetime',
+					form: DateTimeForm,
+			  }))
+			: [':', '!:', '=', '!=', '^'],
+	}));
 
 export const createContentDisplayOptions = (
 	columnDefinitions: TableColumnDefinition<unknown>[],
@@ -97,7 +99,7 @@ export const createDefaultPreferences = <T>(
 	pageSize: 30,
 	contentDisplay: columnDefinitions.map((columnDefinition) => ({
 		id: columnDefinition.id,
-		visible: columnDefinition.visible ?? true,
+		visible: columnDefinition.isVisible ?? true,
 	})),
 	wrapLines: false,
 	stripedRows: false,

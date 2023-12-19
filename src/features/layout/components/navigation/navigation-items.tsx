@@ -19,12 +19,17 @@ export const navigationItems = ({
 			},
 			{
 				type: 'link',
+				text: 'Holidays',
+				href: '/holidays',
+			},
+			{
+				type: 'link',
 				text: 'Demos',
 				href: '/demos',
 			},
 		];
 	}
-	if (pathname === '/todos') {
+	if (pathname.includes('/todos')) {
 		return [
 			{
 				type: 'link',
@@ -43,7 +48,7 @@ export const navigationItems = ({
 			},
 		];
 	}
-	if (pathname === '/banks') {
+	if (pathname.includes('/banks')) {
 		return [
 			{
 				type: 'link',
@@ -57,8 +62,17 @@ export const navigationItems = ({
 			},
 		];
 	}
+	if (pathname.includes('/holidays')) {
+		return [
+			{
+				type: 'link',
+				text: 'Home',
+				href: '/holidays',
+			},
+		];
+	}
 
-	if (pathname === '/demos') {
+	if (pathname.includes('/demos')) {
 		return [
 			{
 				type: 'link',

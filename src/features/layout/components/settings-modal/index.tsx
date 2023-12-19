@@ -5,18 +5,16 @@ import Header from '@cloudscape-design/components/header';
 import Modal from '@cloudscape-design/components/modal';
 import Select, { type SelectProps } from '@cloudscape-design/components/select';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import Tiles from '@cloudscape-design/components/tiles';
 import { selectDensity, selectTheme } from '@/features/layout/state/selectors';
 import { setDensity, setTheme } from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
+import comfortableImage from './images/comfortable-density';
+import { compactImage } from './images/compact-density';
 
 const themeOptions: SelectProps.Option[] = [
 	{ value: Theme.Light, label: 'Light' },
 	{ value: Theme.Dark, label: 'Dark' },
-];
-
-const densityOptions: SelectProps.Option[] = [
-	{ value: Density.Comfortable, label: 'Comfortable' },
-	{ value: Density.Compact, label: 'Compact' },
 ];
 
 type SettingsModalProps = {
@@ -30,7 +28,7 @@ export const SettingsModal = ({ visible, onDismiss }: SettingsModalProps) => {
 
 	return (
 		<Modal
-			size="small"
+			size="medium"
 			visible={visible}
 			header={<Header variant="h2">Theme Settings</Header>}
 			onDismiss={onDismiss}
@@ -51,7 +49,25 @@ export const SettingsModal = ({ visible, onDismiss }: SettingsModalProps) => {
 						/>
 					</FormField>
 					<FormField label="Density">
-						<Select
+						<Tiles
+							value={density}
+							items={[
+								{
+									value: Density.Comfortable,
+									label: 'Comfortable',
+									image: comfortableImage,
+								},
+								{
+									value: Density.Compact,
+									label: 'Compact',
+									image: compactImage,
+								},
+							]}
+							onChange={({ detail }) =>
+								dispatch(setDensity(detail.value as Density))
+							}
+						/>
+						{/* <Select
 							options={densityOptions}
 							selectedOption={
 								densityOptions.find((opt) => opt.value === density) ??
@@ -64,7 +80,7 @@ export const SettingsModal = ({ visible, onDismiss }: SettingsModalProps) => {
 									),
 								)
 							}
-						/>
+						/> */}
 					</FormField>
 				</SpaceBetween>
 			</Box>
