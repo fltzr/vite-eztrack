@@ -97,6 +97,45 @@ export const SignupForm = ({
 									placeholder="YYYY/MM/DD"
 								/>
 							</ColumnLayout>
+
+							<FormInput<InferredSignupSchema>
+								inputMode="tel"
+								name="phoneNumber"
+								placeholder="555-555-5555"
+							/>
+
+							<FormInput<InferredSignupSchema>
+								name="address"
+								placeholder="Address"
+							/>
+
+							<FormInput<InferredSignupSchema>
+								name="address2"
+								placeholder="Address 2"
+							/>
+
+							<ColumnLayout columns={3} minColumnWidth={120}>
+								<FormInput<InferredSignupSchema>
+									name="city"
+									placeholder="City"
+								/>
+
+								<FormInput<InferredSignupSchema>
+									name="state"
+									placeholder="State"
+								/>
+
+								<FormInput<InferredSignupSchema>
+									inputMode="numeric"
+									name="zip"
+									placeholder="Zip"
+								/>
+							</ColumnLayout>
+
+							<FormInput<InferredSignupSchema>
+								name="country"
+								placeholder="Country"
+							/>
 						</SpaceBetween>
 					</Form>
 				</form>

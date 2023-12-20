@@ -3,6 +3,7 @@ import { type PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/tool
 import { AxiosError } from 'axios';
 import type { AuthModel } from 'pocketbase';
 import { client } from '@/common/api/pocketbase-client';
+import { createUser } from '../api/users';
 import type { InferredSigninSchema, InferredSignupSchema } from '../types';
 
 type User = AuthModel;
@@ -31,6 +32,7 @@ const getInitialState = (): AuthState => {
 };
 
 const extractErrorMessage = (error: unknown): string => {
+	console.log(error);
 	if (error instanceof AxiosError && error.response?.data) {
 		return (error.response.data as string) || 'An error occured.';
 	}
@@ -57,7 +59,7 @@ export const signup = createAsyncThunk(
 	'auth/signup',
 	async (credentials: InferredSignupSchema, { dispatch, rejectWithValue }) => {
 		try {
-			await client.collection('users').create(credentials);
+			await createUser(credentials);
 
 			const signinCredentials: InferredSigninSchema = {
 				identity: credentials.email,
