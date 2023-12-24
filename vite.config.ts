@@ -24,8 +24,12 @@ export default defineConfig({
 		strictPort: true,
 		port: 3000,
 		open: false,
-		hmr: {
-			overlay: false,
+		proxy: {
+			'/api': {
+				target: 'http://localhost:3001',
+				changeOrigin: true,
+				rewrite: (path) => path.replace(/^\/api/, ''),
+			},
 		},
 	},
 
