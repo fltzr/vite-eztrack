@@ -1,7 +1,6 @@
 import type { RouteObject } from 'react-router-dom';
 import { AppContainer } from '@/app-container';
 import { ErrorComponent } from '@/common/layouts/error-component';
-import { Shell } from '@/features/auth/components/shell';
 
 export const routes: RouteObject[] = [
 	{
@@ -56,18 +55,14 @@ export const routes: RouteObject[] = [
 				],
 			},
 			{
-				path: 'banks',
+				path: 'budget',
 				handle: {
-					title: () => 'Banks',
+					title: () => 'Budgets',
 				},
 				children: [
 					{
 						index: true,
-						lazy: () => import('@/features/bank/pages/connected-accounts'),
-					},
-					{
-						path: 'link',
-						lazy: () => import('@/features/bank/pages/link'),
+						lazy: () => import('@/features/budget/pages/budget'),
 					},
 				],
 			},
@@ -82,7 +77,7 @@ export const routes: RouteObject[] = [
 	},
 	{
 		path: 'auth',
-		element: <Shell />,
+		lazy: () => import('@/features/auth/components/shell'),
 		children: [
 			{
 				path: 'signin',
