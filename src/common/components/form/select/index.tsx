@@ -41,7 +41,7 @@ export const FormSelect = <T extends FieldValues>({
 							options?.find(
 								(option: SelectProps.Option) =>
 									option.value === field.value,
-							) || null
+							) ?? null
 						}
 						onChange={(event) => {
 							field.onChange(event.detail.selectedOption.value);
