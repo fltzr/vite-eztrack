@@ -2,7 +2,6 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { authApi } from '@/features/auth/state/api';
 import { authReducer } from '@/features/auth/state/slice';
 import { layoutReducer } from '@/features/layout/state/slice';
-import { todoReducer } from '@/features/todos/state/slice';
 import { budgetApi } from '@/features/budget/state/slice';
 
 export const reducers = combineReducers({
@@ -10,5 +9,4 @@ export const reducers = combineReducers({
 	auth: authReducer,
 	[budgetApi.reducerPath]: budgetApi.reducer,
 	layout: layoutReducer,
-	todos: todoReducer,
 });
