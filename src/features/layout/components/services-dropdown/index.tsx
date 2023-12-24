@@ -7,13 +7,14 @@ export const ServicesDowndown = () => (
 	<Popover
 		fixedWidth
 		renderWithPortal
+		header="Services"
 		triggerType="custom"
 		position="bottom"
 		size="large"
 		content={
 			<SpaceBetween size="xs">
 				<RouterLink to="/demos" label="Demos" />
-				<RouterLink to="/banks" label="Banks" />
+				<RouterLink to="/budget" label="Budget" />
 				<RouterLink to="/todos" label="Todos" />
 				<RouterLink to="/account" label="Account" />
 			</SpaceBetween>

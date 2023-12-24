@@ -9,13 +9,8 @@ export const navigationItems = ({
 		return [
 			{
 				type: 'link',
-				text: 'Todos',
-				href: '/todos',
-			},
-			{
-				type: 'link',
-				text: 'Banks',
-				href: '/banks',
+				text: 'Budget',
+				href: '/budget',
 			},
 			{
 				type: 'link',
@@ -48,17 +43,12 @@ export const navigationItems = ({
 			},
 		];
 	}
-	if (pathname.includes('/banks')) {
+	if (pathname.includes('/budget')) {
 		return [
 			{
 				type: 'link',
 				text: 'Home',
-				href: '/banks',
-			},
-			{
-				type: 'link',
-				text: 'Accounts',
-				href: '/banks/accounts',
+				href: '/budget',
 			},
 		];
 	}

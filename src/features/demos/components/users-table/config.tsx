@@ -5,7 +5,7 @@ export type Users = {
 	name: string;
 	username: string;
 	email: string;
-	address: {
+	address1: {
 		street: string;
 		suite: string;
 		city: string;

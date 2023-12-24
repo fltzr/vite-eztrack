@@ -6,12 +6,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import TopNavigation, {
 	type TopNavigationProps,
 } from '@cloudscape-design/components/top-navigation';
-import { selectUser } from '@/features/auth/state/selectors';
-import { signout } from '@/features/auth/state/slice';
 import { ServicesDowndown } from '@/features/layout/components/services-dropdown';
-import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { SettingsModal } from '../settings-modal';
 import styles from './styles.module.scss';
+import { useAppDispatch } from '@/common/hooks';
+import axios from 'axios';
+import { addNotification } from '../../state/slice';
 
 const HeaderPortal = ({ children }: PropsWithChildren) => {
 	const dom = document.querySelector('#h');
@@ -28,9 +28,8 @@ export const Header = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
-	const user = useAppSelector(selectUser);
 
-	const handleMenuDropdownClick: TopNavigationProps.MenuDropdownUtility['onItemClick'] =
+	const _handleMenuDropdownClick: TopNavigationProps.MenuDropdownUtility['onItemClick'] =
 		(event) => {
 			const { id } = event.detail;
 
@@ -47,11 +46,56 @@ export const Header = () => {
 				}
 				case 'sign-out': {
 					event.preventDefault();
-					dispatch(signout());
-					navigate('/auth/signin', {
-						replace: true,
-						state: { from: location.pathname, userSignout: true },
-					});
+					const signout = async () => {
+						await axios.post('/api/signout');
+
+						navigate('/auth/signin', {
+							replace: true,
+							state: { from: location.pathname, userSignout: true },
+						});
+					};
+
+					signout();
+
+					break;
+				}
+				default: {
+					break;
+				}
+			}
+		};
+
+	const handleMenuDropdownClick: TopNavigationProps.MenuDropdownUtility['onItemClick'] =
+		async (event) => {
+			const { id } = event.detail;
+
+			switch (id) {
+				case 'account': {
+					break;
+				}
+				case 'preferences': {
+					break;
+				}
+				case 'sign-out': {
+					console.log('sign-out');
+					event.preventDefault();
+					try {
+						console.log('try block');
+						await axios.post('/api/signout');
+					} catch (error) {
+						dispatch(
+							addNotification({
+								autoDismiss: true,
+								id: `notification-${Date.now()}`,
+								type: 'error',
+								header: 'Operation failed.',
+								content: "That's all we know",
+							}),
+						);
+					} finally {
+						navigate('/auth/signin', { replace: true, state: { from: '/' } });
+					}
+
 					break;
 				}
 				default: {
@@ -84,9 +128,9 @@ export const Header = () => {
 							},
 							{
 								type: 'menu-dropdown',
-								text: `Howdy, ${user?.firstname}!`,
+								text: `Howdy, user!`,
 								iconName: 'user-profile-active',
-								description: user?.email,
+								description: 'user',
 								items: [
 									{
 										id: 'account',
