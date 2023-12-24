@@ -1,5 +1,4 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import Cookies from 'js-cookie';
 import type { User } from '../types';
 
 type AuthState = {
