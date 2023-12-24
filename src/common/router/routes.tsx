@@ -27,33 +27,13 @@ export const routes: RouteObject[] = [
 					},
 				],
 			},
-			{
-				path: 'holidays',
-				handle: {
-					title: () => 'Holidays',
-				},
-				lazy: () => import('@/features/holidays/pages'),
-			},
-			{
-				path: 'demos',
-				handle: {
-					title: () => 'Demos',
-				},
-				children: [
-					{
-						path: 'single-page-form',
-						lazy: () => import('@/features/demos/pages/single-page-form'),
-					},
-					{
-						path: 'wizard',
-						lazy: () => import('@/features/demos/pages/wizard'),
-					},
-					{
-						path: 'table',
-						lazy: () => import('@/features/demos/pages/table'),
-					},
-				],
-			},
+			// {
+			// 	path: 'holidays',
+			// 	handle: {
+			// 		title: () => 'Holidays',
+			// 	},
+			// 	lazy: () => import('@/features/_holidays/pages'),
+			// },
 			{
 				path: 'budget',
 				handle: {
@@ -66,13 +46,13 @@ export const routes: RouteObject[] = [
 					},
 				],
 			},
-			{
-				path: 'todos',
-				handle: {
-					title: () => 'Todos',
-				},
-				lazy: () => import('@/features/todos/pages'),
-			},
+			// {
+			// 	path: 'todos',
+			// 	handle: {
+			// 		title: () => 'Todos',
+			// 	},
+			// 	lazy: () => import('@/features/todos/pages'),
+			// },
 		],
 	},
 	{
