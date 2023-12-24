@@ -1,3 +1,3 @@
-import { ListTodos } from '../components/list-todos';
+// import { ListTodos } from '../components/list-todos';
 
-export const Component = () => <ListTodos />;
+// export const Component = () => <ListTodos />;

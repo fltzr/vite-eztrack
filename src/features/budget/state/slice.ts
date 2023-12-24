@@ -1,11 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { client } from '@/common/api/pocketbase-client';
-import {
-	type LinkTokenResponse,
-	type ExchangePublicTokenResponse,
-	type MultipleBudgetItems,
-	type SingleBudgetItem,
-} from './types';
+import { type MultipleBudgetItems, type SingleBudgetItem } from './types';
 import type { InferredBudgetItemSchema } from '../types';
 
 export const budgetApi = createApi({

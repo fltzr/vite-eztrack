@@ -9,12 +9,13 @@ import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import Link from '@cloudscape-design/components/link';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { client } from '@/common/api/pocketbase-client';
 import { FormDatePicker } from '@/common/components/form/date-picker';
 import { FormInput } from '@/common/components/form/input';
 import { KeyValuePair } from '@/common/components/key-value-pair';
 import { PageLayout } from '@/common/layouts/page-layout';
 import { UserSettings } from '../../components/user-settings';
+import { selectUser } from '../../state/selectors';
+import { useAppSelector } from '@/common/hooks/use-app-selector';
 
 const accountSettingsSchema = z.object({
 	id: z.string(),
@@ -28,20 +29,19 @@ const accountSettingsSchema = z.object({
 type InferredAccountSettingsSchema = z.infer<typeof accountSettingsSchema>;
 
 export const Component = () => {
+	const user = useAppSelector(selectUser);
+
 	const [isEditMode, setIsEditMode] = useState(false);
 	const methods = useForm<InferredAccountSettingsSchema>({
 		resolver: zodResolver(accountSettingsSchema),
 		defaultValues: {
-			id: client.authStore.model?.id,
-			username: client.authStore.model?.username,
-			email: client.authStore.model?.email,
-			firstname: client.authStore.model?.firstname,
-			lastname: client.authStore.model?.lastname,
-			birthdate: client.authStore.model?.birthdate,
+			username: user?.username,
+			email: user?.email,
+			firstname: user?.firstname,
+			lastname: user?.lastname,
+			birthdate: user?.birthdate,
 		},
 	});
-
-	const user = client.authStore.model;
 
 	const toggleEditMode = () => {
 		setIsEditMode((prev) => !prev);
@@ -86,8 +86,8 @@ export const Component = () => {
 						}
 						footer={
 							<SpaceBetween size="s" direction="horizontal">
-								<Box variant="small">Created: {user?.created}</Box>
-								<Box variant="small">Last updated: {user?.updated}</Box>
+								<Box variant="small">Created: </Box>
+								<Box variant="small">Last updated: </Box>
 							</SpaceBetween>
 						}
 					>

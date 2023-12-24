@@ -1,15 +1,15 @@
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { client } from '@/common/api/pocketbase-client';
 import { KeyValuePair } from '@/common/components/key-value-pair';
+import { useAppSelector } from '@/common/hooks';
+import { selectUser } from '../../state/selectors';
 
 export const UserSettings = () => {
-	const user = client.authStore.model;
+	const user = useAppSelector(selectUser);
 
 	return (
 		<ColumnLayout columns={2} variant="text-grid">
 			<SpaceBetween size="l">
-				<KeyValuePair label="Account id">{user?.id}</KeyValuePair>
 				<KeyValuePair label="Username">{user?.username}</KeyValuePair>
 				<KeyValuePair label="Email">{user?.email}</KeyValuePair>
 			</SpaceBetween>
