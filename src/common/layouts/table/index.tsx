@@ -25,6 +25,7 @@ type ReusableTableProps<T> = Partial<TableProps> & {
 	items: T[];
 	loading?: boolean;
 	loadingText?: string;
+	disableFilter?: boolean;
 	onInfoClick?: () => void;
 	onViewClick?: () => void;
 	onEditClick?: () => void;
@@ -36,6 +37,7 @@ export const ReusableTable = <T,>({
 	resource,
 	loading,
 	loadingText,
+	disableFilter = false,
 	...props
 }: ReusableTableProps<T>) => {
 	const tableWidthsStorageKey = `React-${localstorageKeyPrefix}-Table-Widths`;
@@ -114,13 +116,17 @@ export const ReusableTable = <T,>({
 				/>
 			}
 			filter={
-				<PropertyFilter
-					{...propertyFilterProps}
-					expandToViewport
-					countText={getTextFilterCounterText(filteredItemsCount ?? 0)}
-					filteringAriaLabel={`Filter ${resource.toLowerCase()}s`}
-					filteringPlaceholder={`Filter ${resource.toLowerCase()}s`}
-				/>
+				<>
+					{disableFilter ? undefined : (
+						<PropertyFilter
+							{...propertyFilterProps}
+							expandToViewport
+							countText={getTextFilterCounterText(filteredItemsCount ?? 0)}
+							filteringAriaLabel={`Filter ${resource.toLowerCase()}s`}
+							filteringPlaceholder={`Filter ${resource.toLowerCase()}s`}
+						/>
+					)}
+				</>
 			}
 			preferences={
 				<Preferences
