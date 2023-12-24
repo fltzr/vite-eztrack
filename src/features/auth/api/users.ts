@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { User } from '@/common/types/user';
 
-export const createUser = async (user: User) => {
+export const userSignup = async (user: User) => {
 	const response = await axios.post<User>(
 		`${import.meta.env.VITE_API_URI}/signup`,
 		user,
@@ -10,9 +10,9 @@ export const createUser = async (user: User) => {
 	return response.data;
 };
 
-export const signinUser = async (user: Pick<User, 'username' | 'password'>) => {
+export const userSignin = async (user: Pick<User, 'username' | 'password'>) => {
 	const response = await axios.post<Partial<User>>(
-		`${import.meta.env.VITE_API_URI}/login`,
+		`${import.meta.env.VITE_API_URI}/signin`,
 		user,
 	);
 

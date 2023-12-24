@@ -18,7 +18,7 @@ export const UserSettings = () => {
 					{user?.firstname} {user?.lastname}
 				</KeyValuePair>
 				<KeyValuePair label="Birthday">
-					{(user?.birthday as string).split(' ')[0]}
+					{(user?.birthdate as string).split(' ')[0]}
 				</KeyValuePair>
 			</SpaceBetween>
 		</ColumnLayout>

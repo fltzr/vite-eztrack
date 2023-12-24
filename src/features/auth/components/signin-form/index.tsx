@@ -4,20 +4,16 @@ import Button from '@cloudscape-design/components/button';
 import Form from '@cloudscape-design/components/form';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { FormInput } from '@/common/components/form/input';
-import {
-	selectSigninError,
-	selectIsAuthenticating,
-} from '@/features/auth/state/selectors';
 import { type InferredSigninSchema, signinSchema } from '@/features/auth/types';
-import { useAppSelector } from '@/common/hooks';
 
 type SigninFormProps = {
 	handleSignin: (data: InferredSigninSchema) => void;
+	signinState: {
+		isLoading: boolean;
+		isError: boolean;
+	};
 };
-export const SigninForm = ({ handleSignin }: SigninFormProps) => {
-	const isAuthenticating = useAppSelector(selectIsAuthenticating);
-	const serverError = useAppSelector(selectSigninError);
-
+export const SigninForm = ({ handleSignin, signinState }: SigninFormProps) => {
 	const methods = useForm<InferredSigninSchema>({
 		resolver: zodResolver(signinSchema),
 	});
@@ -25,7 +21,7 @@ export const SigninForm = ({ handleSignin }: SigninFormProps) => {
 	return (
 		<SpaceBetween size="m" direction="vertical">
 			<FormProvider {...methods}>
-				<Form errorText={serverError}>
+				<Form>
 					<form
 						id="log-in-form"
 						onSubmit={(event) => {
@@ -36,7 +32,7 @@ export const SigninForm = ({ handleSignin }: SigninFormProps) => {
 							<FormInput<InferredSigninSchema>
 								disableBrowserAutocorrect
 								type="text"
-								name="identity"
+								name="username"
 								placeholder="Email or username"
 								spellcheck={false}
 								autoComplete={false}
@@ -58,7 +54,7 @@ export const SigninForm = ({ handleSignin }: SigninFormProps) => {
 				formAction="submit"
 				form="log-in-form"
 				variant="primary"
-				loading={isAuthenticating}
+				loading={signinState.isLoading}
 				loadingText="Signing in..."
 				disabled={Object.keys(methods.formState.errors).length > 0}
 			>

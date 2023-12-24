@@ -5,7 +5,7 @@ import { BlankTopNavigation } from '@/common/layouts/blank-top-navigation';
 
 import styles from './styles.module.scss';
 
-export const Shell = () => (
+export const Component = () => (
 	<>
 		<BlankTopNavigation />
 		<AppLayout

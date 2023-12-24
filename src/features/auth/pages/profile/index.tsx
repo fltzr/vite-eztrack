@@ -22,7 +22,7 @@ const accountSettingsSchema = z.object({
 	email: z.string().email('Invalid email address.'),
 	firstname: z.string().min(1, 'First name is required.'),
 	lastname: z.string().min(1, 'Last name is required.'),
-	birthday: z.string().min(8, 'Please enter a valid birthday.').max(20),
+	birthdate: z.string().min(8, 'Please enter a valid birthdate.').max(20),
 });
 
 type InferredAccountSettingsSchema = z.infer<typeof accountSettingsSchema>;
@@ -37,7 +37,7 @@ export const Component = () => {
 			email: client.authStore.model?.email,
 			firstname: client.authStore.model?.firstname,
 			lastname: client.authStore.model?.lastname,
-			birthday: client.authStore.model?.birthday,
+			birthdate: client.authStore.model?.birthdate,
 		},
 	});
 
@@ -116,8 +116,8 @@ export const Component = () => {
 											<KeyValuePair label="Last name">
 												<FormInput name="lastname" />
 											</KeyValuePair>
-											<KeyValuePair label="Birthday">
-												<FormDatePicker name="birthday" />
+											<KeyValuePair label="birthdate">
+												<FormDatePicker name="birthdate" />
 											</KeyValuePair>
 										</SpaceBetween>
 									</ColumnLayout>

@@ -10,7 +10,7 @@ export type UserLegacy = {
 	updated: string;
 	firstname: string;
 	lastname: string;
-	birthday: string;
+	birthdate: string;
 	gender: string;
 };
 
@@ -21,12 +21,12 @@ export type User = {
 	firstname: string;
 	lastname: string;
 	gender?: string;
-	birthday: string;
-	phoneNumber: string;
-	address: string;
+	birthdate: string;
+	phone: string;
+	address1: string;
 	address2?: string;
 	city: string;
 	state: string;
-	zip: string;
+	zipcode: string;
 	country: string;
 };

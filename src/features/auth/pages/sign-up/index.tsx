@@ -11,11 +11,7 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 
 import { Divider } from '@/common/components/divider';
 import { SignupForm } from '@/features/auth/components/signup-form';
-import {
-	selectSignupError,
-	selectIsAuthenticated,
-} from '@/features/auth/state/selectors';
-import { signup } from '@/features/auth/state/slice';
+import { selectIsAuthenticated } from '@/features/auth/state/selectors';
 import type { InferredSignupSchema } from '@/features/auth/types';
 import {
 	addNotification,
@@ -33,7 +29,6 @@ export const Component = () => {
 	const location = useLocation();
 
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
-	const serverError = useAppSelector(selectSignupError);
 
 	useEffect(() => {
 		dispatch(setNavigationHidden(true));
@@ -55,15 +50,12 @@ export const Component = () => {
 	) => {
 		try {
 			const normalize = { ...data, email: data.email };
-
-			await dispatch(signup(normalize));
 		} catch (error) {
 			dispatch(
 				addNotification({
 					id: `notification-${Date.now()}`,
 					type: 'error',
 					header: 'Failed to sign up.',
-					content: serverError,
 				}),
 			);
 		}

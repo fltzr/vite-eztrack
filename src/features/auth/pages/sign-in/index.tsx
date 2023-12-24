@@ -10,7 +10,6 @@ import { Divider } from '@/common/components/divider';
 import { CreateAccountButton } from '@/features/auth/components/create-account-button';
 import { SigninForm } from '@/features/auth/components/signin-form';
 import { selectIsAuthenticated } from '@/features/auth/state/selectors';
-import { signin } from '@/features/auth/state/slice';
 import type { InferredSigninSchema } from '@/features/auth/types';
 import {
 	addNotification,
@@ -20,16 +19,17 @@ import {
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { ToggleUiSettings } from '../../components/toggle-ui-settings';
 
+import { useSigninMutation } from '../../state/api';
 import styles from './styles.module.scss';
+import { setUser } from '../../state/slice';
 
 export const Component = () => {
+	const [signin, { isLoading, isError }] = useSigninMutation();
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const state = location.state as { from?: string; userSignout?: boolean } | undefined;
 	const from = state?.from ?? '/';
-
-	console.log(state);
 
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
@@ -46,7 +46,9 @@ export const Component = () => {
 
 	const handleSubmitLogin = async (data: InferredSigninSchema) => {
 		try {
-			await dispatch(signin(data));
+			const payload = await signin(data).unwrap();
+			dispatch(setUser(payload.user));
+			navigate('/', { replace: true });
 		} catch (error) {
 			dispatch(
 				addNotification({
@@ -71,6 +73,7 @@ export const Component = () => {
 						<Box margin={{ top: 'l', bottom: 'xxxl' }}>
 							<SpaceBetween size="s" direction="vertical">
 								<SigninForm
+									signinState={{ isLoading, isError }}
 									handleSignin={(data) => {
 										void handleSubmitLogin(data);
 									}}

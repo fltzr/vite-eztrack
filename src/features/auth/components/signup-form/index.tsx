@@ -93,19 +93,19 @@ export const SignupForm = ({
 								/>
 
 								<FormDatePicker<InferredSignupSchema>
-									name="birthday"
+									name="birthdate"
 									placeholder="YYYY/MM/DD"
 								/>
 							</ColumnLayout>
 
 							<FormInput<InferredSignupSchema>
 								inputMode="tel"
-								name="phoneNumber"
+								name="phone"
 								placeholder="555-555-5555"
 							/>
 
 							<FormInput<InferredSignupSchema>
-								name="address"
+								name="address1"
 								placeholder="Address"
 							/>
 
@@ -127,7 +127,7 @@ export const SignupForm = ({
 
 								<FormInput<InferredSignupSchema>
 									inputMode="numeric"
-									name="zip"
+									name="zipcode"
 									placeholder="Zip"
 								/>
 							</ColumnLayout>
