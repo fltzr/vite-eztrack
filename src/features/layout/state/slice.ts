@@ -12,7 +12,7 @@ import { load, save } from '@/common/utils/local-storage';
 
 type Notification = FlashbarProps.MessageDefinition & { autoDismiss?: boolean };
 
-export interface LayoutState {
+export type LayoutState = {
 	theme: Theme;
 	density: Density;
 	domainTitle: string;
@@ -24,7 +24,7 @@ export interface LayoutState {
 	navigationHidden: boolean;
 	toolsOpen: boolean;
 	toolsHidden: boolean;
-}
+};
 
 const getInitialState = (): LayoutState => {
 	const theme = load<Theme>('theme') ?? Theme.Light;
