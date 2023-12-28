@@ -1,0 +1,86 @@
+{
+	"UI Component": {
+		"scope": "typescriptreact",
+		"prefix": "uic",
+		"body": [
+			"",
+			"type $1Props = {}",
+			"export const $1 = ({ ...props }: $1Props) => {",
+			"",
+			"}"
+		]
+	},
+	"Page Component": {
+		"scope": "typescriptreact",
+		"prefix": "pc",
+		"body": [
+			"import { PageLayout } from '@/common/components/page-layout';",
+			"import { useAppDispatch } from '@/common/hooks';",
+			"",
+			"export const Component = () => {", 
+			"\tconst dipatch = useAppDispatch();",
+			"\n",
+			"return (",
+			"\t<PageLayout title='$2'>",
+			"\t{/* Content */}",
+			"\t</PageLayout>",
+			");"
+			"}"
+		]
+	},
+	"Hook": {
+		"scope": "typescriptreact",
+		"prefix": "hook",
+		"body": [
+			"import { useEffect } from 'react';",
+			"import { useAppDispatch } from '@/common/hooks/use-app-dispatch';",
+			"",
+			"",
+			"export const use$1 = () => {",
+			"\tconst dispatch = useAppDispatch();",
+			"\n\t useEffect(() => { });",
+		]
+	},
+	"Slice": {
+		"scope": "typescriptreact",
+		"prefix": "slice",
+		"body": [
+			"import { createSlice, PayloadAction } from '@reduxjs/toolkit';",
+			"",
+			"type $1State = {",
+			"\t$2",
+			"}".
+			"",
+			"const initialState: $1State = {",
+			"\t$3",
+			"}",
+			"",
+			"const $1Slice = createSlice({",
+			"\tname: '$1',",
+			"\tinitialState,",
+			"\treducers: {",
+			"\t\t$4: (state, action: PayloadAction<$5>) => {",
+			"\t\t\t$6",
+			"\t\t}",
+			"\t}",
+			"});",
+			"",
+			"export const { $4 } = $1Slice.actions;",
+			"export default $1Slice.reducer;"
+		],
+		"description": "Create a slice"
+	},
+	"Route Path": {
+		"scope": "typescriptreact",
+		"prefix": "route",
+		"body": [
+			"{",
+			"\tpath: '$1',",
+			"\tlazy: () => import('$2'),",
+			"\thandle: {",
+			"\t\t$3",
+			"\t}",
+			"}"
+		],
+	}
+}
