@@ -6,13 +6,13 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 import { FormInput } from '@/common/components/form/input';
 import { type InferredSigninSchema, signinSchema } from '@/features/auth/types';
 
-type SigninFormProps = {
+interface SigninFormProps {
 	handleSignin: (data: InferredSigninSchema) => void;
 	signinState: {
 		isLoading: boolean;
 		isError: boolean;
 	};
-};
+}
 export const SigninForm = ({ handleSignin, signinState }: SigninFormProps) => {
 	const methods = useForm<InferredSigninSchema>({
 		resolver: zodResolver(signinSchema),

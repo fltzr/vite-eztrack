@@ -4,7 +4,11 @@
 		"target": "ESNext",
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
-		"lib": ["DOM", "DOM.Iterable", "ESNext"],
+		"lib": [
+			"DOM",
+			"DOM.Iterable",
+			"ESNext"
+		],
 		"jsx": "react-jsx",
 		"composite": false, // you should enable this only for using TS project references. But they are fairly discourages nowadays.
 		"incremental": true,
@@ -26,11 +30,19 @@
 		"allowJs": false,
 		"checkJs": false,
 		"experimentalDecorators": false,
-
 		"paths": {
-			"@/*": ["src/*"]
+			"@/*": [
+				"src/*"
+			]
 		}
 	},
-	"include": ["src"],
-	"references": [{ "path": "./tsconfig.node.json" }]
+	"include": [
+		"src",
+		"vite.config.ts"
+	],
+	"references": [
+		{
+			"path": "./tsconfig.node.json"
+		}
+	]
 }

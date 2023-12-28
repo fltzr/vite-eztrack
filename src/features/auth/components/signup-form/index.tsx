@@ -7,21 +7,15 @@ import SpaceBetween from '@cloudscape-design/components/space-between';
 import { FormDatePicker } from '@/common/components/form/date-picker';
 import { FormInput } from '@/common/components/form/input';
 import { FormSelect } from '@/common/components/form/select';
-import { useAppSelector } from '@/common/hooks/use-app-selector';
-import {
-	selectSignupError,
-	selectIsAuthenticating,
-} from '@/features/auth/state/selectors';
 import { type InferredSignupSchema, signupSchema } from '@/features/auth/types';
 
-export const SignupForm = ({
-	handleSubmitSignup,
-}: {
+interface SignupFormProps {
 	handleSubmitSignup: (data: InferredSignupSchema) => void;
-}) => {
-	const isAuthenticating = useAppSelector(selectIsAuthenticating);
-	const serverError = useAppSelector(selectSignupError);
-
+	signinState: {
+		isLoading: boolean;
+	};
+}
+export const SignupForm = ({ handleSubmitSignup, signinState }: SignupFormProps) => {
 	const methods = useForm<InferredSignupSchema>({
 		resolver: zodResolver(signupSchema),
 	});
@@ -35,13 +29,7 @@ export const SignupForm = ({
 						void methods.handleSubmit(handleSubmitSignup)(event);
 					}}
 				>
-					<Form
-						errorText={
-							Object.keys(methods.formState.errors).length > 0
-								? 'Please correct the errors above'
-								: serverError
-						}
-					>
+					<Form>
 						<SpaceBetween size="m">
 							<ColumnLayout columns={2} minColumnWidth={150}>
 								<FormInput<InferredSignupSchema>
@@ -145,7 +133,7 @@ export const SignupForm = ({
 				formAction="submit"
 				form="signup-form"
 				variant="primary"
-				loading={isAuthenticating}
+				loading={signinState.isLoading}
 				disabled={Object.keys(methods.formState.errors).length > 0}
 			>
 				Create account

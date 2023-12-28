@@ -8,11 +8,11 @@ import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import type { BreadcrumbGroupProps } from '@cloudscape-design/components/breadcrumb-group';
 import type { FlashbarProps } from '@cloudscape-design/components/flashbar';
 import { startAppListening } from '@/common/store/listener-middleware';
-import { load, save } from '@/common/utils';
+import { load, save } from '@/common/utils/local-storage';
 
 type Notification = FlashbarProps.MessageDefinition & { autoDismiss?: boolean };
 
-export type LayoutState = {
+export interface LayoutState {
 	theme: Theme;
 	density: Density;
 	domainTitle: string;
@@ -24,7 +24,7 @@ export type LayoutState = {
 	navigationHidden: boolean;
 	toolsOpen: boolean;
 	toolsHidden: boolean;
-};
+}
 
 const getInitialState = (): LayoutState => {
 	const theme = load<Theme>('theme') ?? Theme.Light;

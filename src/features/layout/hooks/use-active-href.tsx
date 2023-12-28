@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { selectActiveHref } from '../state/selectors';
 import { setActiveHref } from '../state/slice';
+import { useAppDispatch, useAppSelector } from '@/common/hooks';
 
 export const useActiveHref = () => {
 	const dispatch = useAppDispatch();

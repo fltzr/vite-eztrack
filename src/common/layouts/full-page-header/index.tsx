@@ -41,6 +41,7 @@ export const FullPageHeader = ({
 						<Button
 							data-test-id="header-btn-view"
 							disabled={!isOnlyOneItemSelected}
+							onClick={onViewResourceClick}
 						>
 							View
 						</Button>
@@ -49,6 +50,7 @@ export const FullPageHeader = ({
 						<Button
 							data-test-id="header-btn-edit"
 							disabled={!isOnlyOneItemSelected}
+							onClick={onEditResourceClick}
 						>
 							Edit
 						</Button>
@@ -57,12 +59,16 @@ export const FullPageHeader = ({
 						<Button
 							data-test-id="header-btn-delete"
 							disabled={!isOnlyOneItemSelected}
+							onClick={onDeleteResourceClick}
 						>
 							Delete
 						</Button>
 					)}
 					{onCreateResourceClick && createButtonText && (
-						<Button data-test-id="header-btn-create">
+						<Button
+							data-test-id="header-btn-create"
+							onClick={onCreateResourceClick}
+						>
 							{createButtonText}
 						</Button>
 					)}

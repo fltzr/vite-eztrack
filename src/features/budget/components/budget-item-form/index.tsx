@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Box from '@cloudscape-design/components/box';
@@ -8,18 +9,18 @@ import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { FormInput } from '@/common/components/form/input';
 import { FormSelect } from '@/common/components/form/select';
-import { type InferredBudgetItemSchema, budgetItemSchema } from '@/features/budget/types';
+import {
+	type InferredSubmitBudgetItemSchema,
+	submitBudgetItemSchema,
+} from '@/features/budget/types';
 
-type BudgetItemFormProps = {
-	onSubmitBudgetItem: (data: InferredBudgetItemSchema) => void;
-};
+interface BudgetItemFormProps {
+	onSubmitBudgetItem: (data: InferredSubmitBudgetItemSchema) => void;
+}
 
 export const BudgetItemForm = ({ ...props }: BudgetItemFormProps) => {
-	const methods = useForm<InferredBudgetItemSchema>({
-		resolver: zodResolver(budgetItemSchema),
-		defaultValues: {
-			id: `budget-item-${Date.now()}`,
-		},
+	const methods = useForm<InferredSubmitBudgetItemSchema>({
+		resolver: zodResolver(submitBudgetItemSchema),
 	});
 
 	return (
@@ -32,7 +33,7 @@ export const BudgetItemForm = ({ ...props }: BudgetItemFormProps) => {
 					<Button
 						fullWidth
 						formAction="submit"
-						form="budget-item-form"
+						form="create-budget-item-form"
 						variant="primary"
 						disabled={Object.keys(methods.formState.errors).length > 0}
 					>
@@ -44,23 +45,20 @@ export const BudgetItemForm = ({ ...props }: BudgetItemFormProps) => {
 			<FormProvider {...methods}>
 				<Form variant="embedded">
 					<form
-						id="budget-item-form"
+						id="create-budget-item-form"
 						onSubmit={(event) => {
 							void methods.handleSubmit(props.onSubmitBudgetItem)(event);
-							methods.reset({
-								id: `budget-item-${Date.now()}`,
-							});
 						}}
 					>
 						<SpaceBetween size="m" direction="vertical">
-							<FormInput<InferredBudgetItemSchema>
+							<FormInput<InferredSubmitBudgetItemSchema>
 								ariaRequired
 								name="title"
 								label="Item name"
 								autoComplete={false}
 								clearAriaLabel="Clear"
 							/>
-							<FormInput<InferredBudgetItemSchema>
+							<FormInput<InferredSubmitBudgetItemSchema>
 								ariaRequired
 								disableBrowserAutocorrect
 								autoComplete={false}
@@ -70,13 +68,13 @@ export const BudgetItemForm = ({ ...props }: BudgetItemFormProps) => {
 								inputMode="decimal"
 								clearAriaLabel="Clear"
 							/>
-							{/* type BudgetCatagories = 'Shopping' | 'Bills' | 'Savings' | 'Loans' | 'Food' | 'Misc'; */}
-							<FormSelect<InferredBudgetItemSchema>
+							<FormSelect<InferredSubmitBudgetItemSchema>
 								name="category"
 								label="Category"
 								options={[
 									{ label: 'Shopping', value: 'shopping' },
 									{ label: 'Bills', value: 'bills' },
+									{ label: 'Subscriptions', value: 'subscriptions' },
 									{ label: 'Savings', value: 'loans' },
 									{ label: 'Food', value: 'food' },
 									{ label: 'Misc.', value: 'misc' },

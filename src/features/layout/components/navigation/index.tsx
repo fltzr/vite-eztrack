@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import SideNavigation from '@cloudscape-design/components/side-navigation';
-import { useAppSelector } from '@/common/hooks';
 import { selectActiveHref, selectDomainTitle } from '../../state/selectors';
 import { navigationItems } from './navigation-items';
+import { useAppSelector } from '@/common/hooks';
 
 export const Navigation = () => {
 	const navigate = useNavigate();

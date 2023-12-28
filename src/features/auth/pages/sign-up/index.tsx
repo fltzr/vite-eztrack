@@ -2,13 +2,14 @@
 import { useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-
+import { ToggleUiSettings } from '../../components/toggle-ui-settings';
+import { useSignupMutation } from '../../state/api';
+import styles from './styles.module.scss';
 import { Divider } from '@/common/components/divider';
 import { SignupForm } from '@/features/auth/components/signup-form';
 import { selectIsAuthenticated } from '@/features/auth/state/selectors';
@@ -20,13 +21,12 @@ import {
 } from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 
-import { ToggleUiSettings } from '../../components/toggle-ui-settings';
-import styles from './styles.module.scss';
-
 export const Component = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
+
+	const [signup, { isLoading, isSuccess, isError }] = useSignupMutation();
 
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
@@ -50,6 +50,8 @@ export const Component = () => {
 	) => {
 		try {
 			const normalize = { ...data, email: data.email };
+
+			await signup(normalize).unwrap();
 		} catch (error) {
 			dispatch(
 				addNotification({
@@ -73,7 +75,10 @@ export const Component = () => {
 				>
 					<Box margin={{ top: 'xl' }}>
 						<SpaceBetween size="m">
-							<SignupForm handleSubmitSignup={handleSubmitSignup} />
+							<SignupForm
+								handleSubmitSignup={handleSubmitSignup}
+								signinState={{ isLoading }}
+							/>
 							<Divider>Have an eztrack account?</Divider>
 							<Box margin={{ left: 'xxxl', right: 'xxxl' }}>
 								<Button

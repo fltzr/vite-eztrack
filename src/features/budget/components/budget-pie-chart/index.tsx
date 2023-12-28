@@ -2,18 +2,22 @@ import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
 import PieChart, { type PieChartProps } from '@cloudscape-design/components/pie-chart';
+import { toNumber } from 'lodash-es';
 import type { InferredBudgetItemSchema } from '../../types';
 
-type BudgetPieChartProps = {
+interface BudgetPieChartProps {
 	statusType: PieChartProps['statusType'];
 	budgetItems?: InferredBudgetItemSchema[];
 	totalIncome: number;
-};
+}
 
 export const BudgetPieChart = ({ ...props }: BudgetPieChartProps) => {
 	const remainingBudget = props.budgetItems
 		? props.totalIncome -
-			props.budgetItems.reduce((prev, curr) => prev + curr.value, 0)
+			props.budgetItems.reduce(
+				(prev, curr) => toNumber(prev) + toNumber(curr.value),
+				0,
+			)
 		: 0;
 
 	return (

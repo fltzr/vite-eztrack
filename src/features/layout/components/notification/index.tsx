@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from 'react';
 import Flashbar from '@cloudscape-design/components/flashbar';
-import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import { selectNotifications } from '../../state/selectors';
 import { removeNotification } from '../../state/slice';
+import { useAppDispatch, useAppSelector } from '@/common/hooks';
 
 export const Notification = () => {
 	const dispatch = useAppDispatch();

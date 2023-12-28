@@ -2,12 +2,12 @@
 /* eslint-disable react/no-multi-comp */
 import styles from './styles.module.scss';
 
-type TableRowProps = {
+interface TableRowProps {
 	offset: number;
 	separator?: boolean;
 	compact?: boolean;
 	isHeader?: boolean;
-};
+}
 
 /* Generate a singlar specified on a svg */
 
@@ -44,11 +44,11 @@ export const TableRow = ({
 	);
 };
 
-type TableRowsProps = {
+interface TableRowsProps {
 	offsetTop: number;
 	rows: number;
 	compact?: boolean;
-};
+}
 
 export const TableRows = ({ offsetTop, rows, compact = false }: TableRowsProps) => {
 	const distance = compact ? 10 : 13;

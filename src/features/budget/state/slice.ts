@@ -1,27 +1,45 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { type MultipleBudgetItems, type SingleBudgetItem } from './types';
 import type { InferredBudgetItemSchema } from '../types';
+import type { MultipleBudgetItems, SingleBudgetItem } from './types';
 
 export const budgetApi = createApi({
 	reducerPath: 'budgetApi',
 	baseQuery: fetchBaseQuery({ baseUrl: '/api/' }),
+	tagTypes: ['BudgetItem'],
 	endpoints: (builder) => ({
 		fetchBudgetItems: builder.query<MultipleBudgetItems, void>({
 			query: () => '/bank/budget-item/fetch',
+			providesTags: (result) =>
+				result
+					? [
+							...result.items.map(({ id }) => ({
+								type: 'BudgetItem' as const,
+								id,
+							})),
+							'BudgetItem',
+						]
+					: ['BudgetItem'],
 		}),
-		createBudgetItem: builder.mutation<void, SingleBudgetItem>({
+		createBudgetItem: builder.mutation<
+			{ item: InferredBudgetItemSchema; messaage: string },
+			SingleBudgetItem
+		>({
 			query: (data) => ({
 				url: '/bank/budget-item/create',
 				method: 'POST',
 				body: data,
 			}),
+			invalidatesTags: (result) => [
+				{ type: 'BudgetItem', id: result?.item.id },
+				'BudgetItem',
+			],
 		}),
 		deleteBudgetItem: builder.mutation<void, Pick<InferredBudgetItemSchema, 'id'>>({
 			query: (data) => ({
-				url: '/bank/budget-item/delete',
+				url: `/bank/budget-item/delete/${data.id}`,
 				method: 'DELETE',
-				body: data,
 			}),
+			invalidatesTags: () => ['BudgetItem'],
 		}),
 	}),
 });

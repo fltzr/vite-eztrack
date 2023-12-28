@@ -6,13 +6,13 @@ import Modal from '@cloudscape-design/components/modal';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import styles from './styles.module.scss';
 
-type ConfirmDeleteModalProps = {
+interface ConfirmDeleteModalProps {
 	visible: boolean;
 	onDismiss: () => void;
 	confirmDelete: () => void;
 	resource: string;
 	quantity: number;
-};
+}
 export const ConfirmDeleteModal = ({ ...props }: ConfirmDeleteModalProps) => (
 	<Modal
 		size="medium"

@@ -2,7 +2,7 @@ import { format, isValid, parseISO } from 'date-fns';
 
 export const isValidIsoDate = (date: string) => isValid(parseISO(date));
 
-type ParseValueParams = { value: string; defaultTime: string };
+interface ParseValueParams { value: string; defaultTime: string }
 export const parseValue = ({ value, defaultTime = '' }: ParseValueParams) => {
 	const [dateValue = '', timeValue = ''] = value.split('T');
 

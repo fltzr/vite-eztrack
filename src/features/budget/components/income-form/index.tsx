@@ -5,12 +5,12 @@ import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
 import Form from '@cloudscape-design/components/form';
 import Header from '@cloudscape-design/components/header';
-import { FormInput } from '@/common/components/form/input';
 import { incomeSchema, type InferredIncomeSchema } from '../../types';
+import { FormInput } from '@/common/components/form/input';
 
-type IncomeFormProps = {
+interface IncomeFormProps {
 	onSubmitIncome: (data: InferredIncomeSchema) => void;
-};
+}
 
 export const IncomeForm = ({ onSubmitIncome }: IncomeFormProps) => {
 	const methods = useForm<InferredIncomeSchema>({

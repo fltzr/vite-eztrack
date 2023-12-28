@@ -7,6 +7,7 @@ export const signinSchema = z.object({
 
 export const signupSchema = z
 	.object({
+		id: z.string().optional(),
 		email: z.string().email('This will be what you use to sign in.'),
 		username: z.string().min(3, 'Username is required.').max(10),
 		password: z.string().min(8, 'Please enter a valid password.').max(20),

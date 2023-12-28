@@ -1,9 +1,9 @@
-import type { InferredBudgetItemSchema } from '../types';
+import type { InferredBudgetItemSchema, InferredSubmitBudgetItemSchema } from '../types';
 
-export type SingleBudgetItem = {
-	item: InferredBudgetItemSchema;
-};
+export interface SingleBudgetItem {
+	item: InferredSubmitBudgetItemSchema;
+}
 
-export type MultipleBudgetItems = {
+export interface MultipleBudgetItems {
 	items: InferredBudgetItemSchema[];
-};
+}

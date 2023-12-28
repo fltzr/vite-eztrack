@@ -1,11 +1,11 @@
 import { Density, Mode } from '@cloudscape-design/global-styles';
 import Button from '@cloudscape-design/components/button';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import styles from './styles.module.scss';
 import { selectDensity, selectTheme } from '@/features/layout/state/selectors';
 import { setDensity, setTheme } from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
 
-import styles from './styles.module.scss';
 
 export const ToggleUiSettings = () => {
 	const dispatch = useAppDispatch();

@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { load, save } from '../utils';
+import { load, save } from '../utils/local-storage';
 
-type UseLocalStorageProps<T> = {
+interface UseLocalStorageProps<T> {
 	localstorageKey: string;
 	initialValue: T;
-};
+}
 
 export const useLocalStorage = <T>({
 	localstorageKey,

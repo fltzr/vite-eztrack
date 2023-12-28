@@ -4,7 +4,7 @@ import { capitalize } from 'lodash-es';
 import type { TableProps } from '@cloudscape-design/components/table';
 import { DateTimeForm } from '../layouts/table/date-time-form';
 
-export type TableColumnWidth = { id: string; width: number };
+export interface TableColumnWidth { id: string; width: number }
 export type TableColumnDefinition<T> = Omit<
 	TableProps.ColumnDefinition<T>,
 	'id' | 'width'
@@ -15,10 +15,10 @@ export type TableColumnDefinition<T> = Omit<
 		isDateTime?: boolean;
 	};
 
-type AddWidthToColumnDefinitionsParams<T> = {
+interface AddWidthToColumnDefinitionsParams<T> {
 	columnDefinitions: TableColumnDefinition<T>[];
 	columnWidthsArray: TableColumnWidth[];
-};
+}
 
 export const addWidthToColumnDefinitions = <T>({
 	columnDefinitions,
@@ -33,10 +33,10 @@ export const addWidthToColumnDefinitions = <T>({
 		};
 	});
 
-type MapWidthWithColumnDefinitionIdsParams<T> = {
+interface MapWidthWithColumnDefinitionIdsParams<T> {
 	columnDefinitions: TableColumnDefinition<T>[];
 	widths: readonly number[];
-};
+}
 
 export const mapWidthWithColumnDefinitionIds = <T>({
 	columnDefinitions,
@@ -50,10 +50,10 @@ export const mapWidthWithColumnDefinitionIds = <T>({
 export const getTextFilterCounterText = (count: number) =>
 	`${count} ${count === 1 ? 'match' : 'matches'}`;
 
-type GetHeaderCounterTextParams = {
+interface GetHeaderCounterTextParams {
 	items: readonly unknown[];
 	selectedItems?: readonly unknown[];
-};
+}
 export const getHeaderCounterText = ({
 	items,
 	selectedItems,

@@ -5,7 +5,10 @@ import Box from '@cloudscape-design/components/box';
 import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-
+import { ToggleUiSettings } from '../../components/toggle-ui-settings';
+import { useSigninMutation } from '../../state/api';
+import { setUser } from '../../state/slice';
+import styles from './styles.module.scss';
 import { Divider } from '@/common/components/divider';
 import { CreateAccountButton } from '@/features/auth/components/create-account-button';
 import { SigninForm } from '@/features/auth/components/signin-form';
@@ -17,11 +20,6 @@ import {
 	setToolsHidden,
 } from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
-import { ToggleUiSettings } from '../../components/toggle-ui-settings';
-
-import { useSigninMutation } from '../../state/api';
-import styles from './styles.module.scss';
-import { setUser } from '../../state/slice';
 
 export const Component = () => {
 	const [signin, { isLoading, isError }] = useSigninMutation();
@@ -47,16 +45,21 @@ export const Component = () => {
 	const handleSubmitLogin = async (data: InferredSigninSchema) => {
 		try {
 			const payload = await signin(data).unwrap();
+
 			dispatch(setUser(payload.user));
 			navigate('/', { replace: true });
 		} catch (error) {
-			dispatch(
-				addNotification({
-					id: `notification-${Date.now()}`,
-					type: 'error',
-					content: 'Failed to sign in. Please try again.',
-				}),
-			);
+			if (error instanceof Error) {
+				dispatch(
+					addNotification({
+						autoDismiss: true,
+						id: `notification-${Date.now()}`,
+						type: 'error',
+						header: 'Operation failed.',
+						content: `Error: ${error.message}`,
+					}),
+				);
+			}
 		}
 	};
 

@@ -1,10 +1,10 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { User } from '../types';
 
-type AuthState = {
+interface AuthState {
 	isAuthenticated: boolean | null;
 	user: Partial<User> | null;
-};
+}
 
 const initialState: AuthState = {
 	isAuthenticated: false,

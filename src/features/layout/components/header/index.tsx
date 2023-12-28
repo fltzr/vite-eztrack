@@ -2,16 +2,16 @@
 import { type PropsWithChildren, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import TopNavigation, {
 	type TopNavigationProps,
 } from '@cloudscape-design/components/top-navigation';
-import { ServicesDowndown } from '@/features/layout/components/services-dropdown';
-import { SettingsModal } from '../settings-modal';
-import styles from './styles.module.scss';
-import { useAppDispatch } from '@/common/hooks';
 import axios from 'axios';
+import { SettingsModal } from '../settings-modal';
 import { addNotification } from '../../state/slice';
+import styles from './styles.module.scss';
+import { ServicesDowndown } from '@/features/layout/components/services-dropdown';
+import { useAppDispatch } from '@/common/hooks';
+import { useSignoutMutation } from '@/features/auth/state/api';
 
 const HeaderPortal = ({ children }: PropsWithChildren) => {
 	const dom = document.querySelector('#h');
@@ -29,41 +29,7 @@ export const Header = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	const _handleMenuDropdownClick: TopNavigationProps.MenuDropdownUtility['onItemClick'] =
-		(event) => {
-			const { id } = event.detail;
-
-			switch (id) {
-				case 'account': {
-					event.preventDefault();
-					navigate('/account', { replace: true });
-					break;
-				}
-				case 'preferences': {
-					event.preventDefault();
-					navigate('/preferences', { replace: true });
-					break;
-				}
-				case 'sign-out': {
-					event.preventDefault();
-					const signout = async () => {
-						await axios.post('/api/signout');
-
-						navigate('/auth/signin', {
-							replace: true,
-							state: { from: location.pathname, userSignout: true },
-						});
-					};
-
-					signout();
-
-					break;
-				}
-				default: {
-					break;
-				}
-			}
-		};
+	const [signout] = useSignoutMutation();
 
 	const handleMenuDropdownClick: TopNavigationProps.MenuDropdownUtility['onItemClick'] =
 		async (event) => {
@@ -77,11 +43,9 @@ export const Header = () => {
 					break;
 				}
 				case 'sign-out': {
-					console.log('sign-out');
 					event.preventDefault();
 					try {
-						console.log('try block');
-						await axios.post('/api/signout');
+						await signout({}).unwrap();
 					} catch (error) {
 						dispatch(
 							addNotification({

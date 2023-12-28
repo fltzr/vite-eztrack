@@ -15,7 +15,15 @@ export const budgetItemSchema = z.object({
 	category: z.string(),
 });
 
+export const submitBudgetItemSchema = z.object({
+	title: z.string(),
+	value: z.string().transform((value) => parseFloat(value)),
+	category: z.string(),
+});
+
 export type InferredBudgetItemSchema = z.infer<typeof budgetItemSchema>;
+
+export type InferredSubmitBudgetItemSchema = z.infer<typeof submitBudgetItemSchema>;
 
 export const incomeSchema = z.object({
 	income: z.string(),

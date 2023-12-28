@@ -1,75 +1,67 @@
 import type { RouteObject } from 'react-router-dom';
-import { AppContainer } from '@/app-container';
+import { AppContainer } from '@/app/app-container';
+import { AuthContainer } from '@/auth-container';
 import { ErrorComponent } from '@/common/layouts/error-component';
 
 export const routes: RouteObject[] = [
 	{
-		path: '/',
-		element: <AppContainer />,
-		errorElement: <ErrorComponent />,
+		element: <AuthContainer />,
 		children: [
 			{
-				index: true,
-				lazy: () => import('@/features/home/pages'),
-				handle: {
-					title: () => 'Home',
-				},
-			},
-			{
-				path: 'account',
-				handle: {
-					title: () => 'Account',
-				},
+				path: '/',
+				element: <AppContainer />,
+				errorElement: <ErrorComponent />,
 				children: [
 					{
 						index: true,
-						lazy: () => import('@/features/auth/pages/profile'),
+						lazy: () => import('@/features/home/pages'),
+						handle: {
+							title: () => 'Home',
+						},
+					},
+					{
+						path: 'account',
+						handle: {
+							title: () => 'Account',
+						},
+						children: [
+							{
+								index: true,
+								lazy: () => import('@/features/auth/pages/profile'),
+							},
+						],
+					},
+					{
+						path: 'budget',
+						handle: {
+							title: () => 'Budgets',
+						},
+						children: [
+							{
+								index: true,
+								lazy: () => import('@/features/budget/pages/budget'),
+							},
+						],
 					},
 				],
 			},
-			// {
-			// 	path: 'holidays',
-			// 	handle: {
-			// 		title: () => 'Holidays',
-			// 	},
-			// 	lazy: () => import('@/features/_holidays/pages'),
-			// },
 			{
-				path: 'budget',
-				handle: {
-					title: () => 'Budgets',
-				},
+				path: 'auth',
+				lazy: () => import('@/features/auth/pages'),
 				children: [
 					{
-						index: true,
-						lazy: () => import('@/features/budget/pages/budget'),
+						path: 'signin',
+						lazy: () => import('@/features/auth/pages/sign-in'),
+					},
+					{
+						path: 'signup',
+						lazy: () => import('@/features/auth/pages/sign-up'),
+					},
+					{
+						path: 'verify',
+						lazy: () => import('@/features/auth/pages/verify-email'),
 					},
 				],
-			},
-			// {
-			// 	path: 'todos',
-			// 	handle: {
-			// 		title: () => 'Todos',
-			// 	},
-			// 	lazy: () => import('@/features/todos/pages'),
-			// },
-		],
-	},
-	{
-		path: 'auth',
-		lazy: () => import('@/features/auth/components/shell'),
-		children: [
-			{
-				path: 'signin',
-				lazy: () => import('@/features/auth/pages/sign-in'),
-			},
-			{
-				path: 'signup',
-				lazy: () => import('@/features/auth/pages/sign-up'),
-			},
-			{
-				path: 'verify',
-				lazy: () => import('@/features/auth/pages/verify-email'),
 			},
 		],
 	},

@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
+import { setBreadcrumbs } from '../state/slice';
 import { useAppDispatch } from '@/common/hooks/use-app-dispatch';
 import { useTypedMatches } from '@/common/hooks/use-typed-matches';
-import { setBreadcrumbs } from '../state/slice';
 
 export const useBreadcrumbs = () => {
 	const dispatch = useAppDispatch();

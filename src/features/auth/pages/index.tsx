@@ -1,13 +1,10 @@
 import { Navigate } from 'react-router-dom';
-import { load } from '@/common/utils';
+import { selectIsAuthenticated } from '../state/selectors';
+import { useAppSelector } from '@/common/hooks';
+import { Shell } from '@/features/layout/components/shell';
 
 export const Component = () => {
-	const token = load('auth');
+	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
-	if (!token) {
-		return <Navigate replace to="/auth/signin" />;
-	}
-	console.log('Token found, send to app');
-
-	return <Navigate replace to="/" />;
+	return <>{isAuthenticated ? <Shell /> : <Navigate replace to="/" />}</>;
 };

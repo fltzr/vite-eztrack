@@ -1,5 +1,10 @@
 import type { PropsWithChildren } from 'react';
 import AppLayout from '@cloudscape-design/components/app-layout';
+import { setNavigationOpen, setToolsOpen } from '../../state/slice';
+import { Breadcrumbs } from '../breadcrumbs';
+import { Navigation } from '../navigation';
+import { Notification } from '../notification';
+import { useAppDispatch, useAppSelector } from '@/common/hooks';
 import {
 	selectBreadcrumbs,
 	selectNavigationHidden,
@@ -8,11 +13,6 @@ import {
 	selectToolsHidden,
 	selectToolsOpen,
 } from '@/features/layout/state/selectors';
-import { useAppDispatch, useAppSelector } from '@/common/hooks';
-import { setNavigationOpen, setToolsOpen } from '../../state/slice';
-import { Breadcrumbs } from '../breadcrumbs';
-import { Navigation } from '../navigation';
-import { Notification } from '../notification';
 
 export const Shell = ({ children }: PropsWithChildren) => {
 	const dispatch = useAppDispatch();

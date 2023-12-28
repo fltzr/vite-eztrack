@@ -5,6 +5,8 @@ import type { CollectionPreferencesProps } from '@cloudscape-design/components/c
 import Pagination from '@cloudscape-design/components/pagination';
 import PropertyFilter from '@cloudscape-design/components/property-filter';
 import Table, { type TableProps } from '@cloudscape-design/components/table';
+import { FullPageHeader } from '../full-page-header';
+import { TableEmptyState, TableNoMatchState } from './states';
 import { Preferences } from '@/common/components/preferences';
 import { useColumnWidths } from '@/common/hooks/use-column-widths';
 import { useLocalStorage } from '@/common/hooks/use-local-storage';
@@ -15,8 +17,6 @@ import {
 	getTextFilterCounterText,
 	type TableColumnDefinition,
 } from '@/common/utils/table-utils';
-import { FullPageHeader } from '../full-page-header';
-import { TableEmptyState, TableNoMatchState } from './states';
 
 type ReusableTableProps<T> = Partial<TableProps> & {
 	localstorageKeyPrefix: string;
@@ -29,10 +29,10 @@ type ReusableTableProps<T> = Partial<TableProps> & {
 	onInfoClick?: () => void;
 	onViewClick?: () => void;
 	onEditClick?: () => void;
-	onDeleteClick?: () => void;
+	onDeleteClick?: (id: string) => void;
 	onCreateClick?: () => void;
 };
-export const ReusableTable = <T,>({
+export const ReusableTable = <T extends { id: string }>({
 	localstorageKeyPrefix,
 	resource,
 	loading,
@@ -103,16 +103,18 @@ export const ReusableTable = <T,>({
 			header={
 				<FullPageHeader
 					title={`${capitalize(resource)}s`}
-					selectedItemsCount={collectionProps.selectedItems?.length ?? 0}
+					selectedItemsCount={selectedItems.length}
 					counter={getHeaderCounterText({
 						items,
-						selectedItems: collectionProps.selectedItems,
+						selectedItems,
 					})}
 					onInfoLinkClick={props.onInfoClick}
 					onViewResourceClick={props.onViewClick}
 					onEditResourceClick={props.onEditClick}
-					onDeleteResourceClick={props.onDeleteClick}
 					onCreateResourceClick={props.onCreateClick}
+					onDeleteResourceClick={() => {
+						props.onDeleteClick && props.onDeleteClick(selectedItems[0]?.id);
+					}}
 				/>
 			}
 			filter={
@@ -140,9 +142,6 @@ export const ReusableTable = <T,>({
 			}
 			onSelectionChange={(event) => {
 				setSelectedItems(event.detail.selectedItems);
-				console.log(
-					`selectedItems: ${JSON.stringify(event.detail.selectedItems)}`,
-				);
 			}}
 			onColumnWidthsChange={(event) => {
 				console.log(

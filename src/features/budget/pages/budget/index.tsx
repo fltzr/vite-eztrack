@@ -1,24 +1,31 @@
 import { useState } from 'react';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { PageLayout } from '@/common/layouts/page-layout';
 import { BudgetItemForm } from '../../components/budget-item-form';
 import { BudgetItemTable } from '../../components/budget-item-table';
 import { BudgetPieChart } from '../../components/budget-pie-chart';
 import { IncomeForm } from '../../components/income-form';
-import type { InferredBudgetItemSchema, InferredIncomeSchema } from '../../types';
+import type { InferredIncomeSchema, InferredSubmitBudgetItemSchema } from '../../types';
 import { useCreateBudgetItemMutation, useFetchBudgetItemsQuery } from '../../state/slice';
+import { PageLayout } from '@/common/layouts/page-layout';
 import { useAppDispatch } from '@/common/hooks';
 import { addNotification } from '@/features/layout/state/slice';
 
 export const Component = () => {
 	const dispatch = useAppDispatch();
 
-	const { data, isLoading, error } = useFetchBudgetItemsQuery();
-	const [createBudgetItem] = useCreateBudgetItemMutation();
+	const {
+		data,
+		isLoading: isLoadingFetchBudgetItems,
+		error,
+	} = useFetchBudgetItemsQuery();
+	const [
+		createBudgetItem,
+		{ isLoading: isLoadingCreateBudgetItem, isSuccess, isError },
+	] = useCreateBudgetItemMutation();
 	const [totalIncome, setTotalIncome] = useState<number>(0);
 
-	const handleSubmitBudgetItem = async (data: InferredBudgetItemSchema) => {
+	const handleSubmitBudgetItem = async (data: InferredSubmitBudgetItemSchema) => {
 		try {
 			await createBudgetItem({ item: data }).unwrap();
 			dispatch(
@@ -55,17 +62,12 @@ export const Component = () => {
 						<IncomeForm onSubmitIncome={handleTotalIncome} />
 					</SpaceBetween>
 					<BudgetPieChart
-						statusType={isLoading ? 'loading' : 'finished'}
+						statusType={isLoadingCreateBudgetItem ? 'loading' : 'finished'}
 						budgetItems={data?.items ?? []}
 						totalIncome={totalIncome}
 					/>
 				</ColumnLayout>
-				<BudgetItemTable
-					budgetItems={data?.items ?? []}
-					handleDeleteBudgetItem={(id) => {
-						console.log(id);
-					}}
-				/>
+				<BudgetItemTable budgetItems={data?.items ?? []} />
 			</SpaceBetween>
 		</PageLayout>
 	);

@@ -1,8 +1,8 @@
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import { selectUser } from '../../state/selectors';
 import { KeyValuePair } from '@/common/components/key-value-pair';
 import { useAppSelector } from '@/common/hooks';
-import { selectUser } from '../../state/selectors';
 
 export const UserSettings = () => {
 	const user = useAppSelector(selectUser);
