@@ -2,13 +2,22 @@
 /// <reference types="vite/client" />
 
 import { resolve } from 'path';
-import { defineConfig, splitVendorChunkPlugin } from 'vite';
+import { type Plugin, defineConfig, splitVendorChunkPlugin } from 'vite';
 import tsConfigPaths from 'vite-tsconfig-paths';
 import react from '@vitejs/plugin-react-swc';
+import million from 'million/compiler';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { browserslistToTargets } from 'lightningcss';
+import browserslist from 'browserslist';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [react(), tsConfigPaths(), splitVendorChunkPlugin()],
+	plugins: [
+		million.vite({ auto: true }),
+		react(),
+		tsConfigPaths(),
+		splitVendorChunkPlugin(),
+		visualizer() as Plugin,
+	],
 
 	resolve: {
 		alias: {
@@ -17,6 +26,13 @@ export default defineConfig({
 				__dirname,
 				'./src-theme/design-tokens',
 			),
+		},
+	},
+
+	css: {
+		transformer: 'lightningcss',
+		lightningcss: {
+			targets: browserslistToTargets(browserslist('>=0.25%')),
 		},
 	},
 
@@ -41,6 +57,7 @@ export default defineConfig({
 	build: {
 		outDir: 'dist',
 		emptyOutDir: true,
+		cssMinify: 'lightningcss',
 		rollupOptions: {
 			output: {
 				experimentalMinChunkSize: 500,
@@ -50,6 +67,9 @@ export default defineConfig({
 				manualChunks: (id) => {
 					if (id.includes('components/spinner')) {
 						return 'spinner';
+					}
+					if (id.includes('react-dom')) {
+						return 'react-dom';
 					}
 				},
 			},
