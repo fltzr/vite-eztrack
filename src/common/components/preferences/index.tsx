@@ -8,14 +8,14 @@ import {
 	type TableColumnDefinition,
 } from '@/common/utils/table-utils';
 
-interface PreferencesProps {
+type PreferencesProps = {
 	resource: string;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	items: TableColumnDefinition<any>[];
 	preferences: CollectionPreferencesProps.Preferences;
 	setPreferences: CollectionPreferencesProps['onConfirm'];
 	disabled?: boolean;
-}
+};
 export const Preferences = ({ ...props }: PreferencesProps) => {
 	const contentDisplayOptions = createContentDisplayOptions(props.items);
 	const pageSizeOptions = createPageSizeOptions(props.resource);

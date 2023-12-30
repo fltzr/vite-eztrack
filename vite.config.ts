@@ -1,14 +1,14 @@
 /// <reference types="vitest" />
 /// <reference types="vite/client" />
 
-import { resolve } from 'path';
 import { type Plugin, defineConfig, splitVendorChunkPlugin } from 'vite';
 import tsConfigPaths from 'vite-tsconfig-paths';
+import { resolve } from 'path';
 import react from '@vitejs/plugin-react-swc';
+import browserslist from 'browserslist';
+import { browserslistToTargets } from 'lightningcss';
 import million from 'million/compiler';
 import { visualizer } from 'rollup-plugin-visualizer';
-import { browserslistToTargets } from 'lightningcss';
-import browserslist from 'browserslist';
 
 export default defineConfig({
 	plugins: [

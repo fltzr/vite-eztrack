@@ -9,13 +9,13 @@ import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import Link from '@cloudscape-design/components/link';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { UserSettings } from '../../components/user-settings';
-import { selectUser } from '../../state/selectors';
 import { FormDatePicker } from '@/common/components/form/date-picker';
 import { FormInput } from '@/common/components/form/input';
 import { KeyValuePair } from '@/common/components/key-value-pair';
-import { PageLayout } from '@/common/layouts/page-layout';
 import { useAppSelector } from '@/common/hooks/use-app-selector';
+import { PageLayout } from '@/common/layouts/page-layout';
+import { UserSettings } from '../../components/user-settings';
+import { selectUser } from '../../state/selectors';
 
 const accountSettingsSchema = z.object({
 	id: z.string(),

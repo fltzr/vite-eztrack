@@ -1,5 +1,5 @@
-import type { InferredBudgetItemSchema } from '../../types';
 import type { TableColumnDefinition } from '@/common/utils/table-utils';
+import type { InferredBudgetItemSchema } from '../../types';
 
 export const budgetItemColumnDefinition: TableColumnDefinition<InferredBudgetItemSchema>[] =
 	[

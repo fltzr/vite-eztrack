@@ -1,33 +1,27 @@
 import { useState } from 'react';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 import SpaceBetween from '@cloudscape-design/components/space-between';
+import { PageLayout } from '@/common/layouts/page-layout';
+import { addNotification } from '@/features/layout/state/slice';
+import { useAppDispatch } from '@/common/hooks';
 import { BudgetItemForm } from '../../components/budget-item-form';
 import { BudgetItemTable } from '../../components/budget-item-table';
 import { BudgetPieChart } from '../../components/budget-pie-chart';
 import { IncomeForm } from '../../components/income-form';
-import type { InferredIncomeSchema, InferredSubmitBudgetItemSchema } from '../../types';
 import { useCreateBudgetItemMutation, useFetchBudgetItemsQuery } from '../../state/slice';
-import { PageLayout } from '@/common/layouts/page-layout';
-import { useAppDispatch } from '@/common/hooks';
-import { addNotification } from '@/features/layout/state/slice';
+import type { InferredIncomeSchema, InferredSubmitBudgetItemSchema } from '../../types';
 
 export const Component = () => {
 	const dispatch = useAppDispatch();
 
-	const {
-		data,
-		isLoading: isLoadingFetchBudgetItems,
-		error,
-	} = useFetchBudgetItemsQuery();
-	const [
-		createBudgetItem,
-		{ isLoading: isLoadingCreateBudgetItem, isSuccess, isError },
-	] = useCreateBudgetItemMutation();
+	const { data, isLoading, error } = useFetchBudgetItemsQuery();
+	const [createBudgetItem, { isLoading: isLoadingCreateBudgetItem }] =
+		useCreateBudgetItemMutation();
 	const [totalIncome, setTotalIncome] = useState<number>(0);
 
-	const handleSubmitBudgetItem = async (data: InferredSubmitBudgetItemSchema) => {
+	const handleSubmitBudgetItem = async (item: InferredSubmitBudgetItemSchema) => {
 		try {
-			await createBudgetItem({ item: data }).unwrap();
+			await createBudgetItem({ item }).unwrap();
 			dispatch(
 				addNotification({
 					autoDismiss: true,
@@ -49,8 +43,8 @@ export const Component = () => {
 		}
 	};
 
-	const handleTotalIncome = (data: InferredIncomeSchema) => {
-		setTotalIncome(parseFloat(data.income));
+	const handleTotalIncome = (income: InferredIncomeSchema) => {
+		setTotalIncome(parseFloat(income.income));
 	};
 
 	return (
@@ -58,7 +52,11 @@ export const Component = () => {
 			<SpaceBetween size="m" direction="vertical">
 				<ColumnLayout columns={2} minColumnWidth={150}>
 					<SpaceBetween size="m" direction="vertical">
-						<BudgetItemForm onSubmitBudgetItem={handleSubmitBudgetItem} />
+						<BudgetItemForm
+							onSubmitBudgetItem={(item) => {
+								void handleSubmitBudgetItem(item);
+							}}
+						/>
 						<IncomeForm onSubmitIncome={handleTotalIncome} />
 					</SpaceBetween>
 					<BudgetPieChart

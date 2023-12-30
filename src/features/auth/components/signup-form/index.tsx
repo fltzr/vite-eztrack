@@ -1,5 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { isEmpty } from 'lodash-es';
 import Button from '@cloudscape-design/components/button';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
 import Form from '@cloudscape-design/components/form';
@@ -9,12 +10,12 @@ import { FormInput } from '@/common/components/form/input';
 import { FormSelect } from '@/common/components/form/select';
 import { type InferredSignupSchema, signupSchema } from '@/features/auth/types';
 
-interface SignupFormProps {
+type SignupFormProps = {
 	handleSubmitSignup: (data: InferredSignupSchema) => void;
 	signinState: {
 		isLoading: boolean;
 	};
-}
+};
 export const SignupForm = ({ handleSubmitSignup, signinState }: SignupFormProps) => {
 	const methods = useForm<InferredSignupSchema>({
 		resolver: zodResolver(signupSchema),
@@ -134,7 +135,7 @@ export const SignupForm = ({ handleSubmitSignup, signinState }: SignupFormProps)
 				form="signup-form"
 				variant="primary"
 				loading={signinState.isLoading}
-				disabled={Object.keys(methods.formState.errors).length > 0}
+				disabled={isEmpty(methods.formState.errors)}
 			>
 				Create account
 			</Button>

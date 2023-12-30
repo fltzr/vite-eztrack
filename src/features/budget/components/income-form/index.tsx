@@ -1,16 +1,17 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { isEmpty } from 'lodash-es';
 import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
 import Form from '@cloudscape-design/components/form';
 import Header from '@cloudscape-design/components/header';
-import { incomeSchema, type InferredIncomeSchema } from '../../types';
 import { FormInput } from '@/common/components/form/input';
+import { incomeSchema, type InferredIncomeSchema } from '../../types';
 
-interface IncomeFormProps {
+type IncomeFormProps = {
 	onSubmitIncome: (data: InferredIncomeSchema) => void;
-}
+};
 
 export const IncomeForm = ({ onSubmitIncome }: IncomeFormProps) => {
 	const methods = useForm<InferredIncomeSchema>({
@@ -29,7 +30,7 @@ export const IncomeForm = ({ onSubmitIncome }: IncomeFormProps) => {
 						formAction="submit"
 						form="income-form"
 						variant="primary"
-						disabled={Object.keys(methods.formState.errors).length > 0}
+						disabled={!isEmpty(Object.keys(methods.formState.errors))}
 					>
 						Add income
 					</Button>

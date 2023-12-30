@@ -1,18 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { User } from '../types';
 
-interface AuthResponse {
+type AuthResponse = {
 	user: User;
-}
+};
 
-interface VerifyAuthResponse {
-	user?: Partial<User>;
-}
+type VerifyAuthResponse = {
+	user?: Pick<User, 'id' | 'username' | 'email'>;
+};
 
-interface AuthCredentials {
+type AuthCredentials = {
 	username: string;
 	password: string;
-}
+};
 
 type SignupRequest = AuthCredentials & Omit<User, 'username' | 'password'>;
 
@@ -42,7 +42,7 @@ export const authApi = createApi({
 				credentials: 'include',
 			}),
 		}),
-		verify: builder.mutation<VerifyAuthResponse, void>({
+		verify: builder.mutation<VerifyAuthResponse, undefined>({
 			query: () => ({
 				url: 'verify',
 				method: 'POST',

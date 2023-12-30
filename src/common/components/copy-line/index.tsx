@@ -4,10 +4,10 @@ import Popover from '@cloudscape-design/components/popover';
 import StatusIndicator from '@cloudscape-design/components/status-indicator';
 import styles from './styles.module.scss';
 
-interface CopyLineProps {
+type CopyLineProps = {
 	resource: string;
 	content: string;
-}
+};
 export const CopyLine = ({ ...props }: CopyLineProps) => (
 	<span className={styles['word-wrap']}>
 		<Box margin={{ right: 'xxs' }} display="inline-block">

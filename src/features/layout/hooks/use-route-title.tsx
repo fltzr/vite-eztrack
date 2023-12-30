@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { setDomainTitle } from '../state/slice';
 import { useTypedMatches } from '@/common/hooks/use-typed-matches';
 import { useAppDispatch } from '@/common/hooks';
+import { setDomainTitle } from '../state/slice';
 
 export const useRouteTitle = () => {
 	const dispatch = useAppDispatch();

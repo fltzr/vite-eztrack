@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { constant } from 'lodash-es';
 import type { InferredBudgetItemSchema } from '../types';
 import type { MultipleBudgetItems, SingleBudgetItem } from './types';
 
@@ -7,8 +8,8 @@ export const budgetApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: '/api/' }),
 	tagTypes: ['BudgetItem'],
 	endpoints: (builder) => ({
-		fetchBudgetItems: builder.query<MultipleBudgetItems, void>({
-			query: () => '/bank/budget-item/fetch',
+		fetchBudgetItems: builder.query<MultipleBudgetItems, undefined>({
+			query: constant('/bank/budget-item/fetch'),
 			providesTags: (result) =>
 				result
 					? [
@@ -34,7 +35,10 @@ export const budgetApi = createApi({
 				'BudgetItem',
 			],
 		}),
-		deleteBudgetItem: builder.mutation<void, Pick<InferredBudgetItemSchema, 'id'>>({
+		deleteBudgetItem: builder.mutation<
+			undefined,
+			Pick<InferredBudgetItemSchema, 'id'>
+		>({
 			query: (data) => ({
 				url: `/bank/budget-item/delete/${data.id}`,
 				method: 'DELETE',

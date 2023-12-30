@@ -1,10 +1,10 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { User } from '../types';
 
-interface AuthState {
+type AuthState = {
 	isAuthenticated: boolean | null;
 	user: Partial<User> | null;
-}
+};
 
 const initialState: AuthState = {
 	isAuthenticated: false,
@@ -21,8 +21,12 @@ export const authSlice = createSlice({
 		setUser: (state, action: PayloadAction<Partial<User>>) => {
 			state.user = action.payload;
 		},
+		setAuthState: (state, action: PayloadAction<AuthState>) => {
+			state.isAuthenticated = action.payload.isAuthenticated;
+			state.user = action.payload.user;
+		},
 	},
 });
 
-export const { setIsAuthenticated, setUser } = authSlice.actions;
+export const { setIsAuthenticated, setUser, setAuthState } = authSlice.actions;
 export const authReducer = authSlice.reducer;

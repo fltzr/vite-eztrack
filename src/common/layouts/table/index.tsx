@@ -5,8 +5,6 @@ import type { CollectionPreferencesProps } from '@cloudscape-design/components/c
 import Pagination from '@cloudscape-design/components/pagination';
 import PropertyFilter from '@cloudscape-design/components/property-filter';
 import Table, { type TableProps } from '@cloudscape-design/components/table';
-import { FullPageHeader } from '../full-page-header';
-import { TableEmptyState, TableNoMatchState } from './states';
 import { Preferences } from '@/common/components/preferences';
 import { useColumnWidths } from '@/common/hooks/use-column-widths';
 import { useLocalStorage } from '@/common/hooks/use-local-storage';
@@ -17,6 +15,8 @@ import {
 	getTextFilterCounterText,
 	type TableColumnDefinition,
 } from '@/common/utils/table-utils';
+import { FullPageHeader } from '../full-page-header';
+import { TableEmptyState, TableNoMatchState } from './states';
 
 type ReusableTableProps<T> = Partial<TableProps> & {
 	localstorageKeyPrefix: string;

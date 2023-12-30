@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { isEmpty } from 'lodash-es';
 import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
@@ -14,9 +14,9 @@ import {
 	submitBudgetItemSchema,
 } from '@/features/budget/types';
 
-interface BudgetItemFormProps {
+type BudgetItemFormProps = {
 	onSubmitBudgetItem: (data: InferredSubmitBudgetItemSchema) => void;
-}
+};
 
 export const BudgetItemForm = ({ ...props }: BudgetItemFormProps) => {
 	const methods = useForm<InferredSubmitBudgetItemSchema>({
@@ -35,7 +35,7 @@ export const BudgetItemForm = ({ ...props }: BudgetItemFormProps) => {
 						formAction="submit"
 						form="create-budget-item-form"
 						variant="primary"
-						disabled={Object.keys(methods.formState.errors).length > 0}
+						disabled={!isEmpty(Object.keys(methods.formState.errors))}
 					>
 						Add budget item
 					</Button>

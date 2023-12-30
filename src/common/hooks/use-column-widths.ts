@@ -9,10 +9,10 @@ import {
 } from '../utils/table-utils';
 import { useLocalStorage } from './use-local-storage';
 
-interface UseColumnWidthsParams<T> {
+type UseColumnWidthsParams<T> = {
 	localstorageKey: string;
 	columnDefinitions: TableColumnDefinition<T>[];
-}
+};
 
 export const useColumnWidths = <T>({
 	localstorageKey,

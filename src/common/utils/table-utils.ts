@@ -1,10 +1,10 @@
 import type { PropertyFilterProperty } from '@cloudscape-design/collection-hooks';
 import type { CollectionPreferencesProps } from '@cloudscape-design/components';
-import { capitalize } from 'lodash-es';
+import { capitalize, isEmpty } from 'lodash-es';
 import type { TableProps } from '@cloudscape-design/components/table';
 import { DateTimeForm } from '../layouts/table/date-time-form';
 
-export interface TableColumnWidth { id: string; width: number }
+export type TableColumnWidth = { id: string; width: number };
 export type TableColumnDefinition<T> = Omit<
 	TableProps.ColumnDefinition<T>,
 	'id' | 'width'
@@ -15,10 +15,10 @@ export type TableColumnDefinition<T> = Omit<
 		isDateTime?: boolean;
 	};
 
-interface AddWidthToColumnDefinitionsParams<T> {
+type AddWidthToColumnDefinitionsParams<T> = {
 	columnDefinitions: TableColumnDefinition<T>[];
 	columnWidthsArray: TableColumnWidth[];
-}
+};
 
 export const addWidthToColumnDefinitions = <T>({
 	columnDefinitions,
@@ -33,10 +33,10 @@ export const addWidthToColumnDefinitions = <T>({
 		};
 	});
 
-interface MapWidthWithColumnDefinitionIdsParams<T> {
+type MapWidthWithColumnDefinitionIdsParams<T> = {
 	columnDefinitions: TableColumnDefinition<T>[];
 	widths: readonly number[];
-}
+};
 
 export const mapWidthWithColumnDefinitionIds = <T>({
 	columnDefinitions,
@@ -50,15 +50,15 @@ export const mapWidthWithColumnDefinitionIds = <T>({
 export const getTextFilterCounterText = (count: number) =>
 	`${count} ${count === 1 ? 'match' : 'matches'}`;
 
-interface GetHeaderCounterTextParams {
+type GetHeaderCounterTextParams = {
 	items: readonly unknown[];
 	selectedItems?: readonly unknown[];
-}
+};
 export const getHeaderCounterText = ({
 	items,
 	selectedItems,
 }: GetHeaderCounterTextParams) =>
-	selectedItems && selectedItems.length > 0
+	selectedItems && !isEmpty(selectedItems)
 		? `(${selectedItems.length}/${items.length})`
 		: `(${items.length}+)`;
 
@@ -80,7 +80,7 @@ export const createFilteringProperties = <T>(
 					operator,
 					match: 'datetime',
 					form: DateTimeForm,
-			  }))
+				}))
 			: [':', '!:', '=', '!=', '^'],
 	}));
 

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { removeAllNotifications } from '../state/slice';
 import { useAppDispatch } from '@/common/hooks';
+import { removeAllNotifications } from '../state/slice';
 
 export const useDismissNotifications = () => {
 	const dispatch = useAppDispatch();

@@ -3,8 +3,8 @@ import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
-import { BlankTopNavigation } from '../blank-top-navigation';
 import { Center } from '@/common/layouts/center';
+import { BlankTopNavigation } from '../blank-top-navigation';
 
 export const ErrorComponent = () => {
 	const error = useRouteError();

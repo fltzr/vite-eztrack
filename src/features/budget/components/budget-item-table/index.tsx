@@ -1,20 +1,18 @@
-import type { InferredBudgetItemSchema } from '../../types';
-import { useDeleteBudgetItemMutation } from '../../state/slice';
-import { budgetItemColumnDefinition } from './config';
 import { ReusableTable } from '@/common/layouts/table';
+import { useDeleteBudgetItemMutation } from '../../state/slice';
+import type { InferredBudgetItemSchema } from '../../types';
+import { budgetItemColumnDefinition } from './config';
 
-interface BudgetItemTableProps {
+type BudgetItemTableProps = {
 	budgetItems: InferredBudgetItemSchema[];
-}
+};
 
 export const BudgetItemTable = ({ budgetItems }: BudgetItemTableProps) => {
 	const [deleteBudgetItem] = useDeleteBudgetItemMutation();
 
 	const handleDeleteClick = async (id: string) => {
 		try {
-			const payload = await deleteBudgetItem({ id }).unwrap();
-
-			console.log(payload);
+			await deleteBudgetItem({ id }).unwrap();
 		} catch (error) {
 			console.error(error);
 		}
@@ -28,7 +26,9 @@ export const BudgetItemTable = ({ budgetItems }: BudgetItemTableProps) => {
 			columnDefinitions={budgetItemColumnDefinition}
 			items={budgetItems}
 			selectionType="multi"
-			onDeleteClick={handleDeleteClick}
+			onDeleteClick={(event) => {
+				void handleDeleteClick(event);
+			}}
 		/>
 	);
 };

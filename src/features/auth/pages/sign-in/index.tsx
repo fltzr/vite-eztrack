@@ -1,14 +1,11 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { isError } from 'lodash-es';
 import Alert from '@cloudscape-design/components/alert';
 import Box from '@cloudscape-design/components/box';
 import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
-import { ToggleUiSettings } from '../../components/toggle-ui-settings';
-import { useSigninMutation } from '../../state/api';
-import { setUser } from '../../state/slice';
-import styles from './styles.module.scss';
 import { Divider } from '@/common/components/divider';
 import { CreateAccountButton } from '@/features/auth/components/create-account-button';
 import { SigninForm } from '@/features/auth/components/signin-form';
@@ -20,9 +17,13 @@ import {
 	setToolsHidden,
 } from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
+import { ToggleUiSettings } from '../../components/toggle-ui-settings';
+import { useSigninMutation } from '../../state/api';
+import { setUser } from '../../state/slice';
+import styles from './styles.module.scss';
 
 export const Component = () => {
-	const [signin, { isLoading, isError }] = useSigninMutation();
+	const [signin, { isLoading, isError: isSigninError }] = useSigninMutation();
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -49,7 +50,7 @@ export const Component = () => {
 			dispatch(setUser(payload.user));
 			navigate('/', { replace: true });
 		} catch (error) {
-			if (error instanceof Error) {
+			if (isError(error)) {
 				dispatch(
 					addNotification({
 						autoDismiss: true,
@@ -76,7 +77,7 @@ export const Component = () => {
 						<Box margin={{ top: 'l', bottom: 'xxxl' }}>
 							<SpaceBetween size="s" direction="vertical">
 								<SigninForm
-									signinState={{ isLoading, isError }}
+									signinState={{ isLoading, isError: isSigninError }}
 									handleSignin={(data) => {
 										void handleSubmitLogin(data);
 									}}

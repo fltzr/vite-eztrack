@@ -1,4 +1,4 @@
-export interface UserLegacy {
+export type UserLegacy = {
 	id: string;
 	collectionId: '_pb_users_auth_';
 	collectionName: 'users';
@@ -12,9 +12,9 @@ export interface UserLegacy {
 	lastname: string;
 	birthdate: string;
 	gender: string;
-}
+};
 
-export interface User {
+export type User = {
 	username: string;
 	email: string;
 	password: string;
@@ -29,4 +29,4 @@ export interface User {
 	state: string;
 	zipcode: string;
 	country: string;
-}
+};

@@ -6,13 +6,13 @@ import Modal from '@cloudscape-design/components/modal';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import styles from './styles.module.scss';
 
-interface ConfirmDeleteModalProps {
+type ConfirmDeleteModalProps = {
 	visible: boolean;
 	onDismiss: () => void;
 	confirmDelete: () => void;
 	resource: string;
 	quantity: number;
-}
+};
 export const ConfirmDeleteModal = ({ ...props }: ConfirmDeleteModalProps) => (
 	<Modal
 		size="medium"
@@ -37,7 +37,7 @@ export const ConfirmDeleteModal = ({ ...props }: ConfirmDeleteModalProps) => (
 				{'Permanently delete '}
 				<Box variant="strong">
 					{props.quantity}{' '}
-					{props.quantity === 1 ? `${props.resource}` : `${props.resource}s`}
+					{props.quantity === 1 ? props.resource : `${props.resource}s`}
 				</Box>
 				{"? You can't undo this action."}
 			</Box>

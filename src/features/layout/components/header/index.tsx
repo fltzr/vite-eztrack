@@ -1,17 +1,16 @@
 /* eslint-disable react/no-multi-comp */
 import { type PropsWithChildren, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import TopNavigation, {
 	type TopNavigationProps,
 } from '@cloudscape-design/components/top-navigation';
-import axios from 'axios';
-import { SettingsModal } from '../settings-modal';
-import { addNotification } from '../../state/slice';
-import styles from './styles.module.scss';
+import { useSignoutMutation } from '@/features/auth/state/api';
 import { ServicesDowndown } from '@/features/layout/components/services-dropdown';
 import { useAppDispatch } from '@/common/hooks';
-import { useSignoutMutation } from '@/features/auth/state/api';
+import { addNotification } from '../../state/slice';
+import { SettingsModal } from '../settings-modal';
+import styles from './styles.module.scss';
 
 const HeaderPortal = ({ children }: PropsWithChildren) => {
 	const dom = document.querySelector('#h');
@@ -27,12 +26,11 @@ export const Header = () => {
 	const [settingsOpen, setSettingsOpen] = useState(false);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const location = useLocation();
 
 	const [signout] = useSignoutMutation();
 
 	const handleMenuDropdownClick: TopNavigationProps.MenuDropdownUtility['onItemClick'] =
-		async (event) => {
+		(event) => {
 			const { id } = event.detail;
 
 			switch (id) {
@@ -45,7 +43,7 @@ export const Header = () => {
 				case 'sign-out': {
 					event.preventDefault();
 					try {
-						await signout({}).unwrap();
+						void signout({}).unwrap();
 					} catch (error) {
 						dispatch(
 							addNotification({
