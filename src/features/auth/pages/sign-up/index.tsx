@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useEffect } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Box from '@cloudscape-design/components/box';
 import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
@@ -9,14 +8,13 @@ import Header from '@cloudscape-design/components/header';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { Divider } from '@/common/components/divider';
 import { SignupForm } from '@/features/auth/components/signup-form';
-import { selectIsAuthenticated } from '@/features/auth/state/selectors';
 import type { InferredSignupSchema } from '@/features/auth/types';
 import {
 	addNotification,
 	setNavigationHidden,
 	setToolsHidden,
 } from '@/features/layout/state/slice';
-import { useAppDispatch, useAppSelector } from '@/common/hooks';
+import { useAppDispatch } from '@/common/hooks';
 import { ToggleUiSettings } from '../../components/toggle-ui-settings';
 import { useSignupMutation } from '../../state/api';
 import styles from './styles.module.scss';
@@ -24,26 +22,13 @@ import styles from './styles.module.scss';
 export const Component = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const location = useLocation();
 
 	const [signup, { isLoading }] = useSignupMutation();
-
-	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
 	useEffect(() => {
 		dispatch(setNavigationHidden(true));
 		dispatch(setToolsHidden(true));
 	}, [dispatch]);
-
-	useEffect(() => {
-		if (!isAuthenticated) {
-			return;
-		}
-
-		const from: string = location.state?.from || '/';
-
-		navigate(from, { replace: true });
-	}, [location.state?.from, isAuthenticated, navigate]);
 
 	const handleSubmitSignup: SubmitHandler<InferredSignupSchema> = async (
 		data: InferredSignupSchema,

@@ -6,7 +6,8 @@ type AuthResponse = {
 };
 
 type VerifyAuthResponse = {
-	user?: Pick<User, 'id' | 'username' | 'email'>;
+	data?: Pick<User, 'id' | 'username' | 'email'>;
+	message: string;
 };
 
 type AuthCredentials = {

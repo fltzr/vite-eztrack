@@ -1,23 +1,28 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAppDispatch } from '@/common/hooks';
 import { useVerifyMutation } from '../state/api';
 import { setAuthState } from '../state/slice';
 
 export const useAuthVerification = () => {
 	const dispatch = useAppDispatch();
-	const [verify, { isLoading, isError, isSuccess }] = useVerifyMutation();
-	const [isVerififying, setIsVerifying] = useState(true);
+	const location = useLocation();
+	const [isInitializing, setIsInitializing] = useState(true);
+	const [verify, { isLoading }] = useVerifyMutation();
 
 	useEffect(() => {
 		const verifyAuthentication = async () => {
-			try {
-				const payload = await verify().unwrap();
+			console.log('verifyAuthentication');
 
-				if (payload.user) {
+			setIsInitializing(true);
+			try {
+				const payload = await verify(undefined).unwrap();
+
+				if (payload.data) {
 					dispatch(
 						setAuthState({
-							user: payload.user,
-							isAuthenticated: Boolean(payload.user),
+							user: payload.data,
+							isAuthenticated: Boolean(payload.data),
 						}),
 					);
 				} else {
@@ -25,9 +30,13 @@ export const useAuthVerification = () => {
 				}
 			} catch (error) {
 				dispatch(setAuthState({ user: null, isAuthenticated: false }));
+			} finally {
+				setIsInitializing(false);
 			}
 		};
 
 		void verifyAuthentication();
-	}, [dispatch, verify]);
+	}, [dispatch, verify, location]);
+
+	return { isVerifying: isLoading, isInitializing };
 };
