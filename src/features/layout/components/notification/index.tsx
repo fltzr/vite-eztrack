@@ -38,8 +38,6 @@ export const Notification = () => {
 				notifications
 					? notifications.map((notification) => ({
 							...notification,
-							dismissible: true,
-							dismissLabel: 'Close',
 							onDismiss: () => {
 								handleDismiss(notification.id ?? '');
 							},

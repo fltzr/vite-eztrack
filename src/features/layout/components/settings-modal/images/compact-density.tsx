@@ -1,7 +1,7 @@
 import { TableRows, TableRow, WindowPath, TopNavigation } from './common';
 import styles from './styles.module.scss';
 
-export const compactImage = (
+const compactImage = (
 	<svg aria-hidden viewBox="0 0 230 107" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<WindowPath />
 		<TopNavigation />
@@ -23,3 +23,5 @@ export const compactImage = (
 		<TableRows compact offsetTop={37} rows={7} />
 	</svg>
 );
+
+export default compactImage;

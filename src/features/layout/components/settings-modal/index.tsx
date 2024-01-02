@@ -9,8 +9,8 @@ import Tiles from '@cloudscape-design/components/tiles';
 import { selectDensity, selectTheme } from '@/features/layout/state/selectors';
 import { setDensity, setTheme } from '@/features/layout/state/slice';
 import { useAppDispatch, useAppSelector } from '@/common/hooks';
-import comfortableImage from './images/comfortable-density';
-import { compactImage } from './images/compact-density';
+import comfortableDensity from './images/comfortable-density';
+import compactDensity from './images/compact-density';
 
 const themeOptions: SelectProps.Option[] = [
 	{ value: Theme.Light, label: 'Light' },
@@ -55,32 +55,18 @@ export const SettingsModal = ({ visible, onDismiss }: SettingsModalProps) => {
 								{
 									value: Density.Comfortable,
 									label: 'Comfortable',
-									image: comfortableImage,
+									image: comfortableDensity,
 								},
 								{
 									value: Density.Compact,
 									label: 'Compact',
-									image: compactImage,
+									image: compactDensity,
 								},
 							]}
 							onChange={({ detail }) =>
 								dispatch(setDensity(detail.value as Density))
 							}
 						/>
-						{/* <Select
-							options={densityOptions}
-							selectedOption={
-								densityOptions.find((opt) => opt.value === density) ??
-								null
-							}
-							onChange={(event) =>
-								dispatch(
-									setDensity(
-										event.detail.selectedOption.value as Density,
-									),
-								)
-							}
-						/> */}
 					</FormField>
 				</SpaceBetween>
 			</Box>

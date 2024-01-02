@@ -9,8 +9,6 @@ type TableRowProps = {
 	isHeader?: boolean;
 };
 
-/* Generate a singlar specified on a svg */
-
 export const TableRow = ({
 	offset,
 	separator = true,
@@ -29,7 +27,7 @@ export const TableRow = ({
 			<path d={`M53 ${offsetTop}H56V${offsetBottom}H53V${offsetTop}Z`} />
 			<path
 				d={`M61 ${offsetTop}H85V${offsetBottom}H61V${offsetTop}Z`}
-				className={isHeader ? undefined : styles.secondary}
+				className={isHeader ? undefined : styles.primary}
 			/>
 			<path d={`M138 ${offsetTop}H118V${offsetBottom}H138V${offsetTop}Z`} />
 			<path d={`M185 ${offsetTop}H141V${offsetBottom}H185V${offsetTop}Z`} />
@@ -55,14 +53,19 @@ export const TableRows = ({ offsetTop, rows, compact = false }: TableRowsProps) 
 
 	return (
 		<g>
-			{[...Array(rows)].map((_, index) => (
-				<TableRow
-					key={Math.random() * Math.random()}
-					offset={offsetTop + index * distance}
-					compact={compact}
-					separator={index + 1 !== rows}
-				/>
-			))}
+			{[...Array(rows)].map((_, index) => {
+				const offset = offsetTop + index * distance;
+				const key = `row-${index}-${offset}`;
+
+				return (
+					<TableRow
+						key={key}
+						offset={offsetTop + index * distance}
+						compact={compact}
+						separator={index + 1 !== rows}
+					/>
+				);
+			})}
 		</g>
 	);
 };
