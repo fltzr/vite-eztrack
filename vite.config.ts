@@ -5,19 +5,10 @@ import { type Plugin, defineConfig, splitVendorChunkPlugin } from 'vite';
 import tsConfigPaths from 'vite-tsconfig-paths';
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react-swc';
-import browserslist from 'browserslist';
-import { browserslistToTargets } from 'lightningcss';
-import million from 'million/compiler';
 import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig({
-	plugins: [
-		million.vite({ auto: true }),
-		react(),
-		tsConfigPaths(),
-		splitVendorChunkPlugin(),
-		visualizer() as Plugin,
-	],
+	plugins: [react(), tsConfigPaths(), splitVendorChunkPlugin(), visualizer() as Plugin],
 
 	resolve: {
 		alias: {
@@ -26,13 +17,6 @@ export default defineConfig({
 				__dirname,
 				'./src-theme/design-tokens',
 			),
-		},
-	},
-
-	css: {
-		transformer: 'lightningcss',
-		lightningcss: {
-			targets: browserslistToTargets(browserslist('>=0.25%')),
 		},
 	},
 
@@ -57,7 +41,6 @@ export default defineConfig({
 	build: {
 		outDir: 'dist',
 		emptyOutDir: true,
-		cssMinify: 'lightningcss',
 		rollupOptions: {
 			output: {
 				experimentalMinChunkSize: 500,
