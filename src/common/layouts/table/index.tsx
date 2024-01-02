@@ -144,9 +144,6 @@ export const ReusableTable = <T extends { id: string }>({
 				setSelectedItems(event.detail.selectedItems);
 			}}
 			onColumnWidthsChange={(event) => {
-				console.log(
-					`Widths changed: ${JSON.stringify(event.detail.widths, null, 2)}`,
-				);
 				saveWidths(event);
 			}}
 		/>

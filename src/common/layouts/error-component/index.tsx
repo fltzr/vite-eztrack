@@ -4,7 +4,7 @@ import Button from '@cloudscape-design/components/button';
 import Container from '@cloudscape-design/components/container';
 import Header from '@cloudscape-design/components/header';
 import { Center } from '@/common/layouts/center';
-import { BlankTopNavigation } from '../blank-top-navigation';
+import { Header as TopNavigation } from '../header';
 
 export const ErrorComponent = () => {
 	const error = useRouteError();
@@ -12,7 +12,7 @@ export const ErrorComponent = () => {
 
 	return (
 		<>
-			<BlankTopNavigation />
+			<TopNavigation />
 			<Center>
 				<Container
 					variant="default"
