@@ -12,8 +12,6 @@ export const useAuthVerification = () => {
 
 	useEffect(() => {
 		const verifyAuthentication = async () => {
-			console.log('verifyAuthentication');
-
 			setIsInitializing(true);
 			try {
 				const payload = await verify(undefined).unwrap();

@@ -4,10 +4,11 @@ import type { InferredBudgetItemSchema } from '../../types';
 import { budgetItemColumnDefinition } from './config';
 
 type BudgetItemTableProps = {
+	tableStatus?: 'loading' | 'error' | 'finished';
 	budgetItems: InferredBudgetItemSchema[];
 };
 
-export const BudgetItemTable = ({ budgetItems }: BudgetItemTableProps) => {
+export const BudgetItemTable = ({ tableStatus, budgetItems }: BudgetItemTableProps) => {
 	const [deleteBudgetItem] = useDeleteBudgetItemMutation();
 
 	const handleDeleteClick = async (id: string) => {
@@ -25,6 +26,7 @@ export const BudgetItemTable = ({ budgetItems }: BudgetItemTableProps) => {
 			resource="Budget item"
 			columnDefinitions={budgetItemColumnDefinition}
 			items={budgetItems}
+			loading={tableStatus === 'loading'}
 			selectionType="multi"
 			onDeleteClick={(event) => {
 				void handleDeleteClick(event);

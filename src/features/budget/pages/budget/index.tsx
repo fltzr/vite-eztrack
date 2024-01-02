@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ColumnLayout from '@cloudscape-design/components/column-layout';
+import type { PieChartProps } from '@cloudscape-design/components/pie-chart';
 import SpaceBetween from '@cloudscape-design/components/space-between';
 import { PageLayout } from '@/common/layouts/page-layout';
 import { addNotification } from '@/features/layout/state/slice';
@@ -14,10 +15,37 @@ import type { InferredIncomeSchema, InferredSubmitBudgetItemSchema } from '../..
 export const Component = () => {
 	const dispatch = useAppDispatch();
 
-	const { data, isLoading, error } = useFetchBudgetItemsQuery();
-	const [createBudgetItem, { isLoading: isLoadingCreateBudgetItem }] =
-		useCreateBudgetItemMutation();
+	const {
+		data,
+		isLoading: isLoadingBudgetItems,
+		error: errorLoadingBudgetItems,
+	} = useFetchBudgetItemsQuery(undefined);
+	const [
+		createBudgetItem,
+		{ isLoading: isLoadingCreateBudgetItem, error: errorCreatingBudgetItems },
+	] = useCreateBudgetItemMutation();
 	const [totalIncome, setTotalIncome] = useState<number>(0);
+
+	const [chartStatus, setChartStatus] =
+		useState<PieChartProps['statusType']>('loading');
+
+	useEffect(() => {
+		if (isLoadingBudgetItems || isLoadingCreateBudgetItem) {
+			setChartStatus('loading');
+		} else if (errorLoadingBudgetItems ?? errorCreatingBudgetItems) {
+			setChartStatus('error');
+		} else {
+			setChartStatus('finished');
+		}
+
+		console.log('chartStatus', chartStatus);
+	}, [
+		isLoadingBudgetItems,
+		isLoadingCreateBudgetItem,
+		errorLoadingBudgetItems,
+		errorCreatingBudgetItems,
+		chartStatus,
+	]);
 
 	const handleSubmitBudgetItem = async (item: InferredSubmitBudgetItemSchema) => {
 		try {
@@ -60,12 +88,15 @@ export const Component = () => {
 						<IncomeForm onSubmitIncome={handleTotalIncome} />
 					</SpaceBetween>
 					<BudgetPieChart
-						statusType={isLoadingCreateBudgetItem ? 'loading' : 'finished'}
+						statusType={chartStatus}
 						budgetItems={data?.items ?? []}
 						totalIncome={totalIncome}
 					/>
 				</ColumnLayout>
-				<BudgetItemTable budgetItems={data?.items ?? []} />
+				<BudgetItemTable
+					tableStatus={chartStatus}
+					budgetItems={data?.items ?? []}
+				/>
 			</SpaceBetween>
 		</PageLayout>
 	);

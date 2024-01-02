@@ -26,12 +26,20 @@ export const BudgetPieChart = ({ ...props }: BudgetPieChartProps) => {
 				fitHeight
 				variant="donut"
 				size="medium"
-				data={props.budgetItems ?? []}
+				statusType={props.statusType}
 				innerMetricDescription={`($${remainingBudget} remaining)`}
 				innerMetricValue={`$${props.totalIncome}`}
 				segmentDescription={(datum) => `$${datum.value}`}
 				ariaDescription="Donut chart showing generic example data."
 				ariaLabel="Donut chart"
+				data={
+					props.budgetItems
+						? props.budgetItems.map((item) => ({
+								...item,
+								value: toNumber(item.value),
+							}))
+						: []
+				}
 				detailPopoverContent={(segment, sum) => [
 					{ key: 'Amount', value: `$${segment.value}` },
 					{ key: 'Category', value: segment.category },
