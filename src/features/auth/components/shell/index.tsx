@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import AppLayout from '@cloudscape-design/components/app-layout';
-import { BlankTopNavigation } from '@/common/layouts/blank-top-navigation';
+import { Header } from '@/common/layouts/header';
 import { Notification } from '@/features/layout/components/notification';
 import styles from './styles.module.scss';
 
 export const Component = () => (
 	<>
-		<BlankTopNavigation />
+		<Header />
 		<AppLayout
 			navigationHide
 			toolsHide
