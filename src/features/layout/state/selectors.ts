@@ -1,5 +1,6 @@
 import type { AppState } from '@/common/store';
 
+export const selectOnline = (state: AppState) => state.layout.online;
 export const selectTheme = (state: AppState) => state.layout.theme;
 export const selectDensity = (state: AppState) => state.layout.density;
 export const selectDomainTitle = (state: AppState) => state.layout.domainTitle;

@@ -13,6 +13,7 @@ import { load, save } from '@/common/utils/local-storage';
 type Notification = FlashbarProps.MessageDefinition & { autoDismiss?: boolean };
 
 export type LayoutState = {
+	online?: boolean;
 	theme: Theme;
 	density: Density;
 	domainTitle: string;
@@ -52,6 +53,9 @@ const layoutSlice = createSlice({
 	name: 'layout',
 	initialState: getInitialState(),
 	reducers: {
+		setOnline: (state, action: PayloadAction<boolean>) => {
+			state.online = action.payload;
+		},
 		setTheme: (state, action: PayloadAction<Theme>) => {
 			state.theme = action.payload;
 		},
@@ -94,6 +98,7 @@ const layoutSlice = createSlice({
 });
 
 export const {
+	setOnline,
 	setTheme,
 	setDensity,
 	setDomainTitle,
