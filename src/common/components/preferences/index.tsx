@@ -7,6 +7,8 @@ import {
 	createPageSizeOptions,
 	type TableColumnDefinition,
 } from '@/common/utils/table-utils';
+import { addNotification } from '@/features/layout/state/slice';
+import { useAppDispatch } from '@/common/hooks';
 
 type PreferencesProps = {
 	resource: string;
@@ -17,6 +19,7 @@ type PreferencesProps = {
 	disabled?: boolean;
 };
 export const Preferences = ({ ...props }: PreferencesProps) => {
+	const dispatch = useAppDispatch();
 	const contentDisplayOptions = createContentDisplayOptions(props.items);
 	const pageSizeOptions = createPageSizeOptions(props.resource);
 
@@ -56,7 +59,12 @@ export const Preferences = ({ ...props }: PreferencesProps) => {
 				if (props.setPreferences) {
 					props.setPreferences(event);
 				} else {
-					console.log('setPreferences is not defined');
+					dispatch(
+						addNotification({
+							type: 'warning',
+							content: 'Unable to save preferences. Please try again.',
+						}),
+					);
 				}
 			}}
 		/>
