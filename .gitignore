@@ -30,3 +30,4 @@ dist-ssr
 .env
 src/.scannerwork/.sonar_lock
 src/.scannerwork/report-task.txt
+stats.html
